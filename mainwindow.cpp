@@ -5,14 +5,17 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    playButtonIcon("../cs372-FinalProject/Button-Play-icon.png")
+    playButtonPlayIcon("../cs372-FinalProject/Button-Play-icon.png"),
+    playButtonPauseIcon("../cs372-FinalProject/Button-Pause-icon.png"),
+    isPlaying(false)
 {
     ui->setupUi(this);
 
     /*************SETTING UP PLAY BUTTON******************/
     connect(&playButton, SIGNAL(clicked()), this, SLOT(playButtonIsPressed()));
     playButton.setParent(this);
-    playButton.setIcon(playButtonIcon);
+    playButton.setIcon(playButtonPlayIcon);
+    playButton.setGeometry(0,0,90,50);
     playButton.show();
     /*
     connect(&playButton2, SIGNAL(clicked()), this, SLOT(playButtonIsPressed()));

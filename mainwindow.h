@@ -21,14 +21,18 @@ private slots:
     /***********PLAY BUTTON FUNCTION SLOTS***********/
     void playButtonIsPressed ()
     {
-        playButton.setText("Play");
+        if(!isPlaying) playButton.setIcon(playButtonPlayIcon);
+        else playButton.setIcon(playButtonPauseIcon);
+
+        isPlaying = !isPlaying;
     }
 private:
     Ui::MainWindow *ui;
 
     /************Play Button Objects*************/
     QPushButton playButton, playButton2;
-    QIcon playButtonIcon;
+    QIcon playButtonPlayIcon, playButtonPauseIcon;
+    bool isPlaying;
 };
 
 #endif // MAINWINDOW_H
