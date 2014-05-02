@@ -40,6 +40,7 @@ private slots:
     }
 private:
     Ui::MainWindow *ui;
+    QIcon mainWindowIcon;
 
     /************Play Button Objects*************/
     QPushButton playButton;

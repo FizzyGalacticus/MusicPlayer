@@ -5,6 +5,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
+    mainWindowIcon("../cs372-FinalProject/mainWindowIcon.jpg"),
     playButtonPlayIcon("../cs372-FinalProject/Button-Play-icon.png"),
     playButtonPauseIcon("../cs372-FinalProject/Button-Pause-icon.png"),
     nextButtonIcon("../cs372-FinalProject/Button-Next-icon.png"),
@@ -12,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     isPlaying(false)
 {
     ui->setupUi(this);
+    setWindowIcon(mainWindowIcon);
 
     /*************SETTING UP PREV BUTTON******************/
     connect(&prevButton, SIGNAL(clicked()), this, SLOT(prevButtonIsPressed()));
