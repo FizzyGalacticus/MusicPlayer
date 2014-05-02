@@ -5,7 +5,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    playButton(this),
+    /*playButton(this),*/
     playButton2(this),
     playButtonIcon("/home/dustin/CS/testQtApp/Button-Play-icon.png")
 {
@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     playButton2.setGeometry(playButton.width(),0, playButton.width(), playButton.height());
     playButton2.setIcon(playButtonIcon);
     playButton2.show();
-    QObject::connect(&playButton, SIGNAL(clicked()), this, SLOT(playButtonIsPressed()));
+    connect(&playButton, SIGNAL(clicked()), this, SLOT(playButtonIsPressed()));
 }
 
 MainWindow::~MainWindow()

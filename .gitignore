@@ -19,3 +19,7 @@
 *.exe
 *.out
 *.app
+
+# Dustin's things
+commit.sh
+push.sh
