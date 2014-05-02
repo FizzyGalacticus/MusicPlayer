@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     /*playButton(this),*/
     playButton2(this),
-    playButtonIcon("/home/dustin/CS/testQtApp/Button-Play-icon.png")
+    playButtonIcon("../cs372-FinalProject/Button-Play-icon.png")
 {
     ui->setupUi(this);
     //playButton.setText("Play");
