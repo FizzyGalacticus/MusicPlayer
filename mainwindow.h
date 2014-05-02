@@ -18,13 +18,15 @@ public:
     ~MainWindow();
 
 private slots:
+    /***********PLAY BUTTON FUNCTION SLOTS***********/
     void playButtonIsPressed ()
     {
-        //playButton.setHidden(isPressed);
         playButton.setText("Play");
     }
 private:
     Ui::MainWindow *ui;
+
+    /************Play Button Objects*************/
     QPushButton playButton, playButton2;
     QIcon playButtonIcon;
 };
