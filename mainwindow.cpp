@@ -7,22 +7,32 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     playButtonPlayIcon("../cs372-FinalProject/Button-Play-icon.png"),
     playButtonPauseIcon("../cs372-FinalProject/Button-Pause-icon.png"),
+    nextButtonIcon("../cs372-FinalProject/Button-Next-icon.png"),
+    prevButtonIcon("../cs372-FinalProject/Button-Prev-icon.png"),
     isPlaying(false)
 {
     ui->setupUi(this);
+
+    /*************SETTING UP PREV BUTTON******************/
+    connect(&prevButton, SIGNAL(clicked()), this, SLOT(prevButtonIsPressed()));
+    prevButton.setParent(this);
+    prevButton.setIcon(prevButtonIcon);
+    prevButton.setGeometry(0,0,90,50);
+    prevButton.show();
 
     /*************SETTING UP PLAY BUTTON******************/
     connect(&playButton, SIGNAL(clicked()), this, SLOT(playButtonIsPressed()));
     playButton.setParent(this);
     playButton.setIcon(playButtonPlayIcon);
-    playButton.setGeometry(0,0,90,50);
+    playButton.setGeometry(prevButton.width(),0,prevButton.width(),prevButton.height());
     playButton.show();
-    /*
-    connect(&playButton2, SIGNAL(clicked()), this, SLOT(playButtonIsPressed()));
-    playButton2.setParent(this);
-    playButton2.setGeometry(playButton.width(),0, playButton.width(), playButton.height());
-    playButton2.setIcon(playButtonIcon);
-    playButton2.show();*/
+
+    /*************SETTING UP NEXT BUTTON******************/
+    connect(&nextButton, SIGNAL(clicked()), this, SLOT(nextButtonIsPressed()));
+    nextButton.setParent(this);
+    nextButton.setIcon(nextButtonIcon);
+    nextButton.setGeometry(playButton.width()+prevButton.width(),0,prevButton.width(),prevButton.height());
+    nextButton.show();
 }
 
 MainWindow::~MainWindow()

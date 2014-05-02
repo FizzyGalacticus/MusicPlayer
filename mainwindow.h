@@ -18,21 +18,41 @@ public:
     ~MainWindow();
 
 private slots:
-    /***********PLAY BUTTON FUNCTION SLOTS***********/
+    /***********PLAY BUTTON FUNCTION SLOT***********/
     void playButtonIsPressed ()
     {
-        if(!isPlaying) playButton.setIcon(playButtonPlayIcon);
-        else playButton.setIcon(playButtonPauseIcon);
+        if(!isPlaying) playButton.setIcon(playButtonPauseIcon);
+        else playButton.setIcon(playButtonPlayIcon);
 
         isPlaying = !isPlaying;
+    }
+
+    /***********NEXT BUTTON FUNCTION SLOT***********/
+    void nextButtonIsPressed ()
+    {
+        //Go to next song
+    }
+
+    /***********PREV BUTTON FUNCTION SLOT***********/
+    void prevButtonIsPressed ()
+    {
+        //Go to previous song
     }
 private:
     Ui::MainWindow *ui;
 
     /************Play Button Objects*************/
-    QPushButton playButton, playButton2;
+    QPushButton playButton;
     QIcon playButtonPlayIcon, playButtonPauseIcon;
     bool isPlaying;
+
+    /************Next Button Objects*************/
+    QPushButton nextButton;
+    QIcon nextButtonIcon;
+
+    /************Prev Button Objects*************/
+    QPushButton prevButton;
+    QIcon prevButtonIcon;
 };
 
 #endif // MAINWINDOW_H
