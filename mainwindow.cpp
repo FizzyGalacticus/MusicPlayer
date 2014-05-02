@@ -5,11 +5,11 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    mainWindowIcon("../cs372-FinalProject/mainWindowIcon.jpg"),
-    playButtonPlayIcon("../cs372-FinalProject/Button-Play-icon.png"),
-    playButtonPauseIcon("../cs372-FinalProject/Button-Pause-icon.png"),
-    nextButtonIcon("../cs372-FinalProject/Button-Next-icon.png"),
-    prevButtonIcon("../cs372-FinalProject/Button-Prev-icon.png"),
+    mainWindowIcon("../cs372-FinalProject/icons/mainWindowIcon.jpg"),
+    playButtonPlayIcon("../cs372-FinalProject/icons/Button-Play-icon.png"),
+    playButtonPauseIcon("../cs372-FinalProject/icons/Button-Pause-icon.png"),
+    nextButtonIcon("../cs372-FinalProject/icons/Button-Next-icon.png"),
+    prevButtonIcon("../cs372-FinalProject/icons/Button-Prev-icon.png"),
     isPlaying(false)
 {
     ui->setupUi(this);
