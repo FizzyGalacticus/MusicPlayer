@@ -35,6 +35,21 @@ MainWindow::MainWindow(QWidget *parent) :
     nextButton.setIcon(nextButtonIcon);
     nextButton.setGeometry(playButton.width()+prevButton.width(),0,prevButton.width(),prevButton.height());
     nextButton.show();
+
+    /*************SETTING UP VOLUME SLIDER******************/
+
+    volumeLabel = new QLabel;
+    volumeLabel->setText(tr("Volume:"));
+    volumeLabel->setParent(this);
+    volumeSlider = new QSlider(Qt::Horizontal);
+    volumeSlider->setParent(this);
+    volumeSlider->setMinimum(0);
+    volumeSlider->setMaximum(100);
+    volumeSlider->setSingleStep(10);
+    volumeSlider->setGeometry(72,72,144,20);
+    volumeLabel->setGeometry(25,45,72,72);
+    volumeLabel->show();
+    volumeSlider->show();
 }
 
 MainWindow::~MainWindow()

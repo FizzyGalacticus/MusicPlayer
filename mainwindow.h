@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QIcon>
+#include <QHBoxLayout> //For volume Slider
+#include <QLabel>
+#include <QSlider>
 
 namespace Ui {
 class MainWindow;
@@ -54,6 +57,10 @@ private:
     /************Prev Button Objects*************/
     QPushButton prevButton;
     QIcon prevButtonIcon;
+
+    /************Volume Slider*******************/
+    QLabel *volumeLabel;
+    QSlider *volumeSlider;
 };
 
 #endif // MAINWINDOW_H
