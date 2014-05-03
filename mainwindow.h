@@ -47,13 +47,10 @@ private slots:
         //Go to previous song
     }
 
-
-
     void open();
     void play();
     void about();
     void aboutQt();
-
 
 private:
     Ui::MainWindow *ui;
@@ -72,26 +69,18 @@ private:
     QPushButton prevButton;
     QIcon prevButtonIcon;
 
-
     void createActions();
     void createMenus();
 
     QMenu *fileMenu;
     QMenu *playMenu;
-
     QMenu *helpMenu;
-    QActionGroup *alignmentGroup;
-
     QAction *openAct;
     QAction *playAct;
-
     QAction *exitAct;
-
     QAction *aboutAct;
     QAction *aboutQtAct;
     QLabel *infoLabel;
-
-
 };
 
 #endif // MAINWINDOW_H
