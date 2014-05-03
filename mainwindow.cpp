@@ -1,10 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QObject>
-
-// /////
 #include <QtWidgets>
-// /////
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -42,12 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
     nextButton.show();
 
 
-
-    // /////////
-
-//   QWidget *widget = new QWidget;
-//    setCentralWidget(widget);
-
+    /****************SETTING UP MENUS*********************/
     QWidget *topFiller = new QWidget;
     topFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
@@ -68,7 +60,6 @@ MainWindow::MainWindow(QWidget *parent) :
     layout->addWidget(topFiller);
     layout->addWidget(infoLabel);
     layout->addWidget(bottomFiller);
-    //widget->setLayout(layout);
 
     createActions();
     createMenus();
@@ -81,7 +72,6 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowTitle(tr("Menus"));
     setMinimumSize(160, 160);
     resize(480, 320);
-    // //////////
 }
 
 MainWindow::~MainWindow()
@@ -89,34 +79,22 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
 void MainWindow::contextMenuEvent(QContextMenuEvent *event)
 {
     QMenu menu(this);
     menu.addAction(playAct);
-    //menu.addAction(pauseAct);
-    //menu.addAction(pasteAct);
     menu.exec(event->globalPos());
 }
-
-/*void MainWindow::newFile()
-{
-    infoLabel->setText(tr("Invoked <b>File|New</b>"));
-}
-*/
 
 void MainWindow::play()
 {
     playButtonIsPressed();
 }
 
-
-
 void MainWindow::open()
 {
     infoLabel->setText(tr("Invoked <b>File|Open</b>"));
 }
-
 
 void MainWindow::about()
 {
@@ -127,7 +105,6 @@ void MainWindow::about()
 //TODO: docoomentimgz
 }
 
-
 void MainWindow::aboutQt()
 {
     infoLabel->setText(tr("Invoked <b>Help|About Qt</b>"));
@@ -135,8 +112,6 @@ void MainWindow::aboutQt()
 
 void MainWindow::createActions()
 {
-
-
     openAct = new QAction(tr("&Open..."), this);
     openAct->setShortcuts(QKeySequence::Open);
     openAct->setStatusTip(tr("Open an existing file"));
@@ -147,16 +122,10 @@ void MainWindow::createActions()
     exitAct->setStatusTip(tr("Exit the application"));
     connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
 
-    // ///////
     playAct = new QAction(tr("&Play/Pause"), this);
     playAct->setShortcuts(QKeySequence::Play);
     playAct->setStatusTip(tr("Play the last operation"));
     connect(playAct, SIGNAL(triggered()), this, SLOT(play()));
-    // ///////
-
-
-
-
 
     aboutAct = new QAction(tr("&About"), this);
     aboutAct->setStatusTip(tr("Show the application's About box"));
@@ -166,30 +135,19 @@ void MainWindow::createActions()
     aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
     connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(aboutQtAct, SIGNAL(triggered()), this, SLOT(aboutQt()));
-
-
 }
 
 void MainWindow::createMenus()
 {
     fileMenu = menuBar()->addMenu(tr("&File"));
-
     fileMenu->addAction(openAct);
-
     fileMenu->addSeparator();
     fileMenu->addAction(exitAct);
-
     playMenu = menuBar()->addMenu(tr("&Play"));
-
     playMenu->addSeparator();
-
-    playMenu->addAction(playAct); ///////
-
-
+    playMenu->addAction(playAct);
     helpMenu = menuBar()->addMenu(tr("&Help"));
     helpMenu->addAction(aboutAct);
     helpMenu->addAction(aboutQtAct);
-
-
 }
 
