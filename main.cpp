@@ -10,7 +10,6 @@ int main(int argc, char *argv[])
     w.setMinimumWidth(4*72);
     w.setMaximumHeight(2*72);
     w.setMaximumWidth(4*72);*/
-    w.setLayout(new QLayout);
     w.show();
 
     return a.exec();
