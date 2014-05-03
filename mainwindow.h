@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QSlider>
 
+
 namespace Ui {
 class MainWindow;
 }
