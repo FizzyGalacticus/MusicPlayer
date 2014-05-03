@@ -22,10 +22,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    // /////////////
 protected:
         void contextMenuEvent(QContextMenuEvent *event);
-    // /////////
 
 private slots:
     /***********PLAY BUTTON FUNCTION SLOT***********/
@@ -52,10 +50,10 @@ private slots:
 
 
     void open();
-    void play(); // ////////
+    void play();
     void about();
     void aboutQt();
-    // //////////////////////
+
 
 private:
     Ui::MainWindow *ui;
@@ -75,7 +73,6 @@ private:
     QIcon prevButtonIcon;
 
 
-    // /////////////////////
     void createActions();
     void createMenus();
 
@@ -86,14 +83,14 @@ private:
     QActionGroup *alignmentGroup;
 
     QAction *openAct;
-    QAction *playAct; // ////////////
+    QAction *playAct;
 
     QAction *exitAct;
 
     QAction *aboutAct;
     QAction *aboutQtAct;
     QLabel *infoLabel;
-    // ///////////////
+
 
 };
 
