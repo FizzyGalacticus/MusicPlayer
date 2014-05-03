@@ -133,15 +133,15 @@ void MainWindow::createActions()
     connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
 
     playAct = new QAction(tr("&Play/Pause"), this);
-    playAct->setStatusTip(tr("Play the last operation"));
+    playAct->setStatusTip(tr("Play a song"));
     connect(playAct, SIGNAL(triggered()), this, SLOT(play()));
 
     nextSongAct = new QAction(tr("&Next Song"), this);
-    nextSongAct->setStatusTip(tr("Play the last operation"));
+    nextSongAct->setStatusTip(tr("Switches to the Next Song"));
     connect(nextSongAct, SIGNAL(triggered()), this, SLOT(nextSong()));
 
     previousSongAct = new QAction(tr("&Previous Song"), this);
-    previousSongAct->setStatusTip(tr("Play the last operation"));
+    previousSongAct->setStatusTip(tr("Switches to the Previous Song"));
     connect(previousSongAct, SIGNAL(triggered()), this, SLOT(previousSong()));
 
     aboutAct = new QAction(tr("&About"), this);
