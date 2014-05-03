@@ -105,7 +105,7 @@ void MainWindow::previousSong()
 
 void MainWindow::open()
 {
-    infoLabel->setText(tr("Invoked <b>File|Open</b>"));
+   //TODO: ADD OPEN FUNCTIONALITY
 }
 
 void MainWindow::about()
@@ -125,27 +125,22 @@ void MainWindow::aboutQt()
 void MainWindow::createActions()
 {
     openAct = new QAction(tr("&Open..."), this);
-    openAct->setShortcuts(QKeySequence::Open);
     openAct->setStatusTip(tr("Open an existing file"));
     connect(openAct, SIGNAL(triggered()), this, SLOT(open()));
 
     exitAct = new QAction(tr("E&xit"), this);
-    exitAct->setShortcuts(QKeySequence::Quit);
     exitAct->setStatusTip(tr("Exit the application"));
     connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
 
     playAct = new QAction(tr("&Play/Pause"), this);
-    playAct->setShortcuts(QKeySequence::Play);
     playAct->setStatusTip(tr("Play the last operation"));
     connect(playAct, SIGNAL(triggered()), this, SLOT(play()));
 
     nextSongAct = new QAction(tr("&Next Song"), this);
-    //nextSongAct->setShortcuts(QKeySequence::Next);
     nextSongAct->setStatusTip(tr("Play the last operation"));
     connect(nextSongAct, SIGNAL(triggered()), this, SLOT(nextSong()));
 
     previousSongAct = new QAction(tr("&Previous Song"), this);
-    //previousSongAct->setShortcuts(QKeySequence::Previous);
     previousSongAct->setStatusTip(tr("Play the last operation"));
     connect(previousSongAct, SIGNAL(triggered()), this, SLOT(previousSong()));
 
