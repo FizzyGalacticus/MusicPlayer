@@ -49,6 +49,8 @@ private slots:
 
     void open();
     void play();
+    void nextSong();
+    void previousSong();
     void about();
     void aboutQt();
 
@@ -77,6 +79,8 @@ private:
     QMenu *helpMenu;
     QAction *openAct;
     QAction *playAct;
+    QAction *nextSongAct;
+    QAction *previousSongAct;
     QAction *exitAct;
     QAction *aboutAct;
     QAction *aboutQtAct;

@@ -83,12 +83,24 @@ void MainWindow::contextMenuEvent(QContextMenuEvent *event)
 {
     QMenu menu(this);
     menu.addAction(playAct);
+    menu.addAction(nextSongAct);
+    menu.addAction(previousSongAct);
     menu.exec(event->globalPos());
 }
 
 void MainWindow::play()
 {
     playButtonIsPressed();
+}
+
+void MainWindow::nextSong()
+{
+    nextButtonIsPressed();
+}
+
+void MainWindow::previousSong()
+{
+    prevButtonIsPressed();
 }
 
 void MainWindow::open()
@@ -127,6 +139,16 @@ void MainWindow::createActions()
     playAct->setStatusTip(tr("Play the last operation"));
     connect(playAct, SIGNAL(triggered()), this, SLOT(play()));
 
+    nextSongAct = new QAction(tr("&Next Song"), this);
+    //nextSongAct->setShortcuts(QKeySequence::Next);
+    nextSongAct->setStatusTip(tr("Play the last operation"));
+    connect(nextSongAct, SIGNAL(triggered()), this, SLOT(nextSong()));
+
+    previousSongAct = new QAction(tr("&Previous Song"), this);
+    //previousSongAct->setShortcuts(QKeySequence::Previous);
+    previousSongAct->setStatusTip(tr("Play the last operation"));
+    connect(previousSongAct, SIGNAL(triggered()), this, SLOT(previousSong()));
+
     aboutAct = new QAction(tr("&About"), this);
     aboutAct->setStatusTip(tr("Show the application's About box"));
     connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
@@ -143,9 +165,13 @@ void MainWindow::createMenus()
     fileMenu->addAction(openAct);
     fileMenu->addSeparator();
     fileMenu->addAction(exitAct);
+
     playMenu = menuBar()->addMenu(tr("&Play"));
     playMenu->addSeparator();
     playMenu->addAction(playAct);
+    playMenu->addAction(nextSongAct);
+    playMenu->addAction(previousSongAct);
+
     helpMenu = menuBar()->addMenu(tr("&Help"));
     helpMenu->addAction(aboutAct);
     helpMenu->addAction(aboutQtAct);
