@@ -25,6 +25,4 @@ commit.sh
 push.sh
 
 # User Profiles
-MusicPlayer.pro.user.01515e2
-MusicPlayer.pro.user
-*.user
+*.user*
