@@ -18,8 +18,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowIcon(mainWindowIcon);
     setWindowTitle("Music Player");
 
-    setFixedWidth(8*72);
-    setFixedHeight(5*72);
+    setFixedWidth(5*72);
+    setFixedHeight(3*72);
 
     /****************SETTING UP MENUS*********************/
     QWidget *topFiller = new QWidget;
