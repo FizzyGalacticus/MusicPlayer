@@ -6,11 +6,13 @@
 #include <QIcon>
 #include <QLabel>
 #include <QSlider>
+#include <QtMultimedia/QMediaPlayer>
 
 class QAction;
 class QActionGroup;
 class QLabel;
 class QMenu;
+class QMediaPlayer;
 
 namespace Ui {
 class MainWindow;
@@ -92,6 +94,9 @@ private:
     /************Volume Slider*******************/
     QLabel *volumeLabel;
     QSlider *volumeSlider;
+
+    /***********Media Player*********************/
+    QMediaPlayer * _player;
 };
 
 #endif // MAINWINDOW_H

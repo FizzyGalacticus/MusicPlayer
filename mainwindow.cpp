@@ -12,7 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
     prevButtonIcon(":/Resources/icons/Button-Prev-icon.png"),
     playButtonPlayIcon(":/Resources/icons/Button-Play-icon.png"),
     playButtonPauseIcon(":/Resources/icons/Button-Pause-icon.png"),
-    nextButtonIcon(":/Resources/icons/Button-Next-icon.png")
+    nextButtonIcon(":/Resources/icons/Button-Next-icon.png"),
+    _player(0)
 {
     ui->setupUi(this);
     setWindowIcon(mainWindowIcon);
@@ -126,6 +127,12 @@ MainWindow::MainWindow(QWidget *parent) :
             );
     volumeLabel->show();
     volumeSlider->show();
+
+    /******************SOUND CODE******************/
+    _player = new QMediaPlayer;
+    _player->setMedia(QUrl::fromLocalFile("/home/dustin/CS/MusicPlayer/cs372-FinalProject/audio/test.mp3"));
+    _player->setVolume(100);
+    _player->play();
 }
 
 MainWindow::~MainWindow()
