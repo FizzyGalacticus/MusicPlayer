@@ -16,6 +16,8 @@ int main(int argc, char *argv[])
     w.setMaximumHeight(8*72);
     w.setMaximumWidth(8*72);
 
+    w.setObjectName("Music Player");
+
     w.show();
 
     return a.exec();

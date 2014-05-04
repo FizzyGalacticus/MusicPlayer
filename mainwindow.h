@@ -57,20 +57,22 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QIcon mainWindowIcon;
-
-    /************Play Button Objects*************/
-    QPushButton playButton;
-    QIcon playButtonPlayIcon, playButtonPauseIcon;
     bool isPlaying;
-
-    /************Next Button Objects*************/
-    QPushButton nextButton;
-    QIcon nextButtonIcon;
 
     /************Prev Button Objects*************/
     QPushButton prevButton;
     QIcon prevButtonIcon;
 
+    /************Play Button Objects*************/
+    QPushButton playButton;
+    QIcon playButtonPlayIcon, playButtonPauseIcon;
+
+    /************Next Button Objects*************/
+    QPushButton nextButton;
+    QIcon nextButtonIcon;
+
+
+    /**************Menu Objects and Functions***/
     void createActions();
     void createMenus();
 
