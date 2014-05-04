@@ -130,9 +130,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /******************SOUND CODE******************/
     _player = new QMediaPlayer;
-    _player->setMedia(QUrl::fromLocalFile("/home/dustin/CS/MusicPlayer/cs372-FinalProject/audio/test.mp3"));
+    _player->setMedia(QUrl::fromLocalFile("C:\\Users\\Nate\\Documents\\GitHub\\cs372-FinalProject\\test.mp3"));
     _player->setVolume(100);
-    _player->play();
+
 }
 
 MainWindow::~MainWindow()

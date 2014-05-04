@@ -33,7 +33,13 @@ private slots:
     /***********PLAY BUTTON FUNCTION SLOT***********/
     void playButtonIsPressed ()
     {
-        if(!isPlaying) playButton.setIcon(playButtonPauseIcon);
+        _player->pause();
+
+        if(!isPlaying)
+        {
+            playButton.setIcon(playButtonPauseIcon);
+            _player->play();
+        }
         else playButton.setIcon(playButtonPlayIcon);
 
         isPlaying = !isPlaying;
