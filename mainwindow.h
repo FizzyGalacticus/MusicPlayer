@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QIcon>
-#include <QHBoxLayout> //For volume Slider
 #include <QLabel>
 #include <QSlider>
 

@@ -103,15 +103,27 @@ MainWindow::MainWindow(QWidget *parent) :
     /*************SETTING UP VOLUME SLIDER******************/
 
     volumeLabel = new QLabel;
-    volumeLabel->setText(tr("Volume:"));
+    volumeLabel->setText(tr("<b>Volume:</b>"));
     volumeLabel->setParent(this);
     volumeSlider = new QSlider(Qt::Horizontal);
     volumeSlider->setParent(this);
     volumeSlider->setMinimum(0);
     volumeSlider->setMaximum(100);
     volumeSlider->setSingleStep(10);
-    volumeSlider->setGeometry(72,72,144,20);
-    volumeLabel->setGeometry(25,45,72,72);
+    volumeSlider->setGeometry
+            (
+                width()-144,
+                mediaButtonYCoordinate-20,
+                144,
+                20
+            );
+    volumeLabel->setGeometry
+            (
+                width()-volumeSlider->width()-60,
+                volumeSlider->geometry().y(),
+                60,
+                volumeSlider->height()
+            );
     volumeLabel->show();
     volumeSlider->show();
 }
