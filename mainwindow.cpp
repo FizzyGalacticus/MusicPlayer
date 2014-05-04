@@ -18,8 +18,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowIcon(mainWindowIcon);
     setWindowTitle("Music Player");
 
-    setFixedWidth(5*72);
-    setFixedHeight(4*72);
+    setFixedWidth(8*72);
+    setFixedHeight(5*72);
 
     /****************SETTING UP MENUS*********************/
     QWidget *topFiller = new QWidget;
@@ -56,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
     const int mediaButtonYCoordinate =
             (
                 (height() + layout->geometry().height())-
-                (42 + statusBar()->geometry().height())
+                ((width()/5) + statusBar()->geometry().height() - 8)
             );
     /*************SETTING UP PREV BUTTON******************/
     connect(&prevButton, SIGNAL(clicked()), this, SLOT(prevButtonIsPressed()));
@@ -65,8 +65,8 @@ MainWindow::MainWindow(QWidget *parent) :
             (
                 0,
                 mediaButtonYCoordinate,
-                width()/3,
-                50
+                width()/5,
+                width()/5
             );
     prevButton.setIcon(prevButtonIcon);
     prevButton.setIconSize(QSize(prevButton.height(),prevButton.height()));
@@ -77,10 +77,10 @@ MainWindow::MainWindow(QWidget *parent) :
     playButton.setParent(this);
     playButton.setGeometry
             (
-                prevButton.width(),
+                prevButton.width()*2,
                 mediaButtonYCoordinate,
-                width()/3,
-                50
+                width()/5,
+                width()/5
             );
     playButton.setIcon(playButtonPlayIcon);
     playButton.setIconSize(QSize(playButton.height(),playButton.height()));
@@ -91,10 +91,10 @@ MainWindow::MainWindow(QWidget *parent) :
     nextButton.setParent(this);
     nextButton.setGeometry
             (
-                playButton.width()+prevButton.width(),
+                playButton.width()*4,
                 mediaButtonYCoordinate,
-                width()/3,
-                50
+                width()/5,
+                width()/5
             );
     nextButton.setIcon(nextButtonIcon);
     nextButton.setIconSize(QSize(nextButton.height(),nextButton.height()));
@@ -112,14 +112,14 @@ MainWindow::MainWindow(QWidget *parent) :
     volumeSlider->setSingleStep(10);
     volumeSlider->setGeometry
             (
-                width()-144,
+                nextButton.geometry().x(),
                 mediaButtonYCoordinate-20,
-                144,
+                playButton.width(),
                 20
             );
     volumeLabel->setGeometry
             (
-                width()-volumeSlider->width()-60,
+                volumeSlider->geometry().x()-60,
                 volumeSlider->geometry().y(),
                 60,
                 volumeSlider->height()

@@ -7,7 +7,6 @@
 #include <QLabel>
 #include <QSlider>
 
-
 class QAction;
 class QActionGroup;
 class QLabel;
