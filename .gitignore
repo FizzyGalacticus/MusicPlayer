@@ -25,4 +25,5 @@ commit.sh
 push.sh
 
 # User Profiles
+*.user
 *.user*
