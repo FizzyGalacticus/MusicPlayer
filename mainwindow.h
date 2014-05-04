@@ -7,6 +7,8 @@
 #include <QLabel>
 #include <QSlider>
 #include <QtMultimedia/QMediaPlayer>
+#include <QMediaPlaylist>
+#include <QDir>
 
 class QAction;
 class QActionGroup;
