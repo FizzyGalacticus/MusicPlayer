@@ -21,21 +21,21 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&prevButton, SIGNAL(clicked()), this, SLOT(prevButtonIsPressed()));
     prevButton.setParent(this);
     prevButton.setIcon(prevButtonIcon);
-    prevButton.setGeometry(0,(2*72)-50,(4*72/3),50);
+    prevButton.setGeometry(0,(1*72)-50,(4*72/3),50);
     prevButton.show();
 
     /*************SETTING UP PLAY BUTTON******************/
     connect(&playButton, SIGNAL(clicked()), this, SLOT(playButtonIsPressed()));
     playButton.setParent(this);
     playButton.setIcon(playButtonPlayIcon);
-    playButton.setGeometry(prevButton.width(),(2*72)-50,prevButton.width(),prevButton.height());
+    playButton.setGeometry(prevButton.width(),(1*72)-50,prevButton.width(),prevButton.height());
     playButton.show();
 
     /*************SETTING UP NEXT BUTTON******************/
     connect(&nextButton, SIGNAL(clicked()), this, SLOT(nextButtonIsPressed()));
     nextButton.setParent(this);
     nextButton.setIcon(nextButtonIcon);
-    nextButton.setGeometry(playButton.width()+prevButton.width(),(2*72)-50,prevButton.width(),prevButton.height());
+    nextButton.setGeometry(playButton.width()+prevButton.width(),(1*72)-50,prevButton.width(),prevButton.height());
     nextButton.show();
 
 
