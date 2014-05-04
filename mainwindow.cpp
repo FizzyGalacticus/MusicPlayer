@@ -16,46 +16,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowIcon(mainWindowIcon);
+    setWindowTitle("Music Player");
 
-    /*************SETTING UP PREV BUTTON******************/
-    connect(&prevButton, SIGNAL(clicked()), this, SLOT(prevButtonIsPressed()));
-    prevButton.setParent(this);
-    prevButton.setIcon(prevButtonIcon);
-    prevButton.setGeometry
-            (
-                0,
-                (height()-(50+statusBar()->height())),
-                width()/3,
-                50
-            );
-    prevButton.show();
-
-    /*************SETTING UP PLAY BUTTON******************/
-    connect(&playButton, SIGNAL(clicked()), this, SLOT(playButtonIsPressed()));
-    playButton.setParent(this);
-    playButton.setIcon(playButtonPlayIcon);
-    playButton.setGeometry
-            (
-                prevButton.width(),
-                (height()-(50+statusBar()->height())),
-                width()/3,
-                50
-            );
-    playButton.show();
-
-    /*************SETTING UP NEXT BUTTON******************/
-    connect(&nextButton, SIGNAL(clicked()), this, SLOT(nextButtonIsPressed()));
-    nextButton.setParent(this);
-    nextButton.setIcon(nextButtonIcon);
-    nextButton.setGeometry
-            (
-                playButton.width()+prevButton.width(),
-                (height()-(50+statusBar()->height())),
-                width()/3,
-                50
-            );
-    nextButton.show();
-
+    setFixedWidth(5*72);
+    setFixedHeight(4*72);
 
     /****************SETTING UP MENUS*********************/
     QWidget *topFiller = new QWidget;
@@ -82,14 +46,59 @@ MainWindow::MainWindow(QWidget *parent) :
     createActions();
     createMenus();
 
+    /************SETTING UP STATUS BAR********************/
 #ifndef Q_OS_SYMBIAN
     QString message = tr("A context menu is available by right-clicking");
     statusBar()->showMessage(message);
 #endif
 
-    setWindowTitle("Music Player");
-    setMinimumSize(160, 160);
-    resize(480, 320);
+    /*****************SETTING UP BUTTONS******************/
+    const int mediaButtonYCoordinate =
+            (
+                (height() + layout->geometry().height())-
+                (42 + statusBar()->geometry().height())
+            );
+    /*************SETTING UP PREV BUTTON******************/
+    connect(&prevButton, SIGNAL(clicked()), this, SLOT(prevButtonIsPressed()));
+    prevButton.setParent(this);
+    prevButton.setGeometry
+            (
+                0,
+                mediaButtonYCoordinate,
+                width()/3,
+                50
+            );
+    prevButton.setIcon(prevButtonIcon);
+    prevButton.setIconSize(QSize(prevButton.height(),prevButton.height()));
+    prevButton.show();
+
+    /*************SETTING UP PLAY BUTTON******************/
+    connect(&playButton, SIGNAL(clicked()), this, SLOT(playButtonIsPressed()));
+    playButton.setParent(this);
+    playButton.setGeometry
+            (
+                prevButton.width(),
+                mediaButtonYCoordinate,
+                width()/3,
+                50
+            );
+    playButton.setIcon(playButtonPlayIcon);
+    playButton.setIconSize(QSize(playButton.height(),playButton.height()));
+    playButton.show();
+
+    /*************SETTING UP NEXT BUTTON******************/
+    connect(&nextButton, SIGNAL(clicked()), this, SLOT(nextButtonIsPressed()));
+    nextButton.setParent(this);
+    nextButton.setGeometry
+            (
+                playButton.width()+prevButton.width(),
+                mediaButtonYCoordinate,
+                width()/3,
+                50
+            );
+    nextButton.setIcon(nextButtonIcon);
+    nextButton.setIconSize(QSize(nextButton.height(),nextButton.height()));
+    nextButton.show();
 }
 
 MainWindow::~MainWindow()
