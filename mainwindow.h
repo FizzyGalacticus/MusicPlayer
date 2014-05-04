@@ -4,6 +4,10 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QIcon>
+#include <QHBoxLayout> //For volume Slider
+#include <QLabel>
+#include <QSlider>
+
 
 class QAction;
 class QActionGroup;
@@ -71,7 +75,6 @@ private:
     QPushButton nextButton;
     QIcon nextButtonIcon;
 
-
     /**************Menu Objects and Functions***/
     void createActions();
     void createMenus();
@@ -87,6 +90,10 @@ private:
     QAction *aboutAct;
     QAction *aboutQtAct;
     QLabel *infoLabel;
+
+    /************Volume Slider*******************/
+    QLabel *volumeLabel;
+    QSlider *volumeSlider;
 };
 
 #endif // MAINWINDOW_H
