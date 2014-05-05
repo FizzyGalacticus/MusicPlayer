@@ -170,6 +170,7 @@ void MainWindow::open()
    QFileDialog openFileDialog(this);
    openFileDialog.setNameFilter(tr("Audio (*.mp3 *.mp4 *.wav *.flac *.ogg)"));
    openFileDialog.setViewMode(QFileDialog::List);
+   openFileDialog.setFileMode(QFileDialog::ExistingFiles);
 
    QStringList fileNames;
    if(openFileDialog.exec())
@@ -177,9 +178,10 @@ void MainWindow::open()
 
    QList<QMediaContent> playListFiles;
 
-   for(QStringList::iterator file = fileNames.begin(); file != fileNames.end(); file++)
+   for(QStringList::iterator file = fileNames.begin(); file < fileNames.end(); file++)
        playListFiles.append(QMediaContent(QUrl::fromLocalFile(*file)));
 
+   _playlist.clear();
    _playlist.addMedia(playListFiles);
    _player->stop();
    _player->setPlaylist(&_playlist);

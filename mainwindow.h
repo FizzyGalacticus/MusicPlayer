@@ -52,13 +52,13 @@ private slots:
     /***********NEXT BUTTON FUNCTION SLOT***********/
     void nextButtonIsPressed ()
     {
-        //Go to next song
+        _player->setPosition(_playlist.nextIndex());
     }
 
     /***********PREV BUTTON FUNCTION SLOT***********/
     void prevButtonIsPressed ()
     {
-        //Go to previous song
+        _player->setPosition((_playlist.previousIndex()));
     }
 
     void open();
