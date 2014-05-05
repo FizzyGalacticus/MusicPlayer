@@ -11,6 +11,7 @@
 #include <QFileDialog>
 #include <QStringList>
 #include <QList>
+#include <QStyle>
 
 class QAction;
 class QActionGroup;
@@ -53,6 +54,10 @@ private slots:
     void nextButtonIsPressed ()
     {
         _playlist.next();
+        _filename.setText
+                (
+                    _playlist.media(_playlist.currentIndex()).canonicalUrl().fileName()
+                );
     }
 
     /***********PREV BUTTON FUNCTION SLOT***********/
@@ -104,6 +109,9 @@ private:
     /************Volume Slider*******************/
     QLabel *volumeLabel;
     QSlider *volumeSlider;
+
+    /************File Name Display**************/
+    QLabel _filename;
 
     /***********Media Player*********************/
     QMediaPlayer * _player;

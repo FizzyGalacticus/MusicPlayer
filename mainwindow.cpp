@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     playButtonPlayIcon(":/Resources/icons/Button-Play-icon.png"),
     playButtonPauseIcon(":/Resources/icons/Button-Pause-icon.png"),
     nextButtonIcon(":/Resources/icons/Button-Next-icon.png"),
+    _filename(this),
     _player(0),
     _playlist(this)
 {
@@ -129,6 +130,16 @@ MainWindow::MainWindow(QWidget *parent) :
     volumeLabel->show();
     volumeSlider->show();
 
+    /************SETTING UP FILENAME LABEL*********/
+    _filename.setGeometry
+            (
+                volumeLabel->geometry().x()-120,
+                volumeLabel->geometry().y(),
+                volumeLabel->geometry().width(),
+                volumeLabel->geometry().height()
+            );
+    _filename.show();
+
     /******************SOUND CODE******************/
     _player = new QMediaPlayer;
     _player->setVolume(100);
@@ -183,8 +194,6 @@ void MainWindow::open()
     _playlist.clear();
     _playlist.addMedia(playListFiles);
     _playlist.setPlaybackMode(QMediaPlaylist::Loop);
-    qDebug() << _playlist.media(0).canonicalUrl().fileName();
-    qDebug() << _playlist.media(1).canonicalUrl().fileName();
     _player->stop();
     _player->setPlaylist(&_playlist);
     _player->setPosition(0);
