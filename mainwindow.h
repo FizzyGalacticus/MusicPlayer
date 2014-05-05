@@ -8,7 +8,9 @@
 #include <QSlider>
 #include <QtMultimedia/QMediaPlayer>
 #include <QMediaPlaylist>
-#include <QDir>
+#include <QFileDialog>
+#include <QStringList>
+#include <QList>
 
 class QAction;
 class QActionGroup;
@@ -105,6 +107,7 @@ private:
 
     /***********Media Player*********************/
     QMediaPlayer * _player;
+    QMediaPlaylist _playlist;
 };
 
 #endif // MAINWINDOW_H

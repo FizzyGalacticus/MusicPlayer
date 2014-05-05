@@ -13,7 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
     playButtonPlayIcon(":/Resources/icons/Button-Play-icon.png"),
     playButtonPauseIcon(":/Resources/icons/Button-Pause-icon.png"),
     nextButtonIcon(":/Resources/icons/Button-Next-icon.png"),
-    _player(0)
+    _player(0),
+    _playlist(this)
 {
     ui->setupUi(this);
     setWindowIcon(mainWindowIcon);
@@ -166,7 +167,23 @@ void MainWindow::previousSong()
 
 void MainWindow::open()
 {
-   //TODO: ADD OPEN FUNCTIONALITY
+   QFileDialog openFileDialog(this);
+   openFileDialog.setNameFilter(tr("Audio (*.mp3 *.mp4 *.wav *.flac *.ogg)"));
+   openFileDialog.setViewMode(QFileDialog::List);
+
+   QStringList fileNames;
+   if(openFileDialog.exec())
+       fileNames = openFileDialog.selectedFiles();
+
+   QList<QMediaContent> playListFiles;
+
+   for(QStringList::iterator file = fileNames.begin(); file != fileNames.end(); file++)
+       playListFiles.append(QMediaContent(QUrl::fromLocalFile(*file)));
+
+   _playlist.addMedia(playListFiles);
+   _player->stop();
+   _player->setPlaylist(&_playlist);
+   _player->setPosition(1);
 }
 
 void MainWindow::about()
