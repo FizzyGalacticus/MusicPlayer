@@ -20,8 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowIcon(mainWindowIcon);
     setWindowTitle("Music Player");
 
-    setFixedWidth(5*72);
-    setFixedHeight(3*72);
+    setFixedWidth(8*72);
+    setFixedHeight(5*72);
 
     /****************SETTING UP MENUS*********************/
     QWidget *topFiller = new QWidget;
@@ -131,9 +131,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /******************SOUND CODE******************/
     _player = new QMediaPlayer;
-   // _player->setMedia(QUrl::fromLocalFile());
     _player->setVolume(100);
-
 }
 
 MainWindow::~MainWindow()
@@ -167,25 +165,31 @@ void MainWindow::previousSong()
 
 void MainWindow::open()
 {
-   QFileDialog openFileDialog(this);
-   openFileDialog.setNameFilter(tr("Audio (*.mp3 *.mp4 *.wav *.flac *.ogg)"));
-   openFileDialog.setViewMode(QFileDialog::List);
-   openFileDialog.setFileMode(QFileDialog::ExistingFiles);
+    QFileDialog openFileDialog(this);
+    openFileDialog.setNameFilter(tr("Audio (*.mp3 *.mp4 *.wav *.flac *.ogg)"));
+    openFileDialog.setViewMode(QFileDialog::List);
+    openFileDialog.setFileMode(QFileDialog::ExistingFiles);
+    openFileDialog.setDirectory("../cs372-FinalProject/");
 
-   QStringList fileNames;
-   if(openFileDialog.exec())
+    QStringList fileNames;
+    if(openFileDialog.exec())
        fileNames = openFileDialog.selectedFiles();
 
-   QList<QMediaContent> playListFiles;
+    QList<QMediaContent> playListFiles;
 
-   for(QStringList::iterator file = fileNames.begin(); file < fileNames.end(); file++)
+    for(QStringList::iterator file = fileNames.begin(); file < fileNames.end(); file++)
        playListFiles.append(QMediaContent(QUrl::fromLocalFile(*file)));
 
-   _playlist.clear();
-   _playlist.addMedia(playListFiles);
-   _player->stop();
-   _player->setPlaylist(&_playlist);
-   _player->setPosition(1);
+    _playlist.clear();
+    _playlist.addMedia(playListFiles);
+    _playlist.setPlaybackMode(QMediaPlaylist::Loop);
+    qDebug() << _playlist.media(0).canonicalUrl().fileName();
+    qDebug() << _playlist.media(1).canonicalUrl().fileName();
+    _player->stop();
+    _player->setPlaylist(&_playlist);
+    _player->setPosition(0);
+
+    if(isPlaying) playButtonIsPressed();
 }
 
 void MainWindow::about()
