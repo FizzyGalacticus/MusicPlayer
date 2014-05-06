@@ -155,6 +155,44 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+/***********PLAY BUTTON FUNCTION SLOT***********/
+void MainWindow::playButtonIsPressed ()
+{
+    _player->pause();
+
+    if(!isPlaying)
+    {
+        playButton.setIcon(playButtonPauseIcon);
+        _player->play();
+    }
+    else playButton.setIcon(playButtonPlayIcon);
+
+    isPlaying = !isPlaying;
+}
+
+/***********NEXT BUTTON FUNCTION SLOT***********/
+void MainWindow::nextButtonIsPressed ()
+{
+    _playlist->next();
+    _filename->setText
+            (
+                _playlist->media(_playlist->currentIndex()).canonicalUrl().fileName()
+            );
+}
+
+/***********PREV BUTTON FUNCTION SLOT***********/
+void MainWindow::prevButtonIsPressed ()
+{
+    _playlist->previous();
+}
+
+/***********VOLUME SLIDER FUNCTION SLOT***********/
+void MainWindow::volumeSliderValueChanged()
+{
+        _player->setVolume(volumeSlider->value());
+}
+
+/**************MENU OPTION SLOTS****************/
 void MainWindow::contextMenuEvent(QContextMenuEvent *event)
 {
     QMenu menu(this);

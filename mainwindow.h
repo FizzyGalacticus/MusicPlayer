@@ -35,42 +35,15 @@ protected:
         void contextMenuEvent(QContextMenuEvent *event);
 
 private slots:
-    /***********PLAY BUTTON FUNCTION SLOT***********/
-    void playButtonIsPressed ()
-    {
-        _player->pause();
+    /***********BUTTON SLOTS***********/
+    void playButtonIsPressed ();
 
-        if(!isPlaying)
-        {
-            playButton.setIcon(playButtonPauseIcon);
-            _player->play();
-        }
-        else playButton.setIcon(playButtonPlayIcon);
+    void nextButtonIsPressed ();
 
-        isPlaying = !isPlaying;
-    }
+    void prevButtonIsPressed ();
 
-    /***********NEXT BUTTON FUNCTION SLOT***********/
-    void nextButtonIsPressed ()
-    {
-        _playlist->next();
-        _filename->setText
-                (
-                    _playlist->media(_playlist->currentIndex()).canonicalUrl().fileName()
-                );
-    }
-
-    /***********PREV BUTTON FUNCTION SLOT***********/
-    void prevButtonIsPressed ()
-    {
-        _playlist->previous();
-    }
-
-    /***********VOLUME SLIDER FUNCTION SLOT***********/
-    void volumeSliderValueChanged()
-    {
-            _player->setVolume(volumeSlider->value());
-    }
+    /***********VOLUME SLIDER SLOT***********/
+    void volumeSliderValueChanged();
 
     /**************MENU OPTION SLOTS****************/
     void open();
