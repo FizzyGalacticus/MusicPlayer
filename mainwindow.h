@@ -12,6 +12,7 @@
 #include <QStringList>
 #include <QList>
 #include <QStyle>
+#include <QProgressBar>
 
 class QAction;
 class QActionGroup;
@@ -52,6 +53,10 @@ private slots:
     void previousSong();
     void about();
     void aboutQt();
+
+    /*************Media Player Slots************/
+    void playbackPositionChanged(qint64 position);
+    void durationHasChanged(qint64 duration);
 
 private:
     Ui::MainWindow *_ui;
@@ -97,8 +102,12 @@ private:
     QMediaPlayer * _player;
     QMediaPlaylist * _playlist;
 
+    /**************Progress bar*****************/
+    QProgressBar * _progressBar;
+
     /*************SETUP FUNCTIONS***************/
     void setupButtons();
+    void setupProgressBar();
 };
 
 #endif // MAINWINDOW_H

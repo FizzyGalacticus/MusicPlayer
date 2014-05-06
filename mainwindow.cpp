@@ -15,7 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _nextButtonIcon(":/Resources/icons/Button-Next-icon.png"),
     _filename(new QLabel(this)),
     _player(0),
-    _playlist(new QMediaPlaylist(this))
+    _playlist(new QMediaPlaylist(this)),
+    _progressBar(new QProgressBar(this))
 {
     _ui->setupUi(this);
     setWindowIcon(_mainWindowIcon);
@@ -102,6 +103,8 @@ MainWindow::MainWindow(QWidget *parent) :
     /******************SOUND CODE******************/
     _player = new QMediaPlayer;
     _player->setVolume(100);
+
+    setupProgressBar();
 }
 
 MainWindow::~MainWindow()
@@ -118,10 +121,6 @@ void MainWindow::_playButtonIsPressed ()
     {
         _playButton.setIcon(_playButtonPauseIcon);
         _player->play();
-        _filename->setText
-                (
-                    _playlist->media(_playlist->currentIndex()).canonicalUrl().fileName()
-                );
     }
     else _playButton.setIcon(_playButtonPlayIcon);
 
@@ -132,20 +131,12 @@ void MainWindow::_playButtonIsPressed ()
 void MainWindow::_nextButtonIsPressed ()
 {
     _playlist->next();
-    _filename->setText
-            (
-                _playlist->media(_playlist->currentIndex()).canonicalUrl().fileName()
-            );
 }
 
 /***********PREV BUTTON FUNCTION SLOT***********/
 void MainWindow::_prevButtonIsPressed ()
 {
     _playlist->previous();
-    _filename->setText
-            (
-                _playlist->media(_playlist->currentIndex()).canonicalUrl().fileName()
-            );
 }
 
 /***********VOLUME SLIDER FUNCTION SLOT***********/
@@ -324,4 +315,27 @@ void MainWindow::setupButtons()
     _prevButton.show();
     _playButton.show();
     _nextButton.show();
+}
+
+void MainWindow::playbackPositionChanged(qint64 position)
+{
+    _progressBar->setValue(position);
+}
+
+void MainWindow::durationHasChanged(qint64 duration)
+{
+    _filename->setText
+            (
+                _player->currentMedia().canonicalUrl().fileName()
+            );
+    _progressBar->setRange(0,duration);
+}
+
+void MainWindow::setupProgressBar()
+{
+    _progressBar->setGeometry(0,35,width(),100);
+    _progressBar->setValue(0);
+    connect(_player, SIGNAL(positionChanged(qint64)), this, SLOT(playbackPositionChanged(qint64)));
+    connect(_player, SIGNAL(durationChanged(qint64)),this, SLOT(durationHasChanged(qint64)));
+    _progressBar->show();
 }
