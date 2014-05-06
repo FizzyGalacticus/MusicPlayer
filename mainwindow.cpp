@@ -7,7 +7,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     _ui(new Ui::MainWindow),
-    _mainWindowIcon(":/Resources/icons/mainWindowIcon.jpg"),
+    _mainWindowIcon(":/Resources/icons/mainWindowIcon.png"),
     _isPlaying(false),
     _isShuffled(false),
     _prevButton(new QPushButton(this)),
@@ -221,7 +221,7 @@ void MainWindow::createActions()
     _openAct->setIcon(_openIcon);
     connect(_openAct, SIGNAL(triggered()), this, SLOT(open()));
 
-    _exitAct = new QAction(tr("E&xit"), this);
+    _exitAct = new QAction(tr("&Exit"), this);
     _exitAct->setStatusTip(tr("Exit the application"));
     _exitAct->setIcon(_exitIcon);
     connect(_exitAct, SIGNAL(triggered()), this, SLOT(close()));
