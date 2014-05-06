@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _ui(new Ui::MainWindow),
     _mainWindowIcon(":/Resources/icons/mainWindowIcon.jpg"),
     _isPlaying(false),
+    _isShuffled(false),
     _prevButton(new QPushButton(this)),
     _playButton(new QPushButton(this)),
     _nextButton(new QPushButton(this)),
@@ -21,14 +22,15 @@ MainWindow::MainWindow(QWidget *parent) :
     _fileMetadata(new QLabel(this)),
     _player(new QMediaPlayer(this)),
     _playlist(new QMediaPlaylist(this)),
-    _progressBar(new QProgressBar(this))
+    _progressBar(new QProgressBar(this)),
+    _shuffleCheckbox(new QCheckBox("Shuffle", this))
 {
     //_ui->setupUi(this); //I don't think we really need this... but leaving this line here in case
     setWindowIcon(_mainWindowIcon);
     setWindowTitle("Music Player");
 
-    setFixedWidth(5*72);
-    setFixedHeight(3*72);
+    setFixedWidth(7*72);
+    setFixedHeight(4*72);
 
     /****************SETTING UP STATUS BAR*********************/
     QWidget *topFiller = new QWidget;
@@ -67,6 +69,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setupButtons();
     setupProgressBar();
     setupVolumeLabelAndSlider();
+    setupShuffleCheckbox();
     setupMetadataLabel();
 }
 
@@ -335,6 +338,11 @@ void MainWindow::durationHasChanged(qint64 duration)
     _progressBar->setRange(0,duration);
 }
 
+void MainWindow::shuffleCheckboxHasChanged(int state)
+{
+    if(state) _playlist->shuffle();
+}
+
 void MainWindow::setupProgressBar()
 {
     _progressBar->setGeometry(0,28,width(),height()/3);
@@ -370,13 +378,28 @@ void MainWindow::setupVolumeLabelAndSlider()
     _volumeSlider->show();
 }
 
+void MainWindow::setupShuffleCheckbox()
+{
+    connect(_shuffleCheckbox, SIGNAL(stateChanged(int)), this, SLOT(shuffleCheckboxHasChanged(int)));
+
+    _shuffleCheckbox->setGeometry
+            (
+                _playButton->geometry().x(),
+                _volumeLabel->geometry().y(),
+                _volumeSlider->width()+10,
+                _volumeLabel->height()
+            );
+
+    _shuffleCheckbox->show();
+}
+
 void MainWindow::setupMetadataLabel()
 {
     _fileMetadata->setGeometry
             (
                 0,
                 _volumeLabel->geometry().y(),
-                _volumeLabel->geometry().x(),
+                _shuffleCheckbox->geometry().x(),
                 _volumeLabel->geometry().height()
             );
 

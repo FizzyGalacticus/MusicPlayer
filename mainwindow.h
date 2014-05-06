@@ -13,6 +13,7 @@
 #include <QList>
 #include <QStyle>
 #include <QProgressBar>
+#include <QCheckBox>
 
 class QAction;
 class QActionGroup;
@@ -59,10 +60,14 @@ private slots:
     void playbackPositionChanged(qint64 position);
     void durationHasChanged(qint64 duration);
 
+    /*************SHUFFLE CHECKBOX SLOT*********/
+    void shuffleCheckboxHasChanged(int state);
+
 private:
     Ui::MainWindow *_ui;
     QIcon _mainWindowIcon;
     bool _isPlaying;
+    bool _isShuffled;
 
     /************Prev Button Objects*************/
     QPushButton *_prevButton;
@@ -107,11 +112,16 @@ private:
     /**************Progress bar*****************/
     QProgressBar * _progressBar;
 
+    /**************Shuffle Checkox**************/
+    QCheckBox *_shuffleCheckbox;
+    QLabel *_shuffleCheckboxLabel;
+
     /*************SETUP FUNCTIONS***************/
     void setupButtons();
     void setupProgressBar();
     void setupVolumeLabelAndSlider();
     void setupMetadataLabel();
+    void setupShuffleCheckbox();
 };
 
 #endif // MAINWINDOW_H
