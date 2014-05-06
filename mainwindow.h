@@ -66,6 +66,13 @@ private slots:
         _playlist.previous();
     }
 
+    /***********VOLUME SLIDER FUNCTION SLOT***********/
+    void volumeSliderValueChanged()
+    {
+            _player->setVolume(volumeSlider->value());
+    }
+
+    /**************MENU OPTION SLOTS****************/
     void open();
     void play();
     void nextSong();

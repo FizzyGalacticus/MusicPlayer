@@ -112,6 +112,7 @@ MainWindow::MainWindow(QWidget *parent) :
     volumeSlider->setParent(this);
     volumeSlider->setMinimum(0);
     volumeSlider->setMaximum(100);
+    volumeSlider->setSliderPosition(volumeSlider->maximum());
     volumeSlider->setSingleStep(10);
     volumeSlider->setGeometry
             (
@@ -120,6 +121,10 @@ MainWindow::MainWindow(QWidget *parent) :
                 playButton.width(),
                 20
             );
+
+    connect(volumeSlider,SIGNAL(valueChanged(int)),this,SLOT(volumeSliderValueChanged()));
+
+    /*************SETTING UP VOLUME LABEL******************/
     volumeLabel->setGeometry
             (
                 volumeSlider->geometry().x()-60,
