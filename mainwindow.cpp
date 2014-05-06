@@ -13,9 +13,9 @@ MainWindow::MainWindow(QWidget *parent) :
     playButtonPlayIcon(":/Resources/icons/Button-Play-icon.png"),
     playButtonPauseIcon(":/Resources/icons/Button-Pause-icon.png"),
     nextButtonIcon(":/Resources/icons/Button-Next-icon.png"),
-    _filename(this),
+    _filename(new QLabel(this)),
     _player(0),
-    _playlist(this)
+    _playlist(new QMediaPlaylist(this))
 {
     ui->setupUi(this);
     setWindowIcon(mainWindowIcon);
@@ -136,14 +136,14 @@ MainWindow::MainWindow(QWidget *parent) :
     volumeSlider->show();
 
     /************SETTING UP FILENAME LABEL*********/
-    _filename.setGeometry
+    _filename->setGeometry
             (
                 volumeLabel->geometry().x()-120,
                 volumeLabel->geometry().y(),
                 volumeLabel->geometry().width(),
                 volumeLabel->geometry().height()
             );
-    _filename.show();
+    _filename->show();
 
     /******************SOUND CODE******************/
     _player = new QMediaPlayer;
@@ -196,11 +196,11 @@ void MainWindow::open()
     for(QStringList::iterator file = fileNames.begin(); file < fileNames.end(); file++)
        playListFiles.append(QMediaContent(QUrl::fromLocalFile(*file)));
 
-    _playlist.clear();
-    _playlist.addMedia(playListFiles);
-    _playlist.setPlaybackMode(QMediaPlaylist::Loop);
+    _playlist->clear();
+    _playlist->addMedia(playListFiles);
+    _playlist->setPlaybackMode(QMediaPlaylist::Loop);
     _player->stop();
-    _player->setPlaylist(&_playlist);
+    _player->setPlaylist(_playlist);
     _player->setPosition(0);
 
     if(isPlaying) playButtonIsPressed();

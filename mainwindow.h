@@ -53,17 +53,17 @@ private slots:
     /***********NEXT BUTTON FUNCTION SLOT***********/
     void nextButtonIsPressed ()
     {
-        _playlist.next();
-        _filename.setText
+        _playlist->next();
+        _filename->setText
                 (
-                    _playlist.media(_playlist.currentIndex()).canonicalUrl().fileName()
+                    _playlist->media(_playlist->currentIndex()).canonicalUrl().fileName()
                 );
     }
 
     /***********PREV BUTTON FUNCTION SLOT***********/
     void prevButtonIsPressed ()
     {
-        _playlist.previous();
+        _playlist->previous();
     }
 
     /***********VOLUME SLIDER FUNCTION SLOT***********/
@@ -118,11 +118,11 @@ private:
     QSlider *volumeSlider;
 
     /************File Name Display**************/
-    QLabel _filename;
+    QLabel * _filename;
 
     /***********Media Player*********************/
     QMediaPlayer * _player;
-    QMediaPlaylist _playlist;
+    QMediaPlaylist * _playlist;
 };
 
 #endif // MAINWINDOW_H
