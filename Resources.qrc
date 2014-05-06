@@ -9,5 +9,6 @@
         <file>icons/Menu-Open-icon.png</file>
         <file>icons/Menu-Help-icon.png</file>
         <file>icons/Qt-icon.ico</file>
+        <file>icons/Menu-Exit-icon.png</file>
     </qresource>
 </RCC>

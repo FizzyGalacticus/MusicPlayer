@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _helpIcon(":/Resources/icons/Menu-Help-icon.png"),
     _infoIcon(":/Resources/icons/Menu-Info-icon.png"),
     _openIcon(":/Resources/icons/Menu-Open-icon.png"),
+    _exitIcon(":/Resources/icons/Menu-Exit-icon.png"),
     _qtIcon(":/Resources/icons/Qt-icon.ico"),
     _volumeLabel(new QLabel(this)),
     _volumeSlider(new QSlider(Qt::Horizontal, this)),
@@ -184,7 +185,8 @@ void MainWindow::about()
     _infoLabel->setText(tr("Invoked <b>Help|About</b>"));
     QMessageBox::about(this, tr("About Menu"),
             tr("CS 372 - Software Construction"
-               "<p>Final Project - \"Music Player\""));
+               "<p>Final Project - \"Music Player\""
+               "<p>Spring Semester 2014"));
 }
 
 void MainWindow::aboutQt()
@@ -221,6 +223,7 @@ void MainWindow::createActions()
 
     _exitAct = new QAction(tr("E&xit"), this);
     _exitAct->setStatusTip(tr("Exit the application"));
+    _exitAct->setIcon(_exitIcon);
     connect(_exitAct, SIGNAL(triggered()), this, SLOT(close()));
 
     _playAct = new QAction(tr("&Play/Pause"), this);
