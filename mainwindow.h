@@ -108,6 +108,8 @@ private:
     /*************SETUP FUNCTIONS***************/
     void setupButtons();
     void setupProgressBar();
+    void setupVolumeLabelAndSlider();
+    void setupMetadataLabel();
 };
 
 #endif // MAINWINDOW_H

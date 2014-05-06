@@ -13,12 +13,14 @@ MainWindow::MainWindow(QWidget *parent) :
     _playButtonPlayIcon(":/Resources/icons/Button-Play-icon.png"),
     _playButtonPauseIcon(":/Resources/icons/Button-Pause-icon.png"),
     _nextButtonIcon(":/Resources/icons/Button-Next-icon.png"),
+    _volumeLabel(new QLabel(this)),
+    _volumeSlider(new QSlider(Qt::Horizontal, this)),
     _fileMetadata(new QLabel(this)),
-    _player(0),
+    _player(new QMediaPlayer(this)),
     _playlist(new QMediaPlaylist(this)),
     _progressBar(new QProgressBar(this))
 {
-    _ui->setupUi(this);
+    //_ui->setupUi(this);
     setWindowIcon(_mainWindowIcon);
     setWindowTitle("Music Player");
 
@@ -56,55 +58,12 @@ MainWindow::MainWindow(QWidget *parent) :
     statusBar()->showMessage(message);
 #endif
 
+    _player->setVolume(50);
+
     setupButtons();
-
-    /*************SETTING UP VOLUME SLIDER******************/
-
-    _volumeLabel = new QLabel;
-    _volumeLabel->setText(tr("<b>Volume:</b>"));
-    _volumeLabel->setParent(this);
-    _volumeSlider = new QSlider(Qt::Horizontal);
-    _volumeSlider->setParent(this);
-    _volumeSlider->setMinimum(0);
-    _volumeSlider->setMaximum(100);
-    _volumeSlider->setSliderPosition(_volumeSlider->maximum());
-    _volumeSlider->setSingleStep(10);
-    _volumeSlider->setGeometry
-            (
-                _nextButton.geometry().x(),
-                _playButton.geometry().y()-20,
-                _playButton.width(),
-                20
-            );
-
-    connect(_volumeSlider,SIGNAL(valueChanged(int)),this,SLOT(_volumeSliderValueChanged()));
-
-    /*************SETTING UP VOLUME LABEL******************/
-    _volumeLabel->setGeometry
-            (
-                _volumeSlider->geometry().x()-60,
-                _volumeSlider->geometry().y(),
-                60,
-                _volumeSlider->height()
-            );
-    _volumeLabel->show();
-    _volumeSlider->show();
-
-    /************SETTING UP FILENAME LABEL*********/
-    _fileMetadata->setGeometry
-            (
-                0,
-                _volumeLabel->geometry().y(),
-                _volumeLabel->geometry().x(),
-                _volumeLabel->geometry().height()
-            );
-    _fileMetadata->show();
-
-    /******************SOUND CODE******************/
-    _player = new QMediaPlayer;
-    _player->setVolume(100);
-
     setupProgressBar();
+    setupVolumeLabelAndSlider();
+    setupMetadataLabel();
 }
 
 MainWindow::~MainWindow()
@@ -173,7 +132,13 @@ void MainWindow::previousSong()
 void MainWindow::open()
 {
     QFileDialog openFileDialog(this);
-    openFileDialog.setNameFilter(tr("Audio (*.mp3 *.mp4 *.wav *.flac *.ogg)"));
+    openFileDialog.setNameFilter
+            (
+                tr
+                (
+                    "Audio (*.mp3 *.mp4 *.wav *.flac *.ogg *.aiff *.wma *.mid *.ra *.ram *.rm *.vox *.raw *.aac *.au)"
+                )
+            );
     openFileDialog.setViewMode(QFileDialog::List);
     openFileDialog.setFileMode(QFileDialog::ExistingFiles);
     openFileDialog.setDirectory("../cs372-FinalProject/");
@@ -350,4 +315,43 @@ void MainWindow::setupProgressBar()
     connect(_player, SIGNAL(positionChanged(qint64)), this, SLOT(playbackPositionChanged(qint64)));
     connect(_player, SIGNAL(durationChanged(qint64)),this, SLOT(durationHasChanged(qint64)));
     _progressBar->show();
+}
+
+void MainWindow::setupVolumeLabelAndSlider()
+{
+    _volumeLabel->setText(tr("<b>Volume:</b>"));
+    _volumeSlider->setRange(0,100);
+    _volumeSlider->setSliderPosition(_player->volume());
+    _volumeSlider->setGeometry
+            (
+                _nextButton.geometry().x(),
+                _playButton.geometry().y()-20,
+                _playButton.width(),
+                20
+            );
+    _volumeLabel->setGeometry
+            (
+                _volumeSlider->geometry().x()-60,
+                _volumeSlider->geometry().y(),
+                60,
+                _volumeSlider->height()
+            );
+
+    connect(_volumeSlider,SIGNAL(valueChanged(int)),this,SLOT(_volumeSliderValueChanged()));
+
+    _volumeLabel->show();
+    _volumeSlider->show();
+}
+
+void MainWindow::setupMetadataLabel()
+{
+    _fileMetadata->setGeometry
+            (
+                0,
+                _volumeLabel->geometry().y(),
+                _volumeLabel->geometry().x(),
+                _volumeLabel->geometry().height()
+            );
+
+    _fileMetadata->show();
 }
