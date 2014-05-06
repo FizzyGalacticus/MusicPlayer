@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setFixedWidth(8*72);
     setFixedHeight(5*72);
 
-    /****************SETTING UP MENUS*********************/
+    /****************SETTING UP STATUS BAR*********************/
     QWidget *topFiller = new QWidget;
     topFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
@@ -52,6 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
     layout->addWidget(_infoLabel);
     layout->addWidget(bottomFiller);
 
+    /****************SETTING UP MENUS*********************/
     createActions();
     createMenus();
 
@@ -77,16 +78,21 @@ MainWindow::~MainWindow()
 /***********PLAY BUTTON FUNCTION SLOT***********/
 void MainWindow::_playButtonIsPressed ()
 {
-    _player->pause();
-
-    if(!_isPlaying)
+    if(!_playlist->isEmpty())
     {
-        _playButton->setIcon(_playButtonPauseIcon);
-        _player->play();
-    }
-    else _playButton->setIcon(_playButtonPlayIcon);
+        if(!_isPlaying)
+        {
+            _playButton->setIcon(_playButtonPauseIcon);
+            _player->play();
+        }
+        else
+        {
+            _playButton->setIcon(_playButtonPlayIcon);
+            _player->pause();
+        }
 
-    _isPlaying = !_isPlaying;
+        _isPlaying = !_isPlaying;
+    }
 }
 
 /***********NEXT BUTTON FUNCTION SLOT***********/
@@ -144,7 +150,6 @@ void MainWindow::open()
             );
     openFileDialog.setViewMode(QFileDialog::List);
     openFileDialog.setFileMode(QFileDialog::ExistingFiles);
-    openFileDialog.setDirectory("../cs372-FinalProject/");
 
     QStringList fileNames;
     if(openFileDialog.exec())
@@ -179,6 +184,26 @@ void MainWindow::aboutQt()
     _infoLabel->setText(tr("Invoked <b>Help|About Qt</b>"));
 }
 
+void MainWindow::aboutAuthors()
+{
+    _infoLabel->setText(tr("Invoked <b>Help|About</b>"));
+    QMessageBox::about
+            (
+                this,
+                tr("Authors Menu"),
+                tr
+                (
+                    "<b><center>Authors:</center></b>"
+                    "<p>Dustin Dodson"
+                    "<p>Erik Talvi"
+                    "<p>Matthew Parrish"
+                    "<p>Nate Helms"
+                    "<p>Nicholas Mardeusz"
+                    "<p>Thomas Cerny"
+                )
+            );
+}
+
 void MainWindow::createActions()
 {
     _openAct = new QAction(tr("&Open..."), this);
@@ -209,6 +234,10 @@ void MainWindow::createActions()
     _aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
     connect(_aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(_aboutQtAct, SIGNAL(triggered()), this, SLOT(aboutQt()));
+
+    _aboutAuthorsAct = new QAction(tr("About &Authors"), this);
+    _aboutAuthorsAct->setStatusTip(tr("Show information about Music Player's authors"));
+    connect(_aboutAuthorsAct, SIGNAL(triggered()),this, SLOT(aboutAuthors()));
 }
 
 void MainWindow::createMenus()
@@ -227,6 +256,7 @@ void MainWindow::createMenus()
     _helpMenu = menuBar()->addMenu(tr("&Help"));
     _helpMenu->addAction(_aboutAct);
     _helpMenu->addAction(_aboutQtAct);
+    _helpMenu->addAction(_aboutAuthorsAct);
 }
 
 void MainWindow::setupButtons()
@@ -240,11 +270,6 @@ void MainWindow::setupButtons()
     connect(_prevButton, SIGNAL(clicked()), this, SLOT(_prevButtonIsPressed()));
     connect(_playButton, SIGNAL(clicked()), this, SLOT(_playButtonIsPressed()));
     connect(_nextButton, SIGNAL(clicked()), this, SLOT(_nextButtonIsPressed()));
-
-    //Setup parents
-    //_prevButton->setParent(this);
-    _playButton->setParent(this);
-    _nextButton->setParent(this);
 
     //Setup positions
     _prevButton->setGeometry

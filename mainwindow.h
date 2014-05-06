@@ -53,6 +53,7 @@ private slots:
     void previousSong();
     void about();
     void aboutQt();
+    void aboutAuthors();
 
     /*************Media Player Slots************/
     void playbackPositionChanged(qint64 position);
@@ -89,6 +90,7 @@ private:
     QAction *_exitAct;
     QAction *_aboutAct;
     QAction *_aboutQtAct;
+    QAction *_aboutAuthorsAct;
     QLabel *_infoLabel;
 
     /************Volume Slider*******************/
