@@ -36,14 +36,14 @@ protected:
 
 private slots:
     /***********BUTTON SLOTS***********/
-    void playButtonIsPressed ();
+    void _playButtonIsPressed ();
 
-    void nextButtonIsPressed ();
+    void _nextButtonIsPressed ();
 
-    void prevButtonIsPressed ();
+    void _prevButtonIsPressed ();
 
     /***********VOLUME SLIDER SLOT***********/
-    void volumeSliderValueChanged();
+    void _volumeSliderValueChanged();
 
     /**************MENU OPTION SLOTS****************/
     void open();
@@ -55,40 +55,40 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QIcon mainWindowIcon;
-    bool isPlaying;
+    QIcon _mainWindowIcon;
+    bool _isPlaying;
 
     /************Prev Button Objects*************/
-    QPushButton prevButton;
-    QIcon prevButtonIcon;
+    QPushButton _prevButton;
+    QIcon _prevButtonIcon;
 
     /************Play Button Objects*************/
-    QPushButton playButton;
-    QIcon playButtonPlayIcon, playButtonPauseIcon;
+    QPushButton _playButton;
+    QIcon _playButtonPlayIcon, _playButtonPauseIcon;
 
     /************Next Button Objects*************/
-    QPushButton nextButton;
-    QIcon nextButtonIcon;
+    QPushButton _nextButton;
+    QIcon _nextButtonIcon;
 
     /**************Menu Objects and Functions***/
     void createActions();
     void createMenus();
 
-    QMenu *fileMenu;
-    QMenu *playMenu;
-    QMenu *helpMenu;
-    QAction *openAct;
-    QAction *playAct;
-    QAction *nextSongAct;
-    QAction *previousSongAct;
-    QAction *exitAct;
-    QAction *aboutAct;
-    QAction *aboutQtAct;
-    QLabel *infoLabel;
+    QMenu *_fileMenu;
+    QMenu *_playMenu;
+    QMenu *_helpMenu;
+    QAction *_openAct;
+    QAction *_playAct;
+    QAction *_nextSongAct;
+    QAction *_previousSongAct;
+    QAction *_exitAct;
+    QAction *_aboutAct;
+    QAction *_aboutQtAct;
+    QLabel *_infoLabel;
 
     /************Volume Slider*******************/
-    QLabel *volumeLabel;
-    QSlider *volumeSlider;
+    QLabel *_volumeLabel;
+    QSlider *_volumeSlider;
 
     /************File Name Display**************/
     QLabel * _filename;

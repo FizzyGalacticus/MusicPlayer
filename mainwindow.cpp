@@ -7,18 +7,18 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    mainWindowIcon(":/Resources/icons/mainWindowIcon.jpg"),
-    isPlaying(false),
-    prevButtonIcon(":/Resources/icons/Button-Prev-icon.png"),
-    playButtonPlayIcon(":/Resources/icons/Button-Play-icon.png"),
-    playButtonPauseIcon(":/Resources/icons/Button-Pause-icon.png"),
-    nextButtonIcon(":/Resources/icons/Button-Next-icon.png"),
+    _mainWindowIcon(":/Resources/icons/_mainWindowIcon.jpg"),
+    _isPlaying(false),
+    _prevButtonIcon(":/Resources/icons/Button-Prev-icon.png"),
+    _playButtonPlayIcon(":/Resources/icons/Button-Play-icon.png"),
+    _playButtonPauseIcon(":/Resources/icons/Button-Pause-icon.png"),
+    _nextButtonIcon(":/Resources/icons/Button-Next-icon.png"),
     _filename(new QLabel(this)),
     _player(0),
     _playlist(new QMediaPlaylist(this))
 {
     ui->setupUi(this);
-    setWindowIcon(mainWindowIcon);
+    setWindowIcon(_mainWindowIcon);
     setWindowTitle("Music Player");
 
     setFixedWidth(8*72);
@@ -29,13 +29,13 @@ MainWindow::MainWindow(QWidget *parent) :
     topFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 #ifdef Q_OS_SYMBIAN
-    infoLabel = new QLabel(tr("<i>Choose a menu option</i>"));
+    _infoLabel = new QLabel(tr("<i>Choose a menu option</i>"));
 #else
-    infoLabel = new QLabel(tr("<i>Choose a menu option, or right-click to "
+    _infoLabel = new QLabel(tr("<i>Choose a menu option, or right-click to "
                               "invoke a context menu</i>"));
 #endif
-    infoLabel->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
-    infoLabel->setAlignment(Qt::AlignCenter);
+    _infoLabel->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
+    _infoLabel->setAlignment(Qt::AlignCenter);
 
     QWidget *bottomFiller = new QWidget;
     bottomFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setMargin(5);
     layout->addWidget(topFiller);
-    layout->addWidget(infoLabel);
+    layout->addWidget(_infoLabel);
     layout->addWidget(bottomFiller);
 
     createActions();
@@ -59,43 +59,43 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /*************SETTING UP VOLUME SLIDER******************/
 
-    volumeLabel = new QLabel;
-    volumeLabel->setText(tr("<b>Volume:</b>"));
-    volumeLabel->setParent(this);
-    volumeSlider = new QSlider(Qt::Horizontal);
-    volumeSlider->setParent(this);
-    volumeSlider->setMinimum(0);
-    volumeSlider->setMaximum(100);
-    volumeSlider->setSliderPosition(volumeSlider->maximum());
-    volumeSlider->setSingleStep(10);
-    volumeSlider->setGeometry
+    _volumeLabel = new QLabel;
+    _volumeLabel->setText(tr("<b>Volume:</b>"));
+    _volumeLabel->setParent(this);
+    _volumeSlider = new QSlider(Qt::Horizontal);
+    _volumeSlider->setParent(this);
+    _volumeSlider->setMinimum(0);
+    _volumeSlider->setMaximum(100);
+    _volumeSlider->setSliderPosition(_volumeSlider->maximum());
+    _volumeSlider->setSingleStep(10);
+    _volumeSlider->setGeometry
             (
-                nextButton.geometry().x(),
-                playButton.geometry().y()-20,
-                playButton.width(),
+                _nextButton.geometry().x(),
+                _playButton.geometry().y()-20,
+                _playButton.width(),
                 20
             );
 
-    connect(volumeSlider,SIGNAL(valueChanged(int)),this,SLOT(volumeSliderValueChanged()));
+    connect(_volumeSlider,SIGNAL(valueChanged(int)),this,SLOT(_volumeSliderValueChanged()));
 
     /*************SETTING UP VOLUME LABEL******************/
-    volumeLabel->setGeometry
+    _volumeLabel->setGeometry
             (
-                volumeSlider->geometry().x()-60,
-                volumeSlider->geometry().y(),
+                _volumeSlider->geometry().x()-60,
+                _volumeSlider->geometry().y(),
                 60,
-                volumeSlider->height()
+                _volumeSlider->height()
             );
-    volumeLabel->show();
-    volumeSlider->show();
+    _volumeLabel->show();
+    _volumeSlider->show();
 
     /************SETTING UP FILENAME LABEL*********/
     _filename->setGeometry
             (
-                volumeLabel->geometry().x()-120,
-                volumeLabel->geometry().y(),
-                volumeLabel->geometry().width(),
-                volumeLabel->geometry().height()
+                _volumeLabel->geometry().x()-120,
+                _volumeLabel->geometry().y(),
+                _volumeLabel->geometry().width(),
+                _volumeLabel->geometry().height()
             );
     _filename->show();
 
@@ -110,22 +110,22 @@ MainWindow::~MainWindow()
 }
 
 /***********PLAY BUTTON FUNCTION SLOT***********/
-void MainWindow::playButtonIsPressed ()
+void MainWindow::_playButtonIsPressed ()
 {
     _player->pause();
 
-    if(!isPlaying)
+    if(!_isPlaying)
     {
-        playButton.setIcon(playButtonPauseIcon);
+        _playButton.setIcon(_playButtonPauseIcon);
         _player->play();
     }
-    else playButton.setIcon(playButtonPlayIcon);
+    else _playButton.setIcon(_playButtonPlayIcon);
 
-    isPlaying = !isPlaying;
+    _isPlaying = !_isPlaying;
 }
 
 /***********NEXT BUTTON FUNCTION SLOT***********/
-void MainWindow::nextButtonIsPressed ()
+void MainWindow::_nextButtonIsPressed ()
 {
     _playlist->next();
     _filename->setText
@@ -135,40 +135,40 @@ void MainWindow::nextButtonIsPressed ()
 }
 
 /***********PREV BUTTON FUNCTION SLOT***********/
-void MainWindow::prevButtonIsPressed ()
+void MainWindow::_prevButtonIsPressed ()
 {
     _playlist->previous();
 }
 
 /***********VOLUME SLIDER FUNCTION SLOT***********/
-void MainWindow::volumeSliderValueChanged()
+void MainWindow::_volumeSliderValueChanged()
 {
-        _player->setVolume(volumeSlider->value());
+        _player->setVolume(_volumeSlider->value());
 }
 
 /**************MENU OPTION SLOTS****************/
 void MainWindow::contextMenuEvent(QContextMenuEvent *event)
 {
     QMenu menu(this);
-    menu.addAction(playAct);
-    menu.addAction(nextSongAct);
-    menu.addAction(previousSongAct);
+    menu.addAction(_playAct);
+    menu.addAction(_nextSongAct);
+    menu.addAction(_previousSongAct);
     menu.exec(event->globalPos());
 }
 
 void MainWindow::play()
 {
-    playButtonIsPressed();
+    _playButtonIsPressed();
 }
 
 void MainWindow::nextSong()
 {
-    nextButtonIsPressed();
+    _nextButtonIsPressed();
 }
 
 void MainWindow::previousSong()
 {
-    prevButtonIsPressed();
+    _prevButtonIsPressed();
 }
 
 void MainWindow::open()
@@ -195,12 +195,12 @@ void MainWindow::open()
     _player->setPlaylist(_playlist);
     _player->setPosition(0);
 
-    if(isPlaying) playButtonIsPressed();
+    if(_isPlaying) _playButtonIsPressed();
 }
 
 void MainWindow::about()
 {
-    infoLabel->setText(tr("Invoked <b>Help|About</b>"));
+    _infoLabel->setText(tr("Invoked <b>Help|About</b>"));
     QMessageBox::about(this, tr("About Menu"),
             tr("Hit Play to Play Mooxzikz. "
                "Open to Open More Moozikz."));
@@ -209,57 +209,57 @@ void MainWindow::about()
 
 void MainWindow::aboutQt()
 {
-    infoLabel->setText(tr("Invoked <b>Help|About Qt</b>"));
+    _infoLabel->setText(tr("Invoked <b>Help|About Qt</b>"));
 }
 
 void MainWindow::createActions()
 {
-    openAct = new QAction(tr("&Open..."), this);
-    openAct->setStatusTip(tr("Open an existing file"));
-    connect(openAct, SIGNAL(triggered()), this, SLOT(open()));
+    _openAct = new QAction(tr("&Open..."), this);
+    _openAct->setStatusTip(tr("Open an existing file"));
+    connect(_openAct, SIGNAL(triggered()), this, SLOT(open()));
 
-    exitAct = new QAction(tr("E&xit"), this);
-    exitAct->setStatusTip(tr("Exit the application"));
-    connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
+    _exitAct = new QAction(tr("E&xit"), this);
+    _exitAct->setStatusTip(tr("Exit the application"));
+    connect(_exitAct, SIGNAL(triggered()), this, SLOT(close()));
 
-    playAct = new QAction(tr("&Play/Pause"), this);
-    playAct->setStatusTip(tr("Play a song"));
-    connect(playAct, SIGNAL(triggered()), this, SLOT(play()));
+    _playAct = new QAction(tr("&Play/Pause"), this);
+    _playAct->setStatusTip(tr("Play a song"));
+    connect(_playAct, SIGNAL(triggered()), this, SLOT(play()));
 
-    nextSongAct = new QAction(tr("&Next Song"), this);
-    nextSongAct->setStatusTip(tr("Switches to the Next Song"));
-    connect(nextSongAct, SIGNAL(triggered()), this, SLOT(nextSong()));
+    _nextSongAct = new QAction(tr("&Next Song"), this);
+    _nextSongAct->setStatusTip(tr("Switches to the Next Song"));
+    connect(_nextSongAct, SIGNAL(triggered()), this, SLOT(nextSong()));
 
-    previousSongAct = new QAction(tr("&Previous Song"), this);
-    previousSongAct->setStatusTip(tr("Switches to the Previous Song"));
-    connect(previousSongAct, SIGNAL(triggered()), this, SLOT(previousSong()));
+    _previousSongAct = new QAction(tr("&Previous Song"), this);
+    _previousSongAct->setStatusTip(tr("Switches to the Previous Song"));
+    connect(_previousSongAct, SIGNAL(triggered()), this, SLOT(previousSong()));
 
-    aboutAct = new QAction(tr("&About"), this);
-    aboutAct->setStatusTip(tr("Show the application's About box"));
-    connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
+    _aboutAct = new QAction(tr("&About"), this);
+    _aboutAct->setStatusTip(tr("Show the application's About box"));
+    connect(_aboutAct, SIGNAL(triggered()), this, SLOT(about()));
 
-    aboutQtAct = new QAction(tr("About &Qt"), this);
-    aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
-    connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
-    connect(aboutQtAct, SIGNAL(triggered()), this, SLOT(aboutQt()));
+    _aboutQtAct = new QAction(tr("About &Qt"), this);
+    _aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
+    connect(_aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+    connect(_aboutQtAct, SIGNAL(triggered()), this, SLOT(aboutQt()));
 }
 
 void MainWindow::createMenus()
 {
-    fileMenu = menuBar()->addMenu(tr("&File"));
-    fileMenu->addAction(openAct);
-    fileMenu->addSeparator();
-    fileMenu->addAction(exitAct);
+    _fileMenu = menuBar()->addMenu(tr("&File"));
+    _fileMenu->addAction(_openAct);
+    _fileMenu->addSeparator();
+    _fileMenu->addAction(_exitAct);
 
-    playMenu = menuBar()->addMenu(tr("&Play"));
-    playMenu->addSeparator();
-    playMenu->addAction(playAct);
-    playMenu->addAction(nextSongAct);
-    playMenu->addAction(previousSongAct);
+    _playMenu = menuBar()->addMenu(tr("&Play"));
+    _playMenu->addSeparator();
+    _playMenu->addAction(_playAct);
+    _playMenu->addAction(_nextSongAct);
+    _playMenu->addAction(_previousSongAct);
 
-    helpMenu = menuBar()->addMenu(tr("&Help"));
-    helpMenu->addAction(aboutAct);
-    helpMenu->addAction(aboutQtAct);
+    _helpMenu = menuBar()->addMenu(tr("&Help"));
+    _helpMenu->addAction(_aboutAct);
+    _helpMenu->addAction(_aboutQtAct);
 }
 
 void MainWindow::setupButtons()
@@ -270,50 +270,50 @@ void MainWindow::setupButtons()
             );
 
     //Setup signals
-    connect(&prevButton, SIGNAL(clicked()), this, SLOT(prevButtonIsPressed()));
-    connect(&playButton, SIGNAL(clicked()), this, SLOT(playButtonIsPressed()));
-    connect(&nextButton, SIGNAL(clicked()), this, SLOT(nextButtonIsPressed()));
+    connect(&_prevButton, SIGNAL(clicked()), this, SLOT(_prevButtonIsPressed()));
+    connect(&_playButton, SIGNAL(clicked()), this, SLOT(_playButtonIsPressed()));
+    connect(&_nextButton, SIGNAL(clicked()), this, SLOT(_nextButtonIsPressed()));
 
     //Setup parents
-    prevButton.setParent(this);
-    playButton.setParent(this);
-    nextButton.setParent(this);
+    _prevButton.setParent(this);
+    _playButton.setParent(this);
+    _nextButton.setParent(this);
 
     //Setup positions
-    prevButton.setGeometry
+    _prevButton.setGeometry
             (
                 0,
                 mediaButtonYCoordinate,
                 width()/5,
                 width()/5
             );
-    playButton.setGeometry
+    _playButton.setGeometry
             (
-                prevButton.width()*2,
+                _prevButton.width()*2,
                 mediaButtonYCoordinate,
                 width()/5,
                 width()/5
             );
-    nextButton.setGeometry
+    _nextButton.setGeometry
             (
-                playButton.width()*4,
+                _playButton.width()*4,
                 mediaButtonYCoordinate,
                 width()/5,
                 width()/5
             );
 
     //Setup icons
-    prevButton.setIcon(prevButtonIcon);
-    prevButton.setIconSize(QSize(prevButton.height(),prevButton.height()));
+    _prevButton.setIcon(_prevButtonIcon);
+    _prevButton.setIconSize(QSize(_prevButton.height(),_prevButton.height()));
 
-    playButton.setIcon(playButtonPlayIcon);
-    playButton.setIconSize(QSize(playButton.height(),playButton.height()));
+    _playButton.setIcon(_playButtonPlayIcon);
+    _playButton.setIconSize(QSize(_playButton.height(),_playButton.height()));
 
-    nextButton.setIcon(nextButtonIcon);
-    nextButton.setIconSize(QSize(nextButton.height(),nextButton.height()));
+    _nextButton.setIcon(_nextButtonIcon);
+    _nextButton.setIconSize(QSize(_nextButton.height(),_nextButton.height()));
 
     //Show them off
-    prevButton.show();
-    playButton.show();
-    nextButton.show();
+    _prevButton.show();
+    _playButton.show();
+    _nextButton.show();
 }
