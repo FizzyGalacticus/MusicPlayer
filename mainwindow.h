@@ -98,6 +98,8 @@ private:
     QAction *_aboutAuthorsAct;
     QLabel *_infoLabel;
 
+    QIcon _helpIcon, _infoIcon, _openIcon, _qtIcon;
+
     /************Volume Slider*******************/
     QLabel *_volumeLabel;
     QSlider *_volumeSlider;
