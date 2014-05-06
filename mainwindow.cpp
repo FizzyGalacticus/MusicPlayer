@@ -27,8 +27,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowIcon(_mainWindowIcon);
     setWindowTitle("Music Player");
 
-    setFixedWidth(8*72);
-    setFixedHeight(5*72);
+    setFixedWidth(5*72);
+    setFixedHeight(3*72);
 
     /****************SETTING UP STATUS BAR*********************/
     QWidget *topFiller = new QWidget;
@@ -174,9 +174,8 @@ void MainWindow::about()
 {
     _infoLabel->setText(tr("Invoked <b>Help|About</b>"));
     QMessageBox::about(this, tr("About Menu"),
-            tr("Hit Play to Play Mooxzikz. "
-               "Open to Open More Moozikz."));
-//TODO: docoomentimgz
+            tr("CS 372 - Software Construction"
+               "<p>Final Project - \"Music Player\""));
 }
 
 void MainWindow::aboutQt()
