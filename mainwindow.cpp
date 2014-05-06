@@ -333,7 +333,7 @@ void MainWindow::durationHasChanged(qint64 duration)
 
 void MainWindow::setupProgressBar()
 {
-    _progressBar->setGeometry(0,35,width(),100);
+    _progressBar->setGeometry(0,28,width(),height()/3);
     _progressBar->setValue(0);
     connect(_player, SIGNAL(positionChanged(qint64)), this, SLOT(playbackPositionChanged(qint64)));
     connect(_player, SIGNAL(durationChanged(qint64)),this, SLOT(durationHasChanged(qint64)));
