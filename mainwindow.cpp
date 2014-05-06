@@ -55,53 +55,7 @@ MainWindow::MainWindow(QWidget *parent) :
     statusBar()->showMessage(message);
 #endif
 
-    /*****************SETTING UP BUTTONS******************/
-    const int mediaButtonYCoordinate =
-            (
-                (height() + layout->geometry().height())-
-                ((width()/5) + statusBar()->geometry().height() - 8)
-            );
-    /*************SETTING UP PREV BUTTON******************/
-    connect(&prevButton, SIGNAL(clicked()), this, SLOT(prevButtonIsPressed()));
-    prevButton.setParent(this);
-    prevButton.setGeometry
-            (
-                0,
-                mediaButtonYCoordinate,
-                width()/5,
-                width()/5
-            );
-    prevButton.setIcon(prevButtonIcon);
-    prevButton.setIconSize(QSize(prevButton.height(),prevButton.height()));
-    prevButton.show();
-
-    /*************SETTING UP PLAY BUTTON******************/
-    connect(&playButton, SIGNAL(clicked()), this, SLOT(playButtonIsPressed()));
-    playButton.setParent(this);
-    playButton.setGeometry
-            (
-                prevButton.width()*2,
-                mediaButtonYCoordinate,
-                width()/5,
-                width()/5
-            );
-    playButton.setIcon(playButtonPlayIcon);
-    playButton.setIconSize(QSize(playButton.height(),playButton.height()));
-    playButton.show();
-
-    /*************SETTING UP NEXT BUTTON******************/
-    connect(&nextButton, SIGNAL(clicked()), this, SLOT(nextButtonIsPressed()));
-    nextButton.setParent(this);
-    nextButton.setGeometry
-            (
-                playButton.width()*4,
-                mediaButtonYCoordinate,
-                width()/5,
-                width()/5
-            );
-    nextButton.setIcon(nextButtonIcon);
-    nextButton.setIconSize(QSize(nextButton.height(),nextButton.height()));
-    nextButton.show();
+    setupButtons();
 
     /*************SETTING UP VOLUME SLIDER******************/
 
@@ -117,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) :
     volumeSlider->setGeometry
             (
                 nextButton.geometry().x(),
-                mediaButtonYCoordinate-20,
+                playButton.geometry().y()-20,
                 playButton.width(),
                 20
             );
@@ -308,3 +262,58 @@ void MainWindow::createMenus()
     helpMenu->addAction(aboutQtAct);
 }
 
+void MainWindow::setupButtons()
+{
+    const int mediaButtonYCoordinate =
+            (
+                height()- ((width()/5) + statusBar()->geometry().height() - 8)
+            );
+
+    //Setup signals
+    connect(&prevButton, SIGNAL(clicked()), this, SLOT(prevButtonIsPressed()));
+    connect(&playButton, SIGNAL(clicked()), this, SLOT(playButtonIsPressed()));
+    connect(&nextButton, SIGNAL(clicked()), this, SLOT(nextButtonIsPressed()));
+
+    //Setup parents
+    prevButton.setParent(this);
+    playButton.setParent(this);
+    nextButton.setParent(this);
+
+    //Setup positions
+    prevButton.setGeometry
+            (
+                0,
+                mediaButtonYCoordinate,
+                width()/5,
+                width()/5
+            );
+    playButton.setGeometry
+            (
+                prevButton.width()*2,
+                mediaButtonYCoordinate,
+                width()/5,
+                width()/5
+            );
+    nextButton.setGeometry
+            (
+                playButton.width()*4,
+                mediaButtonYCoordinate,
+                width()/5,
+                width()/5
+            );
+
+    //Setup icons
+    prevButton.setIcon(prevButtonIcon);
+    prevButton.setIconSize(QSize(prevButton.height(),prevButton.height()));
+
+    playButton.setIcon(playButtonPlayIcon);
+    playButton.setIconSize(QSize(playButton.height(),playButton.height()));
+
+    nextButton.setIcon(nextButtonIcon);
+    nextButton.setIconSize(QSize(nextButton.height(),nextButton.height()));
+
+    //Show them off
+    prevButton.show();
+    playButton.show();
+    nextButton.show();
+}

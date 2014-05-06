@@ -96,6 +96,9 @@ private:
     /***********Media Player*********************/
     QMediaPlayer * _player;
     QMediaPlaylist * _playlist;
+
+    /*************SETUP FUNCTIONS***************/
+    void setupButtons();
 };
 
 #endif // MAINWINDOW_H
