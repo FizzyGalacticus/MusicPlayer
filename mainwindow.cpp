@@ -324,12 +324,22 @@ void MainWindow::playbackPositionChanged(qint64 position)
 
 void MainWindow::durationHasChanged(qint64 duration)
 {
-    _fileMetadata->setText
-            (
-                //_player->currentMedia().canonicalUrl().fileName()
-                _player->metaData("AlbumArtist").toString() + " - " +
-                _player->metaData("Title").toString()
-            );
+    QString labelStr;
+
+    if(_player->availableMetaData().contains("Title"))
+    {
+        QString songTitle = _player->metaData("Title").toString();
+        if(_player->availableMetaData().contains("AlbumArtist"))
+            labelStr =
+                    (
+                        _player->metaData("AlbumArtist").toString() + " - " +
+                        songTitle
+                    );
+        else labelStr = songTitle;
+    }
+    else labelStr = _player->currentMedia().canonicalUrl().fileName();
+
+    _fileMetadata->setText(labelStr);
     _progressBar->setRange(0,duration);
 }
 
