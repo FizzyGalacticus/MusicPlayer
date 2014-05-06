@@ -96,7 +96,7 @@ private:
     QSlider *_volumeSlider;
 
     /************File Name Display**************/
-    QLabel * _filename;
+    QLabel * _fileMetadata;
 
     /***********Media Player*********************/
     QMediaPlayer * _player;

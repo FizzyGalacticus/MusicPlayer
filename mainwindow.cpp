@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _playButtonPlayIcon(":/Resources/icons/Button-Play-icon.png"),
     _playButtonPauseIcon(":/Resources/icons/Button-Pause-icon.png"),
     _nextButtonIcon(":/Resources/icons/Button-Next-icon.png"),
-    _filename(new QLabel(this)),
+    _fileMetadata(new QLabel(this)),
     _player(0),
     _playlist(new QMediaPlaylist(this)),
     _progressBar(new QProgressBar(this))
@@ -91,14 +91,14 @@ MainWindow::MainWindow(QWidget *parent) :
     _volumeSlider->show();
 
     /************SETTING UP FILENAME LABEL*********/
-    _filename->setGeometry
+    _fileMetadata->setGeometry
             (
                 0,
                 _volumeLabel->geometry().y(),
                 _volumeLabel->geometry().x(),
                 _volumeLabel->geometry().height()
             );
-    _filename->show();
+    _fileMetadata->show();
 
     /******************SOUND CODE******************/
     _player = new QMediaPlayer;
@@ -324,9 +324,11 @@ void MainWindow::playbackPositionChanged(qint64 position)
 
 void MainWindow::durationHasChanged(qint64 duration)
 {
-    _filename->setText
+    _fileMetadata->setText
             (
-                _player->currentMedia().canonicalUrl().fileName()
+                //_player->currentMedia().canonicalUrl().fileName()
+                _player->metaData("AlbumArtist").toString() + " - " +
+                _player->metaData("Title").toString()
             );
     _progressBar->setRange(0,duration);
 }
