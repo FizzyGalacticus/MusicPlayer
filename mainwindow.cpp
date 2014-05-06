@@ -6,8 +6,8 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    _mainWindowIcon(":/Resources/icons/_mainWindowIcon.jpg"),
+    _ui(new Ui::MainWindow),
+    _mainWindowIcon(":/Resources/icons/mainWindowIcon.jpg"),
     _isPlaying(false),
     _prevButtonIcon(":/Resources/icons/Button-Prev-icon.png"),
     _playButtonPlayIcon(":/Resources/icons/Button-Play-icon.png"),
@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _player(0),
     _playlist(new QMediaPlaylist(this))
 {
-    ui->setupUi(this);
+    _ui->setupUi(this);
     setWindowIcon(_mainWindowIcon);
     setWindowTitle("Music Player");
 
@@ -106,7 +106,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+    delete _ui;
 }
 
 /***********PLAY BUTTON FUNCTION SLOT***********/

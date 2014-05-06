@@ -54,7 +54,7 @@ private slots:
     void aboutQt();
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow *_ui;
     QIcon _mainWindowIcon;
     bool _isPlaying;
 
