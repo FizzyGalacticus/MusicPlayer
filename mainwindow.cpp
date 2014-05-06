@@ -92,9 +92,9 @@ MainWindow::MainWindow(QWidget *parent) :
     /************SETTING UP FILENAME LABEL*********/
     _filename->setGeometry
             (
-                _volumeLabel->geometry().x()-120,
+                0,
                 _volumeLabel->geometry().y(),
-                _volumeLabel->geometry().width(),
+                _volumeLabel->geometry().x(),
                 _volumeLabel->geometry().height()
             );
     _filename->show();
@@ -118,6 +118,10 @@ void MainWindow::_playButtonIsPressed ()
     {
         _playButton.setIcon(_playButtonPauseIcon);
         _player->play();
+        _filename->setText
+                (
+                    _playlist->media(_playlist->currentIndex()).canonicalUrl().fileName()
+                );
     }
     else _playButton.setIcon(_playButtonPlayIcon);
 
@@ -138,6 +142,10 @@ void MainWindow::_nextButtonIsPressed ()
 void MainWindow::_prevButtonIsPressed ()
 {
     _playlist->previous();
+    _filename->setText
+            (
+                _playlist->media(_playlist->currentIndex()).canonicalUrl().fileName()
+            );
 }
 
 /***********VOLUME SLIDER FUNCTION SLOT***********/
