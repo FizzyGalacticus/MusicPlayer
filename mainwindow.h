@@ -33,8 +33,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void SetupShuffleCheckbox();
 protected:
-        void contextMenuEvent(QContextMenuEvent *event);
+        void rightClickMenu(QContextMenuEvent *event);
 
 private slots:
     /***********BUTTON SLOTS***********/
@@ -124,6 +125,8 @@ private:
     void setupVolumeLabelAndSlider();
     void setupMetadataLabel();
     void setupShuffleCheckbox();
+    void setupMenus();
+    void setup();
 };
 
 #endif // MAINWINDOW_H
