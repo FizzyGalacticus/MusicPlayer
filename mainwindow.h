@@ -64,15 +64,15 @@ private:
     bool _isPlaying;
 
     /************Prev Button Objects*************/
-    QPushButton _prevButton;
+    QPushButton *_prevButton;
     QIcon _prevButtonIcon;
 
     /************Play Button Objects*************/
-    QPushButton _playButton;
+    QPushButton *_playButton;
     QIcon _playButtonPlayIcon, _playButtonPauseIcon;
 
     /************Next Button Objects*************/
-    QPushButton _nextButton;
+    QPushButton *_nextButton;
     QIcon _nextButtonIcon;
 
     /**************Menu Objects and Functions***/

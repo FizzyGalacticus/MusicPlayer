@@ -9,6 +9,9 @@ MainWindow::MainWindow(QWidget *parent) :
     _ui(new Ui::MainWindow),
     _mainWindowIcon(":/Resources/icons/mainWindowIcon.jpg"),
     _isPlaying(false),
+    _prevButton(new QPushButton(this)),
+    _playButton(new QPushButton(this)),
+    _nextButton(new QPushButton(this)),
     _prevButtonIcon(":/Resources/icons/Button-Prev-icon.png"),
     _playButtonPlayIcon(":/Resources/icons/Button-Play-icon.png"),
     _playButtonPauseIcon(":/Resources/icons/Button-Pause-icon.png"),
@@ -20,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _playlist(new QMediaPlaylist(this)),
     _progressBar(new QProgressBar(this))
 {
-    //_ui->setupUi(this);
+    //_ui->setupUi(this); //I don't think we really need this... but leaving this line here in case
     setWindowIcon(_mainWindowIcon);
     setWindowTitle("Music Player");
 
@@ -78,10 +81,10 @@ void MainWindow::_playButtonIsPressed ()
 
     if(!_isPlaying)
     {
-        _playButton.setIcon(_playButtonPauseIcon);
+        _playButton->setIcon(_playButtonPauseIcon);
         _player->play();
     }
-    else _playButton.setIcon(_playButtonPlayIcon);
+    else _playButton->setIcon(_playButtonPlayIcon);
 
     _isPlaying = !_isPlaying;
 }
@@ -234,52 +237,52 @@ void MainWindow::setupButtons()
             );
 
     //Setup signals
-    connect(&_prevButton, SIGNAL(clicked()), this, SLOT(_prevButtonIsPressed()));
-    connect(&_playButton, SIGNAL(clicked()), this, SLOT(_playButtonIsPressed()));
-    connect(&_nextButton, SIGNAL(clicked()), this, SLOT(_nextButtonIsPressed()));
+    connect(_prevButton, SIGNAL(clicked()), this, SLOT(_prevButtonIsPressed()));
+    connect(_playButton, SIGNAL(clicked()), this, SLOT(_playButtonIsPressed()));
+    connect(_nextButton, SIGNAL(clicked()), this, SLOT(_nextButtonIsPressed()));
 
     //Setup parents
-    _prevButton.setParent(this);
-    _playButton.setParent(this);
-    _nextButton.setParent(this);
+    //_prevButton->setParent(this);
+    _playButton->setParent(this);
+    _nextButton->setParent(this);
 
     //Setup positions
-    _prevButton.setGeometry
+    _prevButton->setGeometry
             (
                 0,
                 mediaButtonYCoordinate,
                 width()/5,
                 width()/5
             );
-    _playButton.setGeometry
+    _playButton->setGeometry
             (
-                _prevButton.width()*2,
+                _prevButton->width()*2,
                 mediaButtonYCoordinate,
                 width()/5,
                 width()/5
             );
-    _nextButton.setGeometry
+    _nextButton->setGeometry
             (
-                _playButton.width()*4,
+                _playButton->width()*4,
                 mediaButtonYCoordinate,
                 width()/5,
                 width()/5
             );
 
     //Setup icons
-    _prevButton.setIcon(_prevButtonIcon);
-    _prevButton.setIconSize(QSize(_prevButton.height(),_prevButton.height()));
+    _prevButton->setIcon(_prevButtonIcon);
+    _prevButton->setIconSize(QSize(_prevButton->height(),_prevButton->height()));
 
-    _playButton.setIcon(_playButtonPlayIcon);
-    _playButton.setIconSize(QSize(_playButton.height(),_playButton.height()));
+    _playButton->setIcon(_playButtonPlayIcon);
+    _playButton->setIconSize(QSize(_playButton->height(),_playButton->height()));
 
-    _nextButton.setIcon(_nextButtonIcon);
-    _nextButton.setIconSize(QSize(_nextButton.height(),_nextButton.height()));
+    _nextButton->setIcon(_nextButtonIcon);
+    _nextButton->setIconSize(QSize(_nextButton->height(),_nextButton->height()));
 
     //Show them off
-    _prevButton.show();
-    _playButton.show();
-    _nextButton.show();
+    _prevButton->show();
+    _playButton->show();
+    _nextButton->show();
 }
 
 void MainWindow::playbackPositionChanged(qint64 position)
@@ -324,9 +327,9 @@ void MainWindow::setupVolumeLabelAndSlider()
     _volumeSlider->setSliderPosition(_player->volume());
     _volumeSlider->setGeometry
             (
-                _nextButton.geometry().x(),
-                _playButton.geometry().y()-20,
-                _playButton.width(),
+                _nextButton->geometry().x(),
+                _playButton->geometry().y()-20,
+                _playButton->width(),
                 20
             );
     _volumeLabel->setGeometry
