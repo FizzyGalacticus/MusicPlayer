@@ -15,6 +15,7 @@
 #include <QProgressBar>
 #include <QCheckBox>
 #include <QListWidget>
+#include <QTabWidget>
 
 class QAction;
 class QActionGroup;
@@ -126,6 +127,9 @@ private:
     const QString getAudioInfo(const QMediaContent &) const;
     void refreshPlaylistView();
 
+    /**************Playlist tabs***************/
+    QTabWidget * _playlistTabs;
+
     /*************SETUP FUNCTIONS***************/
     void setupButtons();
     void setupProgressBar();
@@ -133,6 +137,7 @@ private:
     void setupMetadataLabel();
     void setupShuffleButton();
     void setupMenus();
+    void setupPlaylistTabs();
     void setupPlaylistView();
     void setup();
 };

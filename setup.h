@@ -159,12 +159,28 @@ void MainWindow::setupPlaylistView()
                 height()/2-28
             );
 
-    _playlistView->show();
+    //_playlistView->show();
+}
+
+void MainWindow::setupPlaylistTabs()
+{
+    _playlistTabs->setGeometry
+            (
+                0,
+                28,
+                width(),
+                height()/2-28
+            );
+
+    _playlistTabs->addTab(_playlistView, "Playlist");
+
+    _playlistTabs->show();
 }
 
 void MainWindow::setup()
 {
     setupPlaylistView();
+    setupPlaylistTabs();
     setupButtons();
     setupVolumeLabelAndSlider();
     setupProgressBar();

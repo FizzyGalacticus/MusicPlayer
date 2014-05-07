@@ -9,7 +9,7 @@ void MainWindow::open()
             (
                 tr
                 (
-                    "Audio (*.mp3 *.mp4 *.wav *.flac *.ogg *.aiff *.wma *.mid *.ra *.ram *.rm *.vox *.raw *.aac *.au *.ac3 *.m4a *.amr)"
+                    "Audio (*.mp3 *.mp4 *.wav *.flac *.ogg *.aiff *.wma *.mid *.ra *.ram *.rm *.vox *.raw *.aac *.au *.ac3 *.m4a *.amr *.mod *.669 *.s3m *.mtm)"
                 )
             );
     openFileDialog.setViewMode(QFileDialog::List);
@@ -19,21 +19,24 @@ void MainWindow::open()
     if(openFileDialog.exec())
        fileNames = openFileDialog.selectedFiles();
 
-    QList<QMediaContent> playListFiles;
+    if(openFileDialog.selectedFiles().size())
+    {
+        QList<QMediaContent> playListFiles;
 
-    for(QStringList::iterator file = fileNames.begin(); file < fileNames.end(); file++)
-       playListFiles.append(QMediaContent(QUrl::fromLocalFile(*file)));
+        for(QStringList::iterator file = fileNames.begin(); file < fileNames.end(); file++)
+           playListFiles.append(QMediaContent(QUrl::fromLocalFile(*file)));
 
-    _playlist->clear();
-    _playlist->addMedia(playListFiles);
-    _playlist->setPlaybackMode(QMediaPlaylist::Loop);
-    _playlist->setCurrentIndex(0);
-    _player->stop();
-    _player->setPlaylist(_playlist);
+        _playlist->clear();
+        _playlist->addMedia(playListFiles);
+        _playlist->setPlaybackMode(QMediaPlaylist::Loop);
+        _playlist->setCurrentIndex(0);
+        _player->stop();
+        _player->setPlaylist(_playlist);
 
-    if(_isPlaying) _playButtonIsPressed();
+        if(_isPlaying) _playButtonIsPressed();
 
-    refreshPlaylistView();
+        refreshPlaylistView();
+    }
 }
 
 void MainWindow::about()

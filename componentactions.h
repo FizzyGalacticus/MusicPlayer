@@ -96,7 +96,9 @@ void MainWindow::playlistItemHasBeenClicked(QListWidgetItem * item)
     {
         if(_playlist->media(i).canonicalUrl().fileName() == item->text())
         {
+            _playlistView->item(_playlist->currentIndex())->setTextColor("black");
             _playlist->setCurrentIndex(i);
+            _playlistView->item(_playlist->currentIndex())->setTextColor("red");
             break;
         }
     }
