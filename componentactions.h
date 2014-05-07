@@ -84,4 +84,16 @@ void MainWindow::shuffleCheckboxHasChanged(int state)
     if(state) _playlist->shuffle();
 }
 
+void MainWindow::playlistItemHasBeenClicked(QListWidgetItem * item)
+{
+    for(int i = 0; i < _playlist->mediaCount(); i++)
+    {
+        if(_playlist->media(i).canonicalUrl().fileName() == item->text())
+        {
+            _playlist->setCurrentIndex(i);
+            break;
+        }
+    }
+}
+
 #endif // COMPONENTACTIONS_H

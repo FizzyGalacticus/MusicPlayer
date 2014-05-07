@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _playlist(new QMediaPlaylist(this)),
     _progressBar(new QProgressBar(this)),
     _shuffleCheckbox(new QCheckBox("Shuffle", this)),
-    _playlistView(new QListView(this))
+    _playlistView(new QListWidget(this))
 {
     setWindowIcon(_mainWindowIcon);
     setWindowTitle("Music Player");

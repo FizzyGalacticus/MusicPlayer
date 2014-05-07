@@ -47,6 +47,16 @@ void MainWindow::createActions()
     connect(_aboutAuthorsAct, SIGNAL(triggered()),this, SLOT(aboutAuthors()));
 }
 
+void MainWindow::addItemsToPlaylistView()
+{
+    _playlistView->clear();
 
+    for(int i = 0; i < _playlist->mediaCount(); i++)
+    {
+        _playlistView->addItem(_playlist->media(i).canonicalUrl().fileName());
+    }
+
+    _playlistView->show();
+}
 
 #endif // ACTIONS_H

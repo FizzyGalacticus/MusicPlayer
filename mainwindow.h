@@ -14,7 +14,7 @@
 #include <QStyle>
 #include <QProgressBar>
 #include <QCheckBox>
-#include <QListView>
+#include <QListWidget>
 
 class QAction;
 class QActionGroup;
@@ -64,6 +64,9 @@ private slots:
 
     /*************SHUFFLE CHECKBOX SLOT*********/
     void shuffleCheckboxHasChanged(int state);
+
+    /**************PLAYLIST VIEW SLOT**********/
+    void playlistItemHasBeenClicked(QListWidgetItem * item);
 
 private:
     Ui::MainWindow *_ui;
@@ -121,7 +124,9 @@ private:
     QLabel *_shuffleCheckboxLabel;
 
     /**************Playlist View***************/
-    QListView *_playlistView;
+    QListWidget *_playlistView;
+    const QString getAudioInfo(const QMediaContent &) const;
+    void addItemsToPlaylistView();
 
     /*************SETUP FUNCTIONS***************/
     void setupButtons();
@@ -130,6 +135,7 @@ private:
     void setupMetadataLabel();
     void setupShuffleCheckbox();
     void setupMenus();
+    void setupPlaylistView();
     void setup();
 };
 

@@ -123,6 +123,27 @@ void MainWindow::setupVolumeLabelAndSlider()
     _volumeSlider->show();
 }
 
+void MainWindow::setupPlaylistView()
+{
+    connect
+            (
+                _playlistView,
+                SIGNAL(itemDoubleClicked(QListWidgetItem*)),
+                this,
+                SLOT(playlistItemHasBeenClicked(QListWidgetItem*))
+            );
+
+    _playlistView->setGeometry
+            (
+                0,
+                _progressBar->y()+_progressBar->height(),
+                width(),
+                100
+            );
+
+    _playlistView->show();
+}
+
 void MainWindow::setup()
 {
     setupButtons();
@@ -131,6 +152,7 @@ void MainWindow::setup()
     setupVolumeLabelAndSlider();
     setupShuffleCheckbox();
     setupMetadataLabel();
+    setupPlaylistView();
 }
 
 #endif // SETUP_H

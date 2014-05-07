@@ -32,6 +32,8 @@ void MainWindow::open()
     _player->setPosition(0);
 
     if(_isPlaying) _playButtonIsPressed();
+
+    addItemsToPlaylistView();
 }
 
 void MainWindow::about()
