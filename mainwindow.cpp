@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowIcon(_mainWindowIcon);
     setWindowTitle("Music Player");
 
-    setFixedWidth(7*72);
+    setFixedWidth(5*72);
     setFixedHeight(7*72);
 
     /****************SETTING UP STATUS BAR*********************/
