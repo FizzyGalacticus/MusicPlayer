@@ -169,8 +169,8 @@ void MainWindow::setup()
     setupVolumeLabelAndSlider();
     setupProgressBar();
     setupShuffleButton();
-    setupMenus();
     setupMetadataLabel();
+    setupMenus();
 }
 
 #endif // SETUP_H
