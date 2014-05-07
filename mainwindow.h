@@ -14,6 +14,7 @@
 #include <QStyle>
 #include <QProgressBar>
 #include <QCheckBox>
+#include <QListView>
 
 class QAction;
 class QActionGroup;
@@ -118,6 +119,9 @@ private:
     /**************Shuffle Checkox**************/
     QCheckBox *_shuffleCheckbox;
     QLabel *_shuffleCheckboxLabel;
+
+    /**************Playlist View***************/
+    QListView *_playlistView;
 
     /*************SETUP FUNCTIONS***************/
     void setupButtons();
