@@ -92,19 +92,27 @@ void MainWindow::setupProgressBar()
     _progressBar->show();
 }
 
-void MainWindow::setupShuffleCheckbox()
+void MainWindow::setupShuffleButton()
 {
-    connect(_shuffleCheckbox, SIGNAL(stateChanged(int)), this, SLOT(shuffleCheckboxHasChanged(int)));
+    connect
+            (
+                _shuffleButton,
+                SIGNAL(clicked()),
+                this,
+                SLOT(_shuffleButtonHasBeenPressed())
+            );
 
-    _shuffleCheckbox->setGeometry
+    _shuffleButton->setText("Shuffle");
+
+    _shuffleButton->setGeometry
             (
                 _playButton->geometry().x(),
                 _volumeLabel->geometry().y(),
-                _volumeSlider->width()+10,
+                _volumeLabel->width(),
                 _volumeLabel->height()
             );
 
-    _shuffleCheckbox->show();
+    _shuffleButton->show();
 }
 
 void MainWindow::setupVolumeLabelAndSlider()
@@ -160,7 +168,7 @@ void MainWindow::setup()
     setupButtons();
     setupVolumeLabelAndSlider();
     setupProgressBar();
-    setupShuffleCheckbox();
+    setupShuffleButton();
     setupMenus();
     setupMetadataLabel();
 }

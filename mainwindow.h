@@ -34,7 +34,6 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void SetupShuffleCheckbox();
 protected:
         void rightClickMenu(QContextMenuEvent *event);
 
@@ -62,8 +61,8 @@ private slots:
     void playbackPositionChanged(qint64 position);
     void durationHasChanged(qint64 duration);
 
-    /*************SHUFFLE CHECKBOX SLOT*********/
-    void shuffleCheckboxHasChanged(int state);
+    /*************SHUFFLE BUTTON SLOT*********/
+    void _shuffleButtonHasBeenPressed();
 
     /**************PLAYLIST VIEW SLOT**********/
     void playlistItemHasBeenClicked(QListWidgetItem * item);
@@ -116,24 +115,23 @@ private:
     QMediaPlayer * _player;
     QMediaPlaylist * _playlist;
 
-    /**************Progress bar*****************/
+    /**************Progress Bar*****************/
     QProgressBar * _progressBar;
 
-    /**************Shuffle Checkox**************/
-    QCheckBox *_shuffleCheckbox;
-    QLabel *_shuffleCheckboxLabel;
+    /**************Shuffle Button**************/
+    QPushButton *_shuffleButton;
 
     /**************Playlist View***************/
     QListWidget *_playlistView;
     const QString getAudioInfo(const QMediaContent &) const;
-    void addItemsToPlaylistView();
+    void refreshPlaylistView();
 
     /*************SETUP FUNCTIONS***************/
     void setupButtons();
     void setupProgressBar();
     void setupVolumeLabelAndSlider();
     void setupMetadataLabel();
-    void setupShuffleCheckbox();
+    void setupShuffleButton();
     void setupMenus();
     void setupPlaylistView();
     void setup();

@@ -33,7 +33,7 @@ void MainWindow::open()
 
     if(_isPlaying) _playButtonIsPressed();
 
-    addItemsToPlaylistView();
+    refreshPlaylistView();
 }
 
 void MainWindow::about()

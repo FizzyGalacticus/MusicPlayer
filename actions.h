@@ -47,7 +47,7 @@ void MainWindow::createActions()
     connect(_aboutAuthorsAct, SIGNAL(triggered()),this, SLOT(aboutAuthors()));
 }
 
-void MainWindow::addItemsToPlaylistView()
+void MainWindow::refreshPlaylistView()
 {
     _playlistView->clear();
 

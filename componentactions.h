@@ -79,9 +79,10 @@ void MainWindow::durationHasChanged(qint64 duration)
     _progressBar->setRange(0,duration);
 }
 
-void MainWindow::shuffleCheckboxHasChanged(int state)
+void MainWindow::_shuffleButtonHasBeenPressed()
 {
-    if(state) _playlist->shuffle();
+    _playlist->shuffle();
+    refreshPlaylistView();
 }
 
 void MainWindow::playlistItemHasBeenClicked(QListWidgetItem * item)
