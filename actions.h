@@ -56,6 +56,7 @@ void MainWindow::refreshPlaylistView()
         _playlistView->addItem(_playlist->media(i).canonicalUrl().fileName());
     }
 
+    _playlistView->item(_playlist->currentIndex())->setTextColor("red");
     _playlistView->show();
 }
 

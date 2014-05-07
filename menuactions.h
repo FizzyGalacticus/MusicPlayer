@@ -27,9 +27,9 @@ void MainWindow::open()
     _playlist->clear();
     _playlist->addMedia(playListFiles);
     _playlist->setPlaybackMode(QMediaPlaylist::Loop);
+    _playlist->setCurrentIndex(0);
     _player->stop();
     _player->setPlaylist(_playlist);
-    _player->setPosition(0);
 
     if(_isPlaying) _playButtonIsPressed();
 
