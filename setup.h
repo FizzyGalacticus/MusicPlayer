@@ -7,7 +7,7 @@ void MainWindow::setupButtons()
 {
     const int mediaButtonYCoordinate =
             (
-                height()- ((width()/5) + 50) //statusBar()->geometry().height()
+                height()- ((width()/5) + 22) //statusBar()->geometry().height()
             );
 
     //Setup signals
@@ -65,8 +65,8 @@ void MainWindow::setupMetadataLabel()
     _fileMetadata->setGeometry
             (
                 0,
-                _volumeLabel->geometry().y(),
-                _shuffleCheckbox->geometry().x(),
+                _progressBar->geometry().y() + _progressBar->height(),
+                width(),
                 _volumeLabel->geometry().height()
             );
 
@@ -75,7 +75,17 @@ void MainWindow::setupMetadataLabel()
 
 void MainWindow::setupProgressBar()
 {
-    _progressBar->setGeometry(0,28,width(),height()/3);
+    const int progressBarHeight =
+            (_volumeLabel->geometry().y()-_volumeLabel->height()) -
+            (_playlistView->geometry().y() + _playlistView->height());
+
+    _progressBar->setGeometry
+            (
+                0,
+                height()/2,
+                width(),
+                progressBarHeight
+            );
     _progressBar->setValue(0);
     connect(_player, SIGNAL(positionChanged(qint64)), this, SLOT(playbackPositionChanged(qint64)));
     connect(_player, SIGNAL(durationChanged(qint64)),this, SLOT(durationHasChanged(qint64)));
@@ -136,9 +146,9 @@ void MainWindow::setupPlaylistView()
     _playlistView->setGeometry
             (
                 0,
-                _progressBar->y()+_progressBar->height(),
+                28,
                 width(),
-                100
+                height()/2-28
             );
 
     _playlistView->show();
@@ -146,13 +156,13 @@ void MainWindow::setupPlaylistView()
 
 void MainWindow::setup()
 {
-    setupButtons();
-    setupMenus();
-    setupProgressBar();
-    setupVolumeLabelAndSlider();
-    setupShuffleCheckbox();
-    setupMetadataLabel();
     setupPlaylistView();
+    setupButtons();
+    setupVolumeLabelAndSlider();
+    setupProgressBar();
+    setupShuffleCheckbox();
+    setupMenus();
+    setupMetadataLabel();
 }
 
 #endif // SETUP_H
