@@ -77,6 +77,9 @@ void MainWindow::durationHasChanged(qint64 duration)
 
     _fileMetadata->setText(labelStr);
     _progressBar->setRange(0,duration);
+
+    _playlistView->item(_playlist->previousIndex())->setTextColor("black");
+    _playlistView->item(_playlist->currentIndex())->setTextColor("red");
 }
 
 void MainWindow::_shuffleButtonHasBeenPressed()
