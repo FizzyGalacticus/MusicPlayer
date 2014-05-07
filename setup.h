@@ -66,7 +66,7 @@ void MainWindow::setupMetadataLabel()
             (
                 0,
                 _volumeLabel->geometry().y(),
-                _nextButton->geometry().width()*3,
+                _shuffleCheckbox->geometry().x(),
                 _volumeLabel->geometry().height()
             );
 
@@ -128,8 +128,8 @@ void MainWindow::setup()
     setupButtons();
     setupMenus();
     setupProgressBar();
-    setupShuffleCheckbox();
     setupVolumeLabelAndSlider();
+    setupShuffleCheckbox();
     setupMetadataLabel();
 }
 

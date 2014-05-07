@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowTitle("Music Player");
 
     setFixedWidth(7*72);
-    setFixedHeight(4*72);
+    setFixedHeight(7*72);
 
     /****************SETTING UP STATUS BAR*********************/
     QWidget *topFiller = new QWidget;
