@@ -9,7 +9,7 @@ void MainWindow::open()
             (
                 tr
                 (
-                    "Audio (*.mp3 *.mp4 *.wav *.flac *.ogg *.aiff *.wma *.mid *.ra *.ram *.rm *.vox *.raw *.aac *.au)"
+                    "Audio (*.mp3 *.mp4 *.wav *.flac *.ogg *.aiff *.wma *.mid *.ra *.ram *.rm *.vox *.raw *.aac *.au *.ac3 *.m4a *.amr *.voc *.swf)"
                 )
             );
     openFileDialog.setViewMode(QFileDialog::List);
