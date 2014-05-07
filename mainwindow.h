@@ -35,7 +35,7 @@ public:
     ~MainWindow();
 
 protected:
-        void rightClickMenu(QContextMenuEvent *event);
+        void contextMenuEvent(QContextMenuEvent *event);
 
 private slots:
     /***********BUTTON SLOTS***********/

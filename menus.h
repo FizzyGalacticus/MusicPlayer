@@ -23,7 +23,7 @@ void MainWindow::createMenus()
     _helpMenu->addAction(_aboutAuthorsAct);
 }
 
-void MainWindow::rightClickMenu(QContextMenuEvent *event)
+void MainWindow::contextMenuEvent(QContextMenuEvent *event)
 {
     QMenu menu(this);
     menu.addAction(_playAct);
