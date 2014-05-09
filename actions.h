@@ -60,4 +60,10 @@ void MainWindow::refreshPlaylistView()
     _playlistView->show();
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if ((event->key()==Qt::Key_O) && (event->modifiers()==Qt::CTRL))
+            open();
+}
+
 #endif // ACTIONS_H

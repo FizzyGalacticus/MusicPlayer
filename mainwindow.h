@@ -11,11 +11,11 @@
 #include <QFileDialog>
 #include <QStringList>
 #include <QList>
-#include <QStyle>
 #include <QProgressBar>
 #include <QCheckBox>
 #include <QListWidget>
 #include <QTabWidget>
+#include <QKeyEvent>
 
 class QAction;
 class QActionGroup;
@@ -37,6 +37,7 @@ public:
 
 protected:
         void contextMenuEvent(QContextMenuEvent *event);
+        void keyPressEvent(QKeyEvent *);
 
 private slots:
     /***********BUTTON SLOTS***********/
