@@ -2,22 +2,7 @@
 #define COMPONENTACTIONS_H
 #include "mainwindow.h"
 
-void MainWindow::play()
-{
-    _playButtonIsPressed();
-}
-
-void MainWindow::nextSong()
-{
-    _nextButtonIsPressed();
-}
-
-void MainWindow::previousSong()
-{
-    _prevButtonIsPressed();
-}
-
-void MainWindow::_playButtonIsPressed ()
+void MainWindow::_playButtonIsPressed()
 {
     if(!_playlist->isEmpty())
     {

@@ -18,17 +18,17 @@ void MainWindow::createActions()
     _playAct = new QAction(tr("&Play/Pause"), this);
     _playAct->setStatusTip(tr("Play a song"));
     _playAct->setIcon(_playButtonPlayIcon);
-    connect(_playAct, SIGNAL(triggered()), this, SLOT(play()));
+    connect(_playAct, SIGNAL(triggered()), this, SLOT(_playButtonIsPressed()));
 
     _nextSongAct = new QAction(tr("&Next Song"), this);
     _nextSongAct->setStatusTip(tr("Switches to the Next Song"));
     _nextSongAct->setIcon(_nextButtonIcon);
-    connect(_nextSongAct, SIGNAL(triggered()), this, SLOT(nextSong()));
+    connect(_nextSongAct, SIGNAL(triggered()), this, SLOT(_nextButtonIsPressed()));
 
     _previousSongAct = new QAction(tr("&Previous Song"), this);
     _previousSongAct->setStatusTip(tr("Switches to the Previous Song"));
     _previousSongAct->setIcon(_prevButtonIcon);
-    connect(_previousSongAct, SIGNAL(triggered()), this, SLOT(previousSong()));
+    connect(_previousSongAct, SIGNAL(triggered()), this, SLOT(_prevButtonIsPressed()));
 
     _aboutAct = new QAction(tr("&About"), this);
     _aboutAct->setStatusTip(tr("Show the application's About box"));
@@ -64,6 +64,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if ((event->key()==Qt::Key_O) && (event->modifiers()==Qt::CTRL))
             open();
+    else if(event->key()==Qt::Key_P)
+        _playButtonIsPressed();
 }
 
 #endif // ACTIONS_H

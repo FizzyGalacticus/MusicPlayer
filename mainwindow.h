@@ -52,9 +52,6 @@ private slots:
 
     /**************MENU OPTION SLOTS****************/
     void open();
-    void play();
-    void nextSong();
-    void previousSong();
     void about();
     void aboutQt();
     void aboutAuthors();
