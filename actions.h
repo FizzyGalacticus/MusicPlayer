@@ -70,6 +70,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         _nextButtonIsPressed();
     else if(event->key() == Qt::Key_Comma)
         _prevButtonIsPressed();
+    else if((event->key()==Qt::Key_Q) && (event->modifiers()==Qt::CTRL))
+        close();
 }
 
 #endif // ACTIONS_H
