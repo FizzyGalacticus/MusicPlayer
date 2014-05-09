@@ -66,6 +66,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             open();
     else if(event->key()==Qt::Key_P)
         _playButtonIsPressed();
+    else if(event->key() == Qt::Key_Period)
+        _nextButtonIsPressed();
+    else if(event->key() == Qt::Key_Comma)
+        _prevButtonIsPressed();
 }
 
 #endif // ACTIONS_H
