@@ -25,7 +25,7 @@ void MainWindow::_playButtonIsPressed()
 
 void MainWindow::_nextButtonIsPressed()
 {
-    if(!_playlist->isEmpty())
+    if(!_playlist->isEmpty() && (_playlist->currentMedia() != _playlist->media(_playlist->mediaCount()-1) || _playlist->playbackMode() == QMediaPlaylist::Loop))
     {
         _playlistView->item(_playlist->currentIndex())->setTextColor("black");
         _playlist->next();
@@ -35,7 +35,7 @@ void MainWindow::_nextButtonIsPressed()
 
 void MainWindow::_prevButtonIsPressed ()
 {
-    if(!_playlist->isEmpty())
+    if(!_playlist->isEmpty() && (_playlist->currentMedia() != _playlist->media(0) || _playlist->playbackMode() == QMediaPlaylist::Loop))
     {
         _playlistView->item(_playlist->currentIndex())->setTextColor("black");
         _playlist->previous();
@@ -93,6 +93,12 @@ void MainWindow::playlistItemHasBeenClicked(QListWidgetItem * item)
             break;
         }
     }
+}
+
+void MainWindow::_loopCheckboxStateHasChanged(int state)
+{
+    if(state) _playlist->setPlaybackMode(QMediaPlaylist::Loop);
+    else _playlist->setPlaybackMode(QMediaPlaylist::Sequential);
 }
 
 #endif // COMPONENTACTIONS_H

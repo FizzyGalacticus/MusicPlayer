@@ -31,7 +31,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _progressBar(new QProgressBar(this)),
     _shuffleButton(new QPushButton(this)),
     _playlistView(new QListWidget(this)),
-    _playlistTabs(new QTabWidget(this))
+    _playlistTabs(new QTabWidget(this)),
+    _loopCheckbox(new QCheckBox(this))
 {
     setWindowIcon(_mainWindowIcon);
     setWindowTitle("Music Player");

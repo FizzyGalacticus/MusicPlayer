@@ -87,8 +87,12 @@ void MainWindow::setupProgressBar()
                 progressBarHeight
             );
     _progressBar->setValue(0);
+
+    _progressBar->setTextVisible(false);
+
     connect(_player, SIGNAL(positionChanged(qint64)), this, SLOT(playbackPositionChanged(qint64)));
     connect(_player, SIGNAL(durationChanged(qint64)),this, SLOT(durationHasChanged(qint64)));
+
     _progressBar->show();
 }
 
@@ -177,6 +181,21 @@ void MainWindow::setupPlaylistTabs()
     _playlistTabs->show();
 }
 
+void MainWindow::setupLoopCheckbox()
+{
+    _loopCheckbox->setText("Loop");
+    _loopCheckbox->setGeometry
+            (
+                0,
+                _prevButton->geometry().y() - _volumeLabel->height(),
+                _volumeLabel->width(),
+                _volumeLabel->height()
+            );
+    connect(_loopCheckbox, SIGNAL(stateChanged(int)), this, SLOT(_loopCheckboxStateHasChanged(int)));
+
+    _loopCheckbox->show();
+}
+
 void MainWindow::setup()
 {
     setupPlaylistView();
@@ -187,6 +206,7 @@ void MainWindow::setup()
     setupShuffleButton();
     setupMetadataLabel();
     setupMenus();
+    setupLoopCheckbox();
 }
 
 #endif // SETUP_H

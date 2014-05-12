@@ -16,6 +16,7 @@
 #include <QListWidget>
 #include <QTabWidget>
 #include <QKeyEvent>
+#include <QCheckBox>
 
 class QAction;
 class QActionGroup;
@@ -65,6 +66,9 @@ private slots:
 
     /**************PLAYLIST VIEW SLOT**********/
     void playlistItemHasBeenClicked(QListWidgetItem * item);
+
+    /**************LOOP CHECKBOX SLOT**********/
+    void _loopCheckboxStateHasChanged(int);
 
 private:
     Ui::MainWindow *_ui;
@@ -128,6 +132,9 @@ private:
     /**************Playlist tabs***************/
     QTabWidget * _playlistTabs;
 
+    /**************Loop Checkbox***************/
+    QCheckBox * _loopCheckbox;
+
     /*************SETUP FUNCTIONS***************/
     void setupButtons();
     void setupProgressBar();
@@ -137,6 +144,7 @@ private:
     void setupMenus();
     void setupPlaylistTabs();
     void setupPlaylistView();
+    void setupLoopCheckbox();
     void setup();
 };
 
