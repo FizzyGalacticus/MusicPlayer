@@ -31,7 +31,7 @@ void MainWindow::contextMenuEvent(QContextMenuEvent *event)
     menu.addAction(_playAct);
     menu.addAction(_nextSongAct);
     menu.addAction(_previousSongAct);
-    menu.addAction(_openAct);
+    menu.addAction(_addMediaAct);
     menu.exec(event->globalPos());
 }
 

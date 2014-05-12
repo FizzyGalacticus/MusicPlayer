@@ -12,6 +12,7 @@ void MainWindow::createActions()
 
     _addMediaAct = new QAction(tr("&Add Media"), this);
     _addMediaAct->setStatusTip(tr("Add existing files to current playlist"));
+    _addMediaAct->setIcon(_openIcon);
     connect(_addMediaAct, SIGNAL(triggered()), this, SLOT(addMedia()));
 
     _exitAct = new QAction(tr("&Exit"), this);
@@ -76,6 +77,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         _prevButtonIsPressed();
     else if((event->key()==Qt::Key_Q) && (event->modifiers()==Qt::CTRL))
         close();
+    else if(event->key() == Qt::Key_A)
+        addMedia();
 }
 
 QStringList MainWindow::_openFileDialogue()
