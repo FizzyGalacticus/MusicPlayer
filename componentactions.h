@@ -2,6 +2,12 @@
 #define COMPONENTACTIONS_H
 #include "mainwindow.h"
 
+void MainWindow::_prevButtonIsPressed ()
+{
+    if(!_playlist->isEmpty() && (_playlist->currentMedia() != _playlist->media(0) || _playlist->playbackMode() == QMediaPlaylist::Loop))
+        _playlist->previous();
+}
+
 void MainWindow::_playButtonIsPressed()
 {
     if(!_playlist->isEmpty())
@@ -27,12 +33,6 @@ void MainWindow::_nextButtonIsPressed()
 {
     if(!_playlist->isEmpty() && (_playlist->currentMedia() != _playlist->media(_playlist->mediaCount()-1) || _playlist->playbackMode() == QMediaPlaylist::Loop))
         _playlist->next();
-}
-
-void MainWindow::_prevButtonIsPressed ()
-{
-    if(!_playlist->isEmpty() && (_playlist->currentMedia() != _playlist->media(0) || _playlist->playbackMode() == QMediaPlaylist::Loop))
-        _playlist->previous();
 }
 
 void MainWindow::_volumeSliderValueChanged()
