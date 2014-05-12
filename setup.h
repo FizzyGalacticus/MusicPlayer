@@ -186,8 +186,6 @@ void MainWindow::setupPlaylistView()
                 width(),
                 height()/2-28
             );
-
-    //_playlistView->show();
 }
 
 void MainWindow::setupPlaylistTabs()
