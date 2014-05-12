@@ -69,16 +69,16 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if ((event->key()==Qt::Key_O) && (event->modifiers()==Qt::CTRL))
             open();
-    else if(event->key()==Qt::Key_P)
+    else if(event->key()==Qt::Key_P || event->key() == Qt::Key_MediaPlay || event->key() == Qt::Key_MediaPause)
         _playButtonIsPressed();
     else if(event->key() == Qt::Key_Period)
         _nextButtonIsPressed();
     else if(event->key() == Qt::Key_Comma)
         _prevButtonIsPressed();
-    else if((event->key()==Qt::Key_Q) && (event->modifiers()==Qt::CTRL))
-        close();
     else if(event->key() == Qt::Key_A)
         addMedia();
+    else if((event->key()==Qt::Key_Q) && (event->modifiers()==Qt::CTRL))
+        close();
 }
 
 QStringList MainWindow::_openFileDialogue()
