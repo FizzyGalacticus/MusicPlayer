@@ -120,6 +120,9 @@ private:
     QMediaPlayer * _player;
     QMediaPlaylist * _playlist;
 
+    /*************Open file dialogue*************/
+    QStringList _openFileDialogue();
+
     /**************Progress Bar*****************/
     QProgressBar * _progressBar;
 

@@ -78,4 +78,25 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         close();
 }
 
+QStringList MainWindow::_openFileDialogue()
+{
+    QFileDialog openFileDialog(this);
+    openFileDialog.setNameFilter
+            (
+                tr
+                (
+                    "Audio (*.mp3 *.mp4 *.wav *.flac *.ogg *.aiff *.wma *.mid *.ra *.ram *.rm *.vox *.raw *.aac *.au *.ac3 *.m4a *.amr *.mod *.669 *.s3m *.mtm)"
+                )
+            );
+    openFileDialog.setViewMode(QFileDialog::List);
+    openFileDialog.setFileMode(QFileDialog::ExistingFiles);
+
+    QStringList fileNames;
+
+    if(openFileDialog.exec())
+       fileNames = openFileDialog.selectedFiles();
+
+    return fileNames;
+}
+
 #endif // ACTIONS_H
