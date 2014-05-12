@@ -84,12 +84,17 @@ void MainWindow::playlistItemHasBeenClicked(QListWidgetItem * item)
     {
         if(_playlist->media(i).canonicalUrl().fileName() == item->text())
         {
-            _playlistView->setDisabled(true);
             _playlist->setCurrentIndex(i);
-            _playlistView->setDisabled(false);
+            resetPlaylistViewFunctionality(item);
             break;
         }
     }
+}
+
+void MainWindow::resetPlaylistViewFunctionality(QListWidgetItem* item)
+{
+    _playlistView->setDisabled(true);
+    _playlistView->setDisabled(false);
 }
 
 void MainWindow::_loopCheckboxStateHasChanged(int state)

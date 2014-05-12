@@ -155,6 +155,30 @@ void MainWindow::setupPlaylistView()
                 SLOT(playlistItemHasBeenClicked(QListWidgetItem*))
             );
 
+    connect
+            (
+                _playlistView,
+                SIGNAL(itemActivated(QListWidgetItem*)),
+                this,
+                SLOT(resetPlaylistViewFunctionality(QListWidgetItem*))
+            );
+
+    connect
+            (
+                _playlistView,
+                SIGNAL(itemClicked(QListWidgetItem*)),
+                this,
+                SLOT(resetPlaylistViewFunctionality(QListWidgetItem*))
+            );
+
+    connect
+            (
+                _playlistView,
+                SIGNAL(itemPressed(QListWidgetItem*)),
+                this,
+                SLOT(resetPlaylistViewFunctionality(QListWidgetItem*))
+            );
+
     _playlistView->setGeometry
             (
                 0,

@@ -66,7 +66,8 @@ private slots:
     void _shuffleButtonHasBeenPressed();
 
     /**************PLAYLIST VIEW SLOT**********/
-    void playlistItemHasBeenClicked(QListWidgetItem * item);
+    void playlistItemHasBeenClicked(QListWidgetItem *);
+    void resetPlaylistViewFunctionality(QListWidgetItem*);
 
     /**************LOOP CHECKBOX SLOT**********/
     void _loopCheckboxStateHasChanged(int);
