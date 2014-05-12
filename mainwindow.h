@@ -53,6 +53,7 @@ private slots:
 
     /**************MENU OPTION SLOTS****************/
     void open();
+    void addMedia();
     void about();
     void aboutQt();
     void aboutAuthors();
@@ -96,6 +97,7 @@ private:
     QMenu *_playMenu;
     QMenu *_helpMenu;
     QAction *_openAct;
+    QAction *_addMediaAct;
     QAction *_playAct;
     QAction *_nextSongAct;
     QAction *_previousSongAct;

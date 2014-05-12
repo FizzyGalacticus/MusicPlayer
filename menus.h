@@ -9,6 +9,8 @@ void MainWindow::createMenus()
     _fileMenu = menuBar()->addMenu(tr("&File"));
     _fileMenu->addAction(_openAct);
     _fileMenu->addSeparator();
+    _fileMenu->addAction(_addMediaAct);
+    _fileMenu->addSeparator();
     _fileMenu->addAction(_exitAct);
 
     _playMenu = menuBar()->addMenu(tr("&Play"));

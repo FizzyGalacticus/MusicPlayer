@@ -38,6 +38,36 @@ void MainWindow::open()
     }
 }
 
+void MainWindow::addMedia()
+{
+    QFileDialog openFileDialog(this);
+    openFileDialog.setNameFilter
+            (
+                tr
+                (
+                    "Audio (*.mp3 *.mp4 *.wav *.flac *.ogg *.aiff *.wma *.mid *.ra *.ram *.rm *.vox *.raw *.aac *.au *.ac3 *.m4a *.amr *.mod *.669 *.s3m *.mtm)"
+                )
+            );
+    openFileDialog.setViewMode(QFileDialog::List);
+    openFileDialog.setFileMode(QFileDialog::ExistingFiles);
+
+    QStringList fileNames;
+    if(openFileDialog.exec())
+       fileNames = openFileDialog.selectedFiles();
+
+    if(openFileDialog.selectedFiles().size())
+    {
+        QList<QMediaContent> playListFiles;
+
+        for(QStringList::iterator file = fileNames.begin(); file < fileNames.end(); file++)
+           playListFiles.append(QMediaContent(QUrl::fromLocalFile(*file)));
+
+        _playlist->addMedia(playListFiles);
+
+        refreshPlaylistView();
+    }
+}
+
 void MainWindow::about()
 {
     _infoLabel->setText(tr("Invoked <b>Help|About</b>"));

@@ -6,9 +6,13 @@
 void MainWindow::createActions()
 {
     _openAct = new QAction(tr("&Open..."), this);
-    _openAct->setStatusTip(tr("Open an existing file"));
+    _openAct->setStatusTip(tr("Open existing files"));
     _openAct->setIcon(_openIcon);
     connect(_openAct, SIGNAL(triggered()), this, SLOT(open()));
+
+    _addMediaAct = new QAction(tr("&Add Media"), this);
+    _addMediaAct->setStatusTip(tr("Add existing files to current playlist"));
+    connect(_addMediaAct, SIGNAL(triggered()), this, SLOT(addMedia()));
 
     _exitAct = new QAction(tr("&Exit"), this);
     _exitAct->setStatusTip(tr("Exit the application"));
