@@ -67,7 +67,11 @@ void MainWindow::durationHasChanged(qint64 duration)
 
     for(int i = 0; i < _playlist->mediaCount(); i++)
     {
-        if(i == _playlist->currentIndex()) _playlistView->item(i)->setTextColor("red");
+        if(i == _playlist->currentIndex())
+        {
+            _playlistView->item(i)->setText(labelStr);
+            _playlistView->item(i)->setTextColor("red");
+        }
         else _playlistView->item(i)->setTextColor("black");
     }
 }
