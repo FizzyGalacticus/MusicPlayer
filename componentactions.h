@@ -26,22 +26,13 @@ void MainWindow::_playButtonIsPressed()
 void MainWindow::_nextButtonIsPressed()
 {
     if(!_playlist->isEmpty() && (_playlist->currentMedia() != _playlist->media(_playlist->mediaCount()-1) || _playlist->playbackMode() == QMediaPlaylist::Loop))
-    {
-        _playlistView->item(_playlist->currentIndex())->setTextColor("black");
         _playlist->next();
-        _playlistView->item(_playlist->currentIndex())->setTextColor("red");
-    }
 }
 
 void MainWindow::_prevButtonIsPressed ()
 {
     if(!_playlist->isEmpty() && (_playlist->currentMedia() != _playlist->media(0) || _playlist->playbackMode() == QMediaPlaylist::Loop))
-    {
-        _playlistView->item(_playlist->currentIndex())->setTextColor("black");
         _playlist->previous();
-        _playlistView->item(_playlist->currentIndex())->setTextColor("red");
-    }
-
 }
 
 void MainWindow::_volumeSliderValueChanged()
@@ -73,6 +64,12 @@ void MainWindow::durationHasChanged(qint64 duration)
 
     _fileMetadata->setText(labelStr);
     _progressBar->setRange(0,duration);
+
+    for(int i = 0; i < _playlist->mediaCount(); i++)
+    {
+        if(i == _playlist->currentIndex()) _playlistView->item(i)->setTextColor("red");
+        else _playlistView->item(i)->setTextColor("black");
+    }
 }
 
 void MainWindow::_shuffleButtonHasBeenPressed()
@@ -87,9 +84,7 @@ void MainWindow::playlistItemHasBeenClicked(QListWidgetItem * item)
     {
         if(_playlist->media(i).canonicalUrl().fileName() == item->text())
         {
-            _playlistView->item(_playlist->currentIndex())->setTextColor("black");
-            _playlist->setCurrentIndex(i);
-            _playlistView->item(_playlist->currentIndex())->setTextColor("red");
+            _playlist->setCurrentIndex(i);_playlistView->item(_playlist->currentIndex())->setTextColor("red");
             break;
         }
     }
