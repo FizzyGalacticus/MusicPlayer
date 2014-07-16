@@ -20,6 +20,9 @@
 *.out
 *.app
 
+# Makefile files
+Makefile*
+
 # Dustin's things
 commit.sh
 push.sh
