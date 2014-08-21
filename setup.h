@@ -2,41 +2,19 @@
 #define SETUP_H
 
 #include "mainwindow.h"
+#include <QHBoxLayout>
 
 void MainWindow::setupButtons()
 {
-    const int mediaButtonYCoordinate =
-            (
-                height()- ((width()/5) + 22) //statusBar()->geometry().height()
-            );
+    QHBoxLayout * buttons = new QHBoxLayout;
+    buttons->addWidget(_prevButton);
+    buttons->addWidget(_playButton);
+    buttons->addWidget(_nextButton);
 
     //Setup signals
     connect(_prevButton, SIGNAL(clicked()), this, SLOT(_prevButtonIsPressed()));
     connect(_playButton, SIGNAL(clicked()), this, SLOT(_playButtonIsPressed()));
     connect(_nextButton, SIGNAL(clicked()), this, SLOT(_nextButtonIsPressed()));
-
-    //Setup positions
-    _prevButton->setGeometry
-            (
-                0,
-                mediaButtonYCoordinate,
-                width()/5,
-                width()/5
-            );
-    _playButton->setGeometry
-            (
-                _prevButton->width()*2,
-                mediaButtonYCoordinate,
-                width()/5,
-                width()/5
-            );
-    _nextButton->setGeometry
-            (
-                _playButton->width()*4,
-                mediaButtonYCoordinate,
-                width()/5,
-                width()/5
-            );
 
     //Setup icons
     _prevButton->setIcon(_prevButtonIcon);
@@ -48,10 +26,7 @@ void MainWindow::setupButtons()
     _nextButton->setIcon(_nextButtonIcon);
     _nextButton->setIconSize(QSize(_nextButton->height(),_nextButton->height()));
 
-    //Show them off
-    _prevButton->show();
-    _playButton->show();
-    _nextButton->show();
+    _mainLayout->addLayout(buttons);
 }
 
 void MainWindow::setupMenus()
@@ -62,30 +37,16 @@ void MainWindow::setupMenus()
 
 void MainWindow::setupMetadataLabel()
 {
-    _fileMetadata->setGeometry
-            (
-                0,
-                _progressBar->geometry().y() + _progressBar->height(),
-                width(),
-                _volumeLabel->geometry().height()
-            );
-
-    _fileMetadata->show();
+    QHBoxLayout * metadata = new QHBoxLayout;
+    metadata->addWidget(_fileMetadata);
+    _mainLayout->addLayout(metadata);
 }
 
 void MainWindow::setupProgressBar()
 {
-    const int progressBarHeight =
-            (_volumeLabel->geometry().y()-_volumeLabel->height()) -
-            (_playlistView->geometry().y() + _playlistView->height());
+    QHBoxLayout * progBar = new QHBoxLayout;
+    progBar->addWidget(_progressBar);
 
-    _progressBar->setGeometry
-            (
-                0,
-                height()/2,
-                width(),
-                progressBarHeight
-            );
     _progressBar->setValue(0);
 
     _progressBar->setTextVisible(false);
@@ -93,56 +54,7 @@ void MainWindow::setupProgressBar()
     connect(_player, SIGNAL(positionChanged(qint64)), this, SLOT(playbackPositionChanged(qint64)));
     connect(_player, SIGNAL(durationChanged(qint64)),this, SLOT(durationHasChanged(qint64)));
 
-    _progressBar->show();
-}
-
-void MainWindow::setupShuffleButton()
-{
-    connect
-            (
-                _shuffleButton,
-                SIGNAL(clicked()),
-                this,
-                SLOT(_shuffleButtonHasBeenPressed())
-            );
-
-    _shuffleButton->setText("Shuffle");
-
-    _shuffleButton->setGeometry
-            (
-                _playButton->geometry().x(),
-                _volumeLabel->geometry().y(),
-                _volumeLabel->width(),
-                _volumeLabel->height()
-            );
-
-    _shuffleButton->show();
-}
-
-void MainWindow::setupVolumeLabelAndSlider()
-{
-    _volumeLabel->setText(tr("<b>Volume:</b>"));
-    _volumeSlider->setRange(0,100);
-    _volumeSlider->setSliderPosition(_player->volume());
-    _volumeSlider->setGeometry
-            (
-                _nextButton->geometry().x(),
-                _playButton->geometry().y()-20,
-                _playButton->width(),
-                20
-            );
-    _volumeLabel->setGeometry
-            (
-                _volumeSlider->geometry().x()-60,
-                _volumeSlider->geometry().y(),
-                60,
-                _volumeSlider->height()
-            );
-
-    connect(_volumeSlider,SIGNAL(valueChanged(int)),this,SLOT(_volumeSliderValueChanged()));
-
-    _volumeLabel->show();
-    _volumeSlider->show();
+    _mainLayout->addLayout(progBar);
 }
 
 void MainWindow::setupPlaylistView()
@@ -178,44 +90,46 @@ void MainWindow::setupPlaylistView()
                 this,
                 SLOT(resetPlaylistViewFunctionality(QListWidgetItem*))
             );
-
-    _playlistView->setGeometry
-            (
-                0,
-                28,
-                width(),
-                height()/2-28
-            );
 }
 
 void MainWindow::setupPlaylistTabs()
 {
-    _playlistTabs->setGeometry
-            (
-                0,
-                28,
-                width(),
-                height()/2-28
-            );
+    QHBoxLayout * tabs = new QHBoxLayout;
+    tabs->addWidget(_playlistTabs);
 
     _playlistTabs->addTab(_playlistView, "Playlist");
 
-    _playlistTabs->show();
+    _mainLayout->addLayout(tabs);
 }
 
-void MainWindow::setupLoopCheckbox()
+void MainWindow::setupOptionDash()
 {
+    QHBoxLayout * optionDash = new QHBoxLayout;
+    optionDash->addWidget(_loopCheckbox);
+    optionDash->addWidget(_shuffleButton);
+    optionDash->addWidget(_volumeLabel);
+    optionDash->addWidget(_volumeSlider);
+
+
     _loopCheckbox->setText("Loop");
-    _loopCheckbox->setGeometry
-            (
-                0,
-                _prevButton->geometry().y() - _volumeLabel->height(),
-                _volumeLabel->width(),
-                _volumeLabel->height()
-            );
     connect(_loopCheckbox, SIGNAL(stateChanged(int)), this, SLOT(_loopCheckboxStateHasChanged(int)));
 
-    _loopCheckbox->show();
+    connect
+            (
+                _shuffleButton,
+                SIGNAL(clicked()),
+                this,
+                SLOT(_shuffleButtonHasBeenPressed())
+            );
+
+    _shuffleButton->setText("Shuffle");
+
+    _volumeLabel->setText(tr("<b>Volume:</b>"));
+    _volumeSlider->setRange(0,100);
+    _volumeSlider->setSliderPosition(_player->volume());
+    connect(_volumeSlider,SIGNAL(valueChanged(int)),this,SLOT(_volumeSliderValueChanged()));
+
+    _mainLayout->addLayout(optionDash);
 }
 
 void MainWindow::setup()
@@ -223,12 +137,10 @@ void MainWindow::setup()
     setupPlaylistView();
     setupPlaylistTabs();
     setupButtons();
-    setupVolumeLabelAndSlider();
     setupProgressBar();
-    setupShuffleButton();
     setupMetadataLabel();
     setupMenus();
-    setupLoopCheckbox();
+    setupOptionDash();
 }
 
 #endif // SETUP_H

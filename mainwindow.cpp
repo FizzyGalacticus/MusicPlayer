@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _ui(new Ui::MainWindow),
     _mainWindowIcon(":/Resources/icons/mainWindowIcon.png"),
     _centralWidget(new QWidget(this)),
+    _mainLayout(new QVBoxLayout(_centralWidget)),
     _isPlaying(false),
     _isShuffled(false),
     _prevButton(new QPushButton(this)),
@@ -38,9 +39,6 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowIcon(_mainWindowIcon);
     setWindowTitle("Music Player");
     setCentralWidget(_centralWidget);
-
-    setFixedWidth(5*72);
-    setFixedHeight(7*72);
 
     /****************SETTING UP STATUS BAR*********************/
     QWidget *topFiller = new QWidget;

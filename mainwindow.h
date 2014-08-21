@@ -18,6 +18,7 @@
 #include <QKeyEvent>
 #include <QCheckBox>
 #include <QWidget>
+#include <QVBoxLayout>
 
 class QAction;
 class QActionGroup;
@@ -77,6 +78,7 @@ private:
     Ui::MainWindow *_ui;
     QIcon _mainWindowIcon;
     QWidget * _centralWidget;
+    QVBoxLayout * _mainLayout;
 
     bool _isPlaying;
     bool _isShuffled;
@@ -147,13 +149,11 @@ private:
     /*************SETUP FUNCTIONS***************/
     void setupButtons();
     void setupProgressBar();
-    void setupVolumeLabelAndSlider();
     void setupMetadataLabel();
-    void setupShuffleButton();
     void setupMenus();
     void setupPlaylistTabs();
     void setupPlaylistView();
-    void setupLoopCheckbox();
+    void setupOptionDash();
     void setup();
 };
 
