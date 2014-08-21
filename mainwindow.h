@@ -17,6 +17,7 @@
 #include <QTabWidget>
 #include <QKeyEvent>
 #include <QCheckBox>
+#include <QWidget>
 
 class QAction;
 class QActionGroup;
@@ -75,6 +76,8 @@ private slots:
 private:
     Ui::MainWindow *_ui;
     QIcon _mainWindowIcon;
+    QWidget * _centralWidget;
+
     bool _isPlaying;
     bool _isShuffled;
 
