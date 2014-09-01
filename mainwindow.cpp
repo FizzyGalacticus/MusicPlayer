@@ -33,7 +33,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _currentPlaylist(NULL),
     _progressBar(new QProgressBar(this)),
     _shuffleButton(new QPushButton(this)),
-    _playlistView(new QListWidget(this)),
+    _playlistViews(new QVector<QListWidget *>),
+    _currentPlaylistView(new QListWidget),
     _playlistTabs(new QTabWidget(this)),
     _loopCheckbox(new QCheckBox(this))
 {

@@ -54,15 +54,15 @@ void MainWindow::createActions()
 
 void MainWindow::refreshPlaylistView()
 {
-    _playlistView->clear();
+    _currentPlaylistView->clear();
 
     for(int i = 0; i < _currentPlaylist->mediaCount(); i++)
     {
-        _playlistView->addItem(_currentPlaylist->media(i).canonicalUrl().fileName());
+        _currentPlaylistView->addItem(_currentPlaylist->media(i).canonicalUrl().fileName());
     }
 
-    _playlistView->item(_currentPlaylist->currentIndex())->setTextColor("red");
-    _playlistView->show();
+    _currentPlaylistView->item(_currentPlaylist->currentIndex())->setTextColor("red");
+    _currentPlaylistView->show();
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
@@ -101,6 +101,26 @@ QStringList MainWindow::_openFileDialogue()
        fileNames = openFileDialog.selectedFiles();
 
     return fileNames;
+}
+
+const QString MainWindow::getAudioInfo() const
+{
+    QString metaData = "";
+
+    if(_player->availableMetaData().contains("Title"))
+    {
+        QString songTitle = _player->metaData("Title").toString();
+        if(_player->availableMetaData().contains("AlbumArtist"))
+            metaData =
+                    (
+                        _player->metaData("AlbumArtist").toString() + " - " +
+                        songTitle
+                    );
+        else metaData = songTitle;
+    }
+    else return _player->currentMedia().canonicalUrl().fileName();
+
+    return metaData;
 }
 
 #endif // ACTIONS_H

@@ -1,6 +1,7 @@
 #ifndef COMPONENTACTIONS_H
 #define COMPONENTACTIONS_H
 #include "mainwindow.h"
+#include <QDebug>
 
 void MainWindow::_prevButtonIsPressed ()
 {
@@ -47,20 +48,7 @@ void MainWindow::playbackPositionChanged(qint64 position)
 
 void MainWindow::durationHasChanged(qint64 duration)
 {
-    QString labelStr;
-
-    if(_player->availableMetaData().contains("Title"))
-    {
-        QString songTitle = _player->metaData("Title").toString();
-        if(_player->availableMetaData().contains("AlbumArtist"))
-            labelStr =
-                    (
-                        _player->metaData("AlbumArtist").toString() + " - " +
-                        songTitle
-                    );
-        else labelStr = songTitle;
-    }
-    else labelStr = _player->currentMedia().canonicalUrl().fileName();
+    QString labelStr = getAudioInfo();
 
     _fileMetadata->setText(labelStr);
     _progressBar->setRange(0,duration);
@@ -68,11 +56,8 @@ void MainWindow::durationHasChanged(qint64 duration)
     for(int i = 0; i < _currentPlaylist->mediaCount(); i++)
     {
         if(i == _currentPlaylist->currentIndex())
-        {
-            _playlistView->item(i)->setText(labelStr);
-            _playlistView->item(i)->setTextColor("red");
-        }
-        else _playlistView->item(i)->setTextColor("black");
+            _currentPlaylistView->item(i)->setTextColor("red");
+        else _currentPlaylistView->item(i)->setTextColor("black");
     }
 }
 
@@ -90,6 +75,8 @@ void MainWindow::playlistItemHasBeenClicked(QListWidgetItem * item)
         {
             _currentPlaylist->setCurrentIndex(i);
             resetPlaylistViewFunctionality(item);
+
+            qDebug() << item->text() << "Double clicked!";
             break;
         }
     }
@@ -97,8 +84,8 @@ void MainWindow::playlistItemHasBeenClicked(QListWidgetItem * item)
 
 void MainWindow::resetPlaylistViewFunctionality(QListWidgetItem* item)
 {
-    _playlistView->setDisabled(true);
-    _playlistView->setDisabled(false);
+    _currentPlaylistView->setDisabled(true);
+    _currentPlaylistView->setDisabled(false);
 }
 
 void MainWindow::_loopCheckboxStateHasChanged(int state)

@@ -57,11 +57,11 @@ void MainWindow::setupProgressBar()
     _mainLayout->addLayout(progBar);
 }
 
-void MainWindow::setupPlaylistView()
+void MainWindow::setupPlaylistViewConnections(const QListWidget * playlistView)
 {
     connect
             (
-                _playlistView,
+                playlistView,
                 SIGNAL(itemDoubleClicked(QListWidgetItem*)),
                 this,
                 SLOT(playlistItemHasBeenClicked(QListWidgetItem*))
@@ -69,7 +69,7 @@ void MainWindow::setupPlaylistView()
 
     connect
             (
-                _playlistView,
+                playlistView,
                 SIGNAL(itemActivated(QListWidgetItem*)),
                 this,
                 SLOT(resetPlaylistViewFunctionality(QListWidgetItem*))
@@ -77,7 +77,7 @@ void MainWindow::setupPlaylistView()
 
     connect
             (
-                _playlistView,
+                playlistView,
                 SIGNAL(itemClicked(QListWidgetItem*)),
                 this,
                 SLOT(resetPlaylistViewFunctionality(QListWidgetItem*))
@@ -85,7 +85,7 @@ void MainWindow::setupPlaylistView()
 
     connect
             (
-                _playlistView,
+                playlistView,
                 SIGNAL(itemPressed(QListWidgetItem*)),
                 this,
                 SLOT(resetPlaylistViewFunctionality(QListWidgetItem*))
@@ -94,7 +94,10 @@ void MainWindow::setupPlaylistView()
 
 void MainWindow::setupPlaylistTabs()
 {
-    _playlistTabs->addTab(_playlistView, "Playlist");
+    _playlistViews->push_back(_currentPlaylistView);
+    setupPlaylistViewConnections(_currentPlaylistView);
+
+    _playlistTabs->addTab(_currentPlaylistView, "Playlist");
 
     _currentPlaylist = new QMediaPlaylist;
     _playlists->push_back(_currentPlaylist);
@@ -134,7 +137,6 @@ void MainWindow::setupOptionDash()
 
 void MainWindow::setup()
 {
-    setupPlaylistView();
     setupPlaylistTabs();
     setupButtons();
     setupProgressBar();

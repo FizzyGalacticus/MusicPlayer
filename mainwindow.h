@@ -138,8 +138,10 @@ private:
     QPushButton *_shuffleButton;
 
     /**************Playlist View***************/
-    QListWidget *_playlistView;
-    const QString getAudioInfo(const QMediaContent &) const;
+    QVector<QListWidget *> * _playlistViews;
+    QListWidget * _currentPlaylistView;
+    void setupPlaylistViewConnections(const QListWidget *);
+    const QString getAudioInfo() const;
     void refreshPlaylistView();
 
     /**************Playlist tabs***************/
@@ -154,7 +156,6 @@ private:
     void setupMetadataLabel();
     void setupMenus();
     void setupPlaylistTabs();
-    void setupPlaylistView();
     void setupOptionDash();
     void setup();
 };
