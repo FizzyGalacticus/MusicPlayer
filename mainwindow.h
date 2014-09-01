@@ -79,6 +79,7 @@ private slots:
 
     /*************PLAYLIST TABS SLOTS*************/
     void _tabCloseRequested(int);
+    void _currentTabIndexHasChanged(int);
 
 private:
     Ui::MainWindow *_ui;
@@ -129,9 +130,8 @@ private:
     QLabel * _fileMetadata;
 
     /***********Media Player*********************/
-    QMediaPlayer * _player;
-    QVector<QMediaPlaylist *> * _playlists;
-    QMediaPlaylist * _currentPlaylist;
+    QVector<QMediaPlayer *> * _players;
+    QMediaPlayer * _currentPlayer;
 
     /*************Open file dialogue*************/
     QStringList _openFileDialogue();

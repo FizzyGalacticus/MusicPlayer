@@ -54,15 +54,15 @@ void MainWindow::createActions()
 
 void MainWindow::refreshPlaylistView()
 {
-    _currentPlaylistView->clear();
+    _playlistViews->at(_playlistTabs->currentIndex())->clear();
 
-    for(int i = 0; i < _currentPlaylist->mediaCount(); i++)
+    for(int i = 0; i < _currentPlayer->playlist()->mediaCount(); i++)
     {
-        _currentPlaylistView->addItem(_currentPlaylist->media(i).canonicalUrl().fileName());
+        _playlistViews->at(_playlistTabs->currentIndex())->addItem(_players->at(_playlistTabs->currentIndex())->playlist()->media(i).canonicalUrl().fileName());
     }
 
-    _currentPlaylistView->item(_currentPlaylist->currentIndex())->setTextColor("red");
-    _currentPlaylistView->show();
+    _playlistViews->at(_playlistTabs->currentIndex())->item(_players->at(_playlistTabs->currentIndex())->playlist()->currentIndex())->setTextColor("red");
+    _playlistViews->at(_playlistTabs->currentIndex())->show();
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
@@ -107,18 +107,18 @@ const QString MainWindow::getAudioInfo() const
 {
     QString metaData = "";
 
-    if(_player->availableMetaData().contains("Title"))
+    if(_currentPlayer->availableMetaData().contains("Title"))
     {
-        QString songTitle = _player->metaData("Title").toString();
-        if(_player->availableMetaData().contains("AlbumArtist"))
+        QString songTitle = _currentPlayer->metaData("Title").toString();
+        if(_currentPlayer->availableMetaData().contains("AlbumArtist"))
             metaData =
                     (
-                        _player->metaData("AlbumArtist").toString() + " - " +
+                        _currentPlayer->metaData("AlbumArtist").toString() + " - " +
                         songTitle
                     );
         else metaData = songTitle;
     }
-    else return _player->currentMedia().canonicalUrl().fileName();
+    else return _currentPlayer->currentMedia().canonicalUrl().fileName();
 
     return metaData;
 }

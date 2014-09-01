@@ -28,9 +28,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _volumeLabel(new QLabel(this)),
     _volumeSlider(new QSlider(Qt::Horizontal, this)),
     _fileMetadata(new QLabel(this)),
-    _player(new QMediaPlayer(this)),
-    _playlists(new QVector<QMediaPlaylist *>),
-    _currentPlaylist(NULL),
+    _players(new QVector<QMediaPlayer *>),
+    _currentPlayer(new QMediaPlayer),
     _progressBar(new QProgressBar(this)),
     _shuffleButton(new QPushButton),
     _playlistViews(new QVector<QListWidget *>),
@@ -72,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) :
     statusBar()->showMessage(message);
     #endif
 
-    _player->setVolume(50);
+    _currentPlayer->setVolume(50);
 
     setup();
 

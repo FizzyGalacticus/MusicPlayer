@@ -51,8 +51,8 @@ void MainWindow::setupProgressBar()
 
     _progressBar->setTextVisible(false);
 
-    connect(_player, SIGNAL(positionChanged(qint64)), this, SLOT(playbackPositionChanged(qint64)));
-    connect(_player, SIGNAL(durationChanged(qint64)),this, SLOT(durationHasChanged(qint64)));
+    connect(_currentPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(playbackPositionChanged(qint64)));
+    connect(_currentPlayer, SIGNAL(durationChanged(qint64)),this, SLOT(durationHasChanged(qint64)));
 
     _mainLayout->addLayout(progBar);
 }
@@ -95,15 +95,16 @@ void MainWindow::setupPlaylistViewConnections(const QListWidget * playlistView)
 void MainWindow::setupPlaylistTabs()
 {
     _playlistViews->push_back(_currentPlaylistView);
-    setupPlaylistViewConnections(_currentPlaylistView);
+    setupPlaylistViewConnections(_playlistViews->at(_playlistViews->count()-1));
 
     _playlistTabs->addTab(_currentPlaylistView, "Playlist");
     _playlistTabs->setTabsClosable(true);
 
     connect(_playlistTabs,SIGNAL(tabCloseRequested(int)),this,SLOT(_tabCloseRequested(int)));
+    connect(_playlistTabs,SIGNAL(currentChanged(int)),this,SLOT(_currentTabIndexHasChanged(int)));
 
-    _currentPlaylist = new QMediaPlaylist;
-    _playlists->push_back(_currentPlaylist);
+    _players->push_back(_currentPlayer);
+    _currentPlayer->setPlaylist(new QMediaPlaylist);
 
     _mainLayout->addWidget(_playlistTabs);
 }
@@ -128,7 +129,7 @@ void MainWindow::setupOptionDash()
 
     _volumeLabel->setText(tr("<b>Volume:</b>"));
     _volumeSlider->setRange(0,100);
-    _volumeSlider->setSliderPosition(_player->volume());
+    _volumeSlider->setSliderPosition(_currentPlayer->volume());
     connect(_volumeSlider,SIGNAL(valueChanged(int)),this,SLOT(_volumeSliderValueChanged()));
 
     _mainLayout->addLayout(optionDash);

@@ -5,51 +5,87 @@
 
 void MainWindow::_prevButtonIsPressed ()
 {
-    if(!_currentPlaylist->isEmpty() && (_currentPlaylist->currentMedia() != _currentPlaylist->media(0) || _currentPlaylist->playbackMode() == QMediaPlaylist::Loop))
-        _currentPlaylist->previous();
+    if(!_currentPlayer->playlist()->isEmpty() && (_currentPlayer->playlist()->currentMedia() != _currentPlayer->playlist()->media(0) || _currentPlayer->playlist()->playbackMode() == QMediaPlaylist::Loop))
+        _currentPlayer->playlist()->previous();
 }
 
 void MainWindow::_playButtonIsPressed()
 {
-    if(!_currentPlaylist->isEmpty())
+    if(!_players->at(_playlistTabs->currentIndex())->playlist()->isEmpty())
     {
-        if(!_isPlaying)
+        if(_currentPlayer == _players->at(_playlistTabs->currentIndex()))
         {
-            _playButton->setIcon(_playButtonPauseIcon);
-            _playAct->setIcon(_playButtonPauseIcon);
-            _player->play();
+            if(_isPlaying)
+            {
+                _currentPlayer->pause();
+                _playButton->setIcon(_playButtonPlayIcon);
+                _playAct->setIcon(_playButtonPlayIcon);
+
+                _isPlaying = false;
+            }
+            else
+            {
+                _currentPlayer->play();
+                _playButton->setIcon(_playButtonPauseIcon);
+                _playAct->setIcon(_playButtonPauseIcon);
+
+                _isPlaying = true;
+            }
         }
         else
         {
-            _playButton->setIcon(_playButtonPlayIcon);
-            _playAct->setIcon(_playButtonPlayIcon);
-            _player->pause();
-        }
+            if(_isPlaying)
+            {
+                _currentPlayer->pause();
+                _currentPlayer = _players->at(_playlistTabs->currentIndex());
+                _playButton->setIcon(_playButtonPauseIcon);
+                _playAct->setIcon(_playButtonPauseIcon);
+                _currentPlayer->play();
 
-        _isPlaying = !_isPlaying;
+                _isPlaying = true;
+            }
+            else
+            {
+                _currentPlayer = _players->at(_playlistTabs->currentIndex());
+                _currentPlayer->play();
+                _playButton->setIcon(_playButtonPauseIcon);
+                _playAct->setIcon(_playButtonPauseIcon);
+
+                _isPlaying = true;
+            }
+
+            _currentPlayer->setVolume(_volumeSlider->value());
+        }
     }
 }
 
 void MainWindow::_nextButtonIsPressed()
 {
-    if(!_currentPlaylist->isEmpty() && (_currentPlaylist->currentMedia() != _currentPlaylist->media(_currentPlaylist->mediaCount()-1) || _currentPlaylist->playbackMode() == QMediaPlaylist::Loop))
-        _currentPlaylist->next();
+    if(!_currentPlayer->playlist()->isEmpty() && (_currentPlayer->playlist()->currentMedia() != _currentPlayer->playlist()->media(_currentPlayer->playlist()->mediaCount()-1) || _currentPlayer->playlist()->playbackMode() == QMediaPlaylist::Loop))
+        _currentPlayer->playlist()->next();
 }
 
 void MainWindow::_newPlaylistTabButtonIsPressed()
 {
     QListWidget * newPlaylistView = new QListWidget;
 
+    setupPlaylistViewConnections(newPlaylistView);
+
     _playlistViews->push_back(newPlaylistView);
     _playlistTabs->addTab(newPlaylistView,("Playlist " + QString::number(_playlistViews->count())));
-    _playlists->push_back(new QMediaPlaylist);
+    _players->push_back(new QMediaPlayer);
+    _players->at(_players->count()-1)->setPlaylist(new QMediaPlaylist);
+    _players->at(_players->count()-1)->playlist()->setCurrentIndex(0);
+
+    connect(_players->at(_players->count()-1),SIGNAL(durationChanged(qint64)),this,SLOT(durationHasChanged(qint64)));
+    connect(_players->at(_players->count()-1),SIGNAL(positionChanged(qint64)),this,SLOT(playbackPositionChanged(qint64)));
 
     qDebug() << "Added new playlist tab!";
 }
 
 void MainWindow::_volumeSliderValueChanged()
 {
-        _player->setVolume(_volumeSlider->value());
+        _currentPlayer->setVolume(_volumeSlider->value());
 }
 
 void MainWindow::playbackPositionChanged(qint64 position)
@@ -59,14 +95,19 @@ void MainWindow::playbackPositionChanged(qint64 position)
 
 void MainWindow::durationHasChanged(qint64 duration)
 {
-    QString labelStr = getAudioInfo();
+    qDebug() << "Duration changed";
 
-    _fileMetadata->setText(labelStr);
-    _progressBar->setRange(0,duration);
-
-    for(int i = 0; i < _currentPlaylist->mediaCount(); i++)
+    if(_currentPlayer == _players->at(_playlistTabs->currentIndex()))
     {
-        if(i == _currentPlaylist->currentIndex())
+        QString labelStr = getAudioInfo();
+
+        _fileMetadata->setText(labelStr);
+        _progressBar->setRange(0,duration);
+    }
+
+    for(int i = 0; i < _currentPlayer->playlist()->mediaCount(); i++)
+    {
+        if(i == _currentPlayer->playlist()->currentIndex())
             _currentPlaylistView->item(i)->setTextColor("red");
         else _currentPlaylistView->item(i)->setTextColor("black");
     }
@@ -74,17 +115,17 @@ void MainWindow::durationHasChanged(qint64 duration)
 
 void MainWindow::_shuffleButtonHasBeenPressed()
 {
-    _currentPlaylist->shuffle();
+    _currentPlayer->playlist()->shuffle();
     refreshPlaylistView();
 }
 
 void MainWindow::playlistItemHasBeenClicked(QListWidgetItem * item)
 {
-    for(int i = 0; i < _currentPlaylist->mediaCount(); i++)
+    for(int i = 0; i < _players->at(_playlistTabs->currentIndex())->playlist()->mediaCount(); i++)
     {
-        if(_currentPlaylist->media(i).canonicalUrl().fileName() == item->text())
+        if(_players->at(_playlistTabs->currentIndex())->playlist()->media(i).canonicalUrl().fileName() == item->text())
         {
-            _currentPlaylist->setCurrentIndex(i);
+            _players->at(_playlistTabs->currentIndex())->playlist()->setCurrentIndex(i);
             resetPlaylistViewFunctionality(item);
 
             qDebug() << item->text() << "Double clicked!";
@@ -95,16 +136,17 @@ void MainWindow::playlistItemHasBeenClicked(QListWidgetItem * item)
 
 void MainWindow::resetPlaylistViewFunctionality(QListWidgetItem* item)
 {
-    _currentPlaylistView->setDisabled(true);
-    _currentPlaylistView->setDisabled(false);
+    //BROKEN
+    _playlistViews->at(_playlistTabs->currentIndex())->setDisabled(true);
+    _playlistViews->at(_playlistTabs->currentIndex())->setDisabled(false);
 
-    if(item) qDebug() << "Reset _currentPlaylistView.";
+    if(item){}
 }
 
 void MainWindow::_loopCheckboxStateHasChanged(int state)
 {
-    if(state) _currentPlaylist->setPlaybackMode(QMediaPlaylist::Loop);
-    else _currentPlaylist->setPlaybackMode(QMediaPlaylist::Sequential);
+    if(state) _currentPlayer->playlist()->setPlaybackMode(QMediaPlaylist::Loop);
+    else _currentPlayer->playlist()->setPlaybackMode(QMediaPlaylist::Sequential);
 }
 
 void MainWindow::_tabCloseRequested(int index)
@@ -124,23 +166,39 @@ void MainWindow::_tabCloseRequested(int index)
             {
                 _playlistTabs->setCurrentIndex(index-1);
                 _currentPlaylistView = _playlistViews->at(index-1);
-                _currentPlaylist = _playlists->at(index-1);
+                _currentPlayer = _players->at(index-1);
             }
             else
             {
                 _playlistTabs->setCurrentIndex(index+1);
                 _currentPlaylistView = _playlistViews->at(index+1);
-                _currentPlaylist = _playlists->at(index+1);
+                _currentPlayer = _players->at(index+1);
             }
         }
 
-        qDebug() << "Moved things around!";
         _playlistTabs->removeTab(index);
-        qDebug() << "Removed tab!";
         _playlistViews->remove(index);
-        qDebug() << "Removed playlistview!";
-        _playlists->remove(index);
-        qDebug() << "Removed playlist!";
+        _players->remove(index);
+    }
+}
+
+void MainWindow::_currentTabIndexHasChanged(int index)
+{
+    _currentPlaylistView = _playlistViews->at(index);
+
+    if(_currentPlayer != _players->at(index))
+    {
+        _playButton->setIcon(_playButtonPlayIcon);
+        _playAct->setIcon(_playButtonPlayIcon);
+
+        for(int i = 0; i < _playlistViews->at(_playlistTabs->currentIndex())->count(); i++)
+            if(_playlistViews->at(_playlistTabs->currentIndex())->currentItem()->textColor() == "red")
+                _players->at(_playlistTabs->currentIndex())->playlist()->setCurrentIndex(i);
+    }
+    else
+    {
+        _playButton->setIcon(_playButtonPauseIcon);
+        _playAct->setIcon(_playButtonPauseIcon);
     }
 }
 

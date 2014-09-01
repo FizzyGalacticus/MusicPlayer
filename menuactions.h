@@ -13,11 +13,11 @@ void MainWindow::open()
         for(QStringList::iterator file = fileNames.begin(); file < fileNames.end(); file++)
            playListFiles.append(QMediaContent(QUrl::fromLocalFile(*file)));
 
-        _currentPlaylist->clear();
-        _currentPlaylist->addMedia(playListFiles);
-        _currentPlaylist->setCurrentIndex(0);
-        _player->stop();
-        _player->setPlaylist(_currentPlaylist);
+        _currentPlayer->playlist()->clear();
+        _currentPlayer->playlist()->addMedia(playListFiles);
+        _currentPlayer->playlist()->setCurrentIndex(0);
+        _currentPlayer->stop();
+        _currentPlayer->setPlaylist(_currentPlayer->playlist());
 
         if(_isPlaying) _playButtonIsPressed();
 
@@ -34,15 +34,14 @@ void MainWindow::addMedia()
         QList<QMediaContent> playListFiles;
 
         for(QStringList::iterator file = fileNames.begin(); file < fileNames.end(); file++)
-           playListFiles.append(QMediaContent(QUrl::fromLocalFile(*file)));
+            playListFiles.append(QMediaContent(QUrl::fromLocalFile(*file)));
 
-        if(_currentPlaylist->isEmpty())
+        if(_players->at(_playlistTabs->currentIndex())->playlist() && _players->at(_playlistTabs->currentIndex())->playlist()->isEmpty())
         {
-            _currentPlaylist->addMedia(playListFiles);
-            _currentPlaylist->setCurrentIndex(0);
-            _player->setPlaylist(_currentPlaylist);
+            _players->at(_playlistTabs->currentIndex())->playlist()->addMedia(playListFiles);
+            _players->at(_playlistTabs->currentIndex())->playlist()->setCurrentIndex(0);
         }
-        else _currentPlaylist->addMedia(playListFiles);
+        else _players->at(_playlistTabs->currentIndex())->playlist()->addMedia(playListFiles);
 
         refreshPlaylistView();
     }
