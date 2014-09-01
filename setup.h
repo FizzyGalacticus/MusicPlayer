@@ -94,12 +94,9 @@ void MainWindow::setupPlaylistView()
 
 void MainWindow::setupPlaylistTabs()
 {
-    QHBoxLayout * tabs = new QHBoxLayout;
-    tabs->addWidget(_playlistTabs);
-
     _playlistTabs->addTab(_playlistView, "Playlist");
 
-    _mainLayout->addLayout(tabs);
+    _mainLayout->addWidget(_playlistTabs);
 }
 
 void MainWindow::setupOptionDash()
