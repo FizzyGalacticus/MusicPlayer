@@ -42,6 +42,7 @@ void MainWindow::_newPlaylistTabButtonIsPressed()
 
     _playlistViews->push_back(newPlaylistView);
     _playlistTabs->addTab(newPlaylistView,("Playlist " + QString::number(_playlistViews->count())));
+    _playlists->push_back(new QMediaPlaylist);
 
     qDebug() << "Added new playlist tab!";
 }
@@ -108,30 +109,38 @@ void MainWindow::_loopCheckboxStateHasChanged(int state)
 
 void MainWindow::_tabCloseRequested(int index)
 {
-    qDebug() << index;
+    //If there is only one playlist/tab open
     if(_playlistTabs->count() == 1)
     {
 
     }
     else
     {
-//        if(_currentPlaylist == _playlists->at(index))
-//        {
-//            if(index == _playlists->size()-1)
-//                _currentPlaylist = _playlists->at(index-1);
-//            else _currentPlaylist = _playlists->at(index+1);
-//        }
+        qDebug() << "More than one tab!";
+        if(_playlistTabs->currentIndex() == index)
+        {
+            qDebug() << "Trying to close the current tab!";
+            if(index == (_playlistTabs->count()-1))
+            {
+                _playlistTabs->setCurrentIndex(index-1);
+                _currentPlaylistView = _playlistViews->at(index-1);
+                _currentPlaylist = _playlists->at(index-1);
+            }
+            else
+            {
+                _playlistTabs->setCurrentIndex(index+1);
+                _currentPlaylistView = _playlistViews->at(index+1);
+                _currentPlaylist = _playlists->at(index+1);
+            }
+        }
 
-//        if(_currentPlaylistView == _playlistViews->at(index))
-//        {
-//            if(index == _playlistViews->size()-1)
-//                _currentPlaylistView = _playlistViews->at(index-1);
-//            else _currentPlaylistView = _playlistViews->at(index+1);
-//        }
-//        qDebug() << "Moved things around!";
-//        _playlistTabs->removeTab(index);
-//        _playlistViews->remove(index);
-//        _playlists->remove(index);
+        qDebug() << "Moved things around!";
+        _playlistTabs->removeTab(index);
+        qDebug() << "Removed tab!";
+        _playlistViews->remove(index);
+        qDebug() << "Removed playlistview!";
+        _playlists->remove(index);
+        qDebug() << "Removed playlist!";
     }
 }
 
