@@ -146,6 +146,7 @@ private:
 
     /**************Playlist tabs***************/
     QTabWidget * _playlistTabs;
+    QPushButton * _newPlaylistTabButton;
 
     /**************Loop Checkbox***************/
     QCheckBox * _loopCheckbox;

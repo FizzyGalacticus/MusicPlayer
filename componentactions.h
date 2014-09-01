@@ -87,7 +87,7 @@ void MainWindow::resetPlaylistViewFunctionality(QListWidgetItem* item)
     _currentPlaylistView->setDisabled(true);
     _currentPlaylistView->setDisabled(false);
 
-    qDebug() << item->text();
+    if(item) qDebug() << "Reset _currentPlaylistView.";
 }
 
 void MainWindow::_loopCheckboxStateHasChanged(int state)

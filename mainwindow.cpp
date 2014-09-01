@@ -32,10 +32,11 @@ MainWindow::MainWindow(QWidget *parent) :
     _playlists(new QVector<QMediaPlaylist *>),
     _currentPlaylist(NULL),
     _progressBar(new QProgressBar(this)),
-    _shuffleButton(new QPushButton(this)),
+    _shuffleButton(new QPushButton),
     _playlistViews(new QVector<QListWidget *>),
     _currentPlaylistView(new QListWidget),
     _playlistTabs(new QTabWidget(this)),
+    _newPlaylistTabButton(new QPushButton("New Playlist")),
     _loopCheckbox(new QCheckBox(this))
 {
     setWindowIcon(_mainWindowIcon);

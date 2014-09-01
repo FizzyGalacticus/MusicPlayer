@@ -108,8 +108,9 @@ void MainWindow::setupPlaylistTabs()
 void MainWindow::setupOptionDash()
 {
     QHBoxLayout * optionDash = new QHBoxLayout;
-    optionDash->addWidget(_loopCheckbox);
+    optionDash->addWidget(_newPlaylistTabButton);
     optionDash->addWidget(_shuffleButton);
+    optionDash->addWidget(_loopCheckbox);
     optionDash->addWidget(_volumeLabel);
     optionDash->addWidget(_volumeSlider);
 
@@ -138,11 +139,11 @@ void MainWindow::setupOptionDash()
 void MainWindow::setup()
 {
     setupPlaylistTabs();
-    setupButtons();
     setupProgressBar();
     setupMetadataLabel();
     setupMenus();
     setupOptionDash();
+    setupButtons();
 }
 
 #endif // SETUP_H
