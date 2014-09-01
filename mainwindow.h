@@ -19,6 +19,7 @@
 #include <QCheckBox>
 #include <QWidget>
 #include <QVBoxLayout>
+#include <QVector>
 
 class QAction;
 class QActionGroup;
@@ -124,7 +125,8 @@ private:
 
     /***********Media Player*********************/
     QMediaPlayer * _player;
-    QMediaPlaylist * _playlist;
+    QVector<QMediaPlaylist *> * _playlists;
+    QMediaPlaylist * _currentPlaylist;
 
     /*************Open file dialogue*************/
     QStringList _openFileDialogue();

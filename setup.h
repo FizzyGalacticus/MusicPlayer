@@ -96,6 +96,9 @@ void MainWindow::setupPlaylistTabs()
 {
     _playlistTabs->addTab(_playlistView, "Playlist");
 
+    _currentPlaylist = new QMediaPlaylist;
+    _playlists->push_back(_currentPlaylist);
+
     _mainLayout->addWidget(_playlistTabs);
 }
 

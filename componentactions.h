@@ -4,13 +4,13 @@
 
 void MainWindow::_prevButtonIsPressed ()
 {
-    if(!_playlist->isEmpty() && (_playlist->currentMedia() != _playlist->media(0) || _playlist->playbackMode() == QMediaPlaylist::Loop))
-        _playlist->previous();
+    if(!_currentPlaylist->isEmpty() && (_currentPlaylist->currentMedia() != _currentPlaylist->media(0) || _currentPlaylist->playbackMode() == QMediaPlaylist::Loop))
+        _currentPlaylist->previous();
 }
 
 void MainWindow::_playButtonIsPressed()
 {
-    if(!_playlist->isEmpty())
+    if(!_currentPlaylist->isEmpty())
     {
         if(!_isPlaying)
         {
@@ -31,8 +31,8 @@ void MainWindow::_playButtonIsPressed()
 
 void MainWindow::_nextButtonIsPressed()
 {
-    if(!_playlist->isEmpty() && (_playlist->currentMedia() != _playlist->media(_playlist->mediaCount()-1) || _playlist->playbackMode() == QMediaPlaylist::Loop))
-        _playlist->next();
+    if(!_currentPlaylist->isEmpty() && (_currentPlaylist->currentMedia() != _currentPlaylist->media(_currentPlaylist->mediaCount()-1) || _currentPlaylist->playbackMode() == QMediaPlaylist::Loop))
+        _currentPlaylist->next();
 }
 
 void MainWindow::_volumeSliderValueChanged()
@@ -65,9 +65,9 @@ void MainWindow::durationHasChanged(qint64 duration)
     _fileMetadata->setText(labelStr);
     _progressBar->setRange(0,duration);
 
-    for(int i = 0; i < _playlist->mediaCount(); i++)
+    for(int i = 0; i < _currentPlaylist->mediaCount(); i++)
     {
-        if(i == _playlist->currentIndex())
+        if(i == _currentPlaylist->currentIndex())
         {
             _playlistView->item(i)->setText(labelStr);
             _playlistView->item(i)->setTextColor("red");
@@ -78,17 +78,17 @@ void MainWindow::durationHasChanged(qint64 duration)
 
 void MainWindow::_shuffleButtonHasBeenPressed()
 {
-    _playlist->shuffle();
+    _currentPlaylist->shuffle();
     refreshPlaylistView();
 }
 
 void MainWindow::playlistItemHasBeenClicked(QListWidgetItem * item)
 {
-    for(int i = 0; i < _playlist->mediaCount(); i++)
+    for(int i = 0; i < _currentPlaylist->mediaCount(); i++)
     {
-        if(_playlist->media(i).canonicalUrl().fileName() == item->text())
+        if(_currentPlaylist->media(i).canonicalUrl().fileName() == item->text())
         {
-            _playlist->setCurrentIndex(i);
+            _currentPlaylist->setCurrentIndex(i);
             resetPlaylistViewFunctionality(item);
             break;
         }
@@ -103,8 +103,8 @@ void MainWindow::resetPlaylistViewFunctionality(QListWidgetItem* item)
 
 void MainWindow::_loopCheckboxStateHasChanged(int state)
 {
-    if(state) _playlist->setPlaybackMode(QMediaPlaylist::Loop);
-    else _playlist->setPlaybackMode(QMediaPlaylist::Sequential);
+    if(state) _currentPlaylist->setPlaybackMode(QMediaPlaylist::Loop);
+    else _currentPlaylist->setPlaybackMode(QMediaPlaylist::Sequential);
 }
 
 #endif // COMPONENTACTIONS_H

@@ -56,12 +56,12 @@ void MainWindow::refreshPlaylistView()
 {
     _playlistView->clear();
 
-    for(int i = 0; i < _playlist->mediaCount(); i++)
+    for(int i = 0; i < _currentPlaylist->mediaCount(); i++)
     {
-        _playlistView->addItem(_playlist->media(i).canonicalUrl().fileName());
+        _playlistView->addItem(_currentPlaylist->media(i).canonicalUrl().fileName());
     }
 
-    _playlistView->item(_playlist->currentIndex())->setTextColor("red");
+    _playlistView->item(_currentPlaylist->currentIndex())->setTextColor("red");
     _playlistView->show();
 }
 
