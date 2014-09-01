@@ -100,6 +100,8 @@ void MainWindow::setupPlaylistTabs()
     _playlistTabs->addTab(_currentPlaylistView, "Playlist");
     _playlistTabs->setTabsClosable(true);
 
+    connect(_playlistTabs,SIGNAL(tabCloseRequested(int)),this,SLOT(_tabCloseRequested(int)));
+
     _currentPlaylist = new QMediaPlaylist;
     _playlists->push_back(_currentPlaylist);
 

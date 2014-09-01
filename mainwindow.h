@@ -77,6 +77,9 @@ private slots:
     /**************LOOP CHECKBOX SLOT**********/
     void _loopCheckboxStateHasChanged(int);
 
+    /*************PLAYLIST TABS SLOTS*************/
+    void _tabCloseRequested(int);
+
 private:
     Ui::MainWindow *_ui;
     QIcon _mainWindowIcon;

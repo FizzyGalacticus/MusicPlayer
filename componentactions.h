@@ -106,4 +106,33 @@ void MainWindow::_loopCheckboxStateHasChanged(int state)
     else _currentPlaylist->setPlaybackMode(QMediaPlaylist::Sequential);
 }
 
+void MainWindow::_tabCloseRequested(int index)
+{
+    qDebug() << index;
+    if(_playlistTabs->count() == 1)
+    {
+
+    }
+    else
+    {
+//        if(_currentPlaylist == _playlists->at(index))
+//        {
+//            if(index == _playlists->size()-1)
+//                _currentPlaylist = _playlists->at(index-1);
+//            else _currentPlaylist = _playlists->at(index+1);
+//        }
+
+//        if(_currentPlaylistView == _playlistViews->at(index))
+//        {
+//            if(index == _playlistViews->size()-1)
+//                _currentPlaylistView = _playlistViews->at(index-1);
+//            else _currentPlaylistView = _playlistViews->at(index+1);
+//        }
+//        qDebug() << "Moved things around!";
+//        _playlistTabs->removeTab(index);
+//        _playlistViews->remove(index);
+//        _playlists->remove(index);
+    }
+}
+
 #endif // COMPONENTACTIONS_H
