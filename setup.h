@@ -98,6 +98,7 @@ void MainWindow::setupPlaylistTabs()
     setupPlaylistViewConnections(_currentPlaylistView);
 
     _playlistTabs->addTab(_currentPlaylistView, "Playlist");
+    _playlistTabs->setTabsClosable(true);
 
     _currentPlaylist = new QMediaPlaylist;
     _playlists->push_back(_currentPlaylist);
@@ -114,17 +115,12 @@ void MainWindow::setupOptionDash()
     optionDash->addWidget(_volumeLabel);
     optionDash->addWidget(_volumeSlider);
 
+    connect(_newPlaylistTabButton,SIGNAL(clicked()),this,SLOT(_newPlaylistTabButtonIsPressed()));
+
+    connect(_shuffleButton,SIGNAL(clicked()),this,SLOT(_shuffleButtonHasBeenPressed()));
 
     _loopCheckbox->setText("Loop");
     connect(_loopCheckbox, SIGNAL(stateChanged(int)), this, SLOT(_loopCheckboxStateHasChanged(int)));
-
-    connect
-            (
-                _shuffleButton,
-                SIGNAL(clicked()),
-                this,
-                SLOT(_shuffleButtonHasBeenPressed())
-            );
 
     _shuffleButton->setText("Shuffle");
 

@@ -51,6 +51,8 @@ private slots:
 
     void _prevButtonIsPressed ();
 
+    void _newPlaylistTabButtonIsPressed();
+
     /***********VOLUME SLIDER SLOT***********/
     void _volumeSliderValueChanged();
 

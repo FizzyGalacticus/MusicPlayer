@@ -36,6 +36,16 @@ void MainWindow::_nextButtonIsPressed()
         _currentPlaylist->next();
 }
 
+void MainWindow::_newPlaylistTabButtonIsPressed()
+{
+    QListWidget * newPlaylistView = new QListWidget;
+
+    _playlistViews->push_back(newPlaylistView);
+    _playlistTabs->addTab(newPlaylistView,("Playlist " + QString::number(_playlistViews->count())));
+
+    qDebug() << "Added new playlist tab!";
+}
+
 void MainWindow::_volumeSliderValueChanged()
 {
         _player->setVolume(_volumeSlider->value());
