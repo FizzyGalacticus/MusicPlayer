@@ -67,15 +67,15 @@ void MainWindow::refreshPlaylistView()
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-    if ((event->key()==Qt::Key_O) && (event->modifiers()==Qt::CTRL))
-            open();
+    if ((event->key()==Qt::Key_O) && (event->modifiers() == Qt::CTRL))
+        open();
     else if(event->key()==Qt::Key_P || event->key() == Qt::Key_MediaPlay || event->key() == Qt::Key_MediaPause)
         _playButtonIsPressed();
-    else if(event->key() == Qt::Key_Period)
+    else if(event->key() == Qt::Key_MediaNext)
         _nextButtonIsPressed();
-    else if(event->key() == Qt::Key_Comma)
+    else if(event->key() == Qt::Key_MediaPrevious)
         _prevButtonIsPressed();
-    else if(event->key() == Qt::Key_A)
+    else if(event->key() == Qt::Key_A && (event->modifiers() == Qt::CTRL))
         addMedia();
     else if((event->key()==Qt::Key_Q) && (event->modifiers()==Qt::CTRL))
         close();
