@@ -56,7 +56,7 @@ void MainWindow::refreshPlaylistView()
 {
     _playlistViews->at(_playlistTabs->currentIndex())->clear();
 
-    for(int i = 0; i < _currentPlayer->playlist()->mediaCount(); i++)
+    for(int i = 0; i < _players->at(_playlistTabs->currentIndex())->playlist()->mediaCount(); i++)
     {
         _playlistViews->at(_playlistTabs->currentIndex())->addItem(_players->at(_playlistTabs->currentIndex())->playlist()->media(i).canonicalUrl().fileName());
     }
