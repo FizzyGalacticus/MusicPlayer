@@ -1,15 +1,26 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <QStyleFactory>
+#include <QDebug>
+#include <exception>
+using std::exception;
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    a.setStyle(QStyleFactory::create("Fusion"));
+    try
+    {
+        QApplication a(argc, argv);
+        a.setStyle(QStyleFactory::create("Fusion"));
 
-    MainWindow w;
+        MainWindow w;
 
-    w.show();
+        w.show();
 
-    return a.exec();
+        return a.exec();
+    }
+    catch(exception &e)
+    {
+        qDebug() << e.what();
+        return 0;
+    }
 }

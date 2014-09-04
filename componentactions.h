@@ -96,6 +96,14 @@ void MainWindow::playbackPositionChanged(qint64 position)
 void MainWindow::durationHasChanged(qint64 duration)
 {
     qDebug() << "Duration changed";
+    int currentPlayerIndex;
+
+    for(int player = 0; player < _players->count(); player++)
+        if(_players->at(player) == _currentPlayer)
+        {
+            currentPlayerIndex = player;
+            break;
+        }
 
     if(_currentPlayer == _players->at(_playlistTabs->currentIndex()))
     {
@@ -108,8 +116,9 @@ void MainWindow::durationHasChanged(qint64 duration)
     for(int i = 0; i < _currentPlayer->playlist()->mediaCount(); i++)
     {
         if(i == _currentPlayer->playlist()->currentIndex())
-            _currentPlaylistView->item(i)->setTextColor("red");
-        else _currentPlaylistView->item(i)->setTextColor("black");
+            _playlistViews->at(currentPlayerIndex)->item(i)->setTextColor("red");
+
+        else _playlistViews->at(currentPlayerIndex)->item(i)->setTextColor("black");
     }
 }
 
@@ -191,9 +200,9 @@ void MainWindow::_currentTabIndexHasChanged(int index)
         _playButton->setIcon(_playButtonPlayIcon);
         _playAct->setIcon(_playButtonPlayIcon);
 
-        for(int i = 0; i < _playlistViews->at(_playlistTabs->currentIndex())->count(); i++)
-            if(_playlistViews->at(_playlistTabs->currentIndex())->currentItem()->textColor() == "red")
-                _players->at(_playlistTabs->currentIndex())->playlist()->setCurrentIndex(i);
+        for(int i = 0; i < _playlistViews->at(index)->count(); i++)
+            if(_playlistViews->at(index)->item(i)->textColor() == "red")
+                _players->at(index)->playlist()->setCurrentIndex(i);
     }
     else
     {
