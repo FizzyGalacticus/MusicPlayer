@@ -146,7 +146,7 @@ private:
     QVector<QListWidget *> * _playlistViews;
     QListWidget * _currentPlaylistView;
     void setupPlaylistViewConnections(const QListWidget *);
-    const QString getAudioInfo() const;
+    const QString getAudioInfo(const int &) const;
     void refreshPlaylistView();
 
     /**************Playlist tabs***************/

@@ -96,29 +96,29 @@ void MainWindow::playbackPositionChanged(qint64 position)
 void MainWindow::durationHasChanged(qint64 duration)
 {
     qDebug() << "Duration changed";
-    int currentPlayerIndex;
+    int playerWhoseDurationChanged;
 
     for(int player = 0; player < _players->count(); player++)
-        if(_players->at(player) == _currentPlayer)
+        if(_players->at(player)->duration() == duration)
         {
-            currentPlayerIndex = player;
+            playerWhoseDurationChanged = player;
             break;
         }
 
-    if(_currentPlayer == _players->at(_playlistTabs->currentIndex()))
+    if(_currentPlayer == _players->at(playerWhoseDurationChanged))
     {
-        QString labelStr = getAudioInfo();
+        QString labelStr = getAudioInfo(playerWhoseDurationChanged);
 
         _fileMetadata->setText(labelStr);
         _progressBar->setRange(0,duration);
     }
 
-    for(int i = 0; i < _currentPlayer->playlist()->mediaCount(); i++)
+    for(int i = 0; i < _players->at(playerWhoseDurationChanged)->playlist()->mediaCount(); i++)
     {
         if(i == _currentPlayer->playlist()->currentIndex())
-            _playlistViews->at(currentPlayerIndex)->item(i)->setTextColor("red");
+            _playlistViews->at(playerWhoseDurationChanged)->item(i)->setTextColor("red");
 
-        else _playlistViews->at(currentPlayerIndex)->item(i)->setTextColor("black");
+        else _playlistViews->at(playerWhoseDurationChanged)->item(i)->setTextColor("black");
     }
 }
 

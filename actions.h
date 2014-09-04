@@ -103,22 +103,22 @@ QStringList MainWindow::_openFileDialogue()
     return fileNames;
 }
 
-const QString MainWindow::getAudioInfo() const
+const QString MainWindow::getAudioInfo(const int & index) const
 {
     QString metaData = "";
 
-    if(_currentPlayer->availableMetaData().contains("Title"))
+    if(_players->at(index)->availableMetaData().contains("Title"))
     {
-        QString songTitle = _currentPlayer->metaData("Title").toString();
-        if(_currentPlayer->availableMetaData().contains("AlbumArtist"))
+        QString songTitle = _players->at(index)->metaData("Title").toString();
+        if(_players->at(index)->availableMetaData().contains("AlbumArtist"))
             metaData =
                     (
-                        _currentPlayer->metaData("AlbumArtist").toString() + " - " +
+                        _players->at(index)->metaData("AlbumArtist").toString() + " - " +
                         songTitle
                     );
         else metaData = songTitle;
     }
-    else return _currentPlayer->currentMedia().canonicalUrl().fileName();
+    else return _players->at(index)->currentMedia().canonicalUrl().fileName();
 
     return metaData;
 }
