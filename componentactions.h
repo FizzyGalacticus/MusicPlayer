@@ -40,6 +40,7 @@ void MainWindow::_playButtonIsPressed()
                 _currentPlayer = _players->at(_playlistTabs->currentIndex());
                 _playButton->setIcon(_playButtonPauseIcon);
                 _playAct->setIcon(_playButtonPauseIcon);
+                durationHasChanged(_currentPlayer->duration());
                 _currentPlayer->play();
 
                 _isPlaying = true;
@@ -47,9 +48,10 @@ void MainWindow::_playButtonIsPressed()
             else
             {
                 _currentPlayer = _players->at(_playlistTabs->currentIndex());
-                _currentPlayer->play();
                 _playButton->setIcon(_playButtonPauseIcon);
                 _playAct->setIcon(_playButtonPauseIcon);
+                durationHasChanged(_currentPlayer->duration());
+                _currentPlayer->play();
 
                 _isPlaying = true;
             }
@@ -95,17 +97,18 @@ void MainWindow::playbackPositionChanged(qint64 position)
 
 void MainWindow::durationHasChanged(qint64 duration)
 {
-    qDebug() << "Duration changed";
-    int playerWhoseDurationChanged;
+    qDebug() << "Duration: " << ((duration / (1000*60)) % 60) << ':' << ((duration / 1000) % 60);
+    int playerWhoseDurationChanged = -1;
 
     for(int player = 0; player < _players->count(); player++)
         if(_players->at(player)->duration() == duration)
         {
             playerWhoseDurationChanged = player;
+            qDebug() << "Player whose duration changed:" << playerWhoseDurationChanged;
             break;
         }
 
-    if(_currentPlayer == _players->at(playerWhoseDurationChanged))
+    if(playerWhoseDurationChanged != -1 && _currentPlayer == _players->at(playerWhoseDurationChanged))
     {
         QString labelStr = getAudioInfo(playerWhoseDurationChanged);
 
@@ -113,13 +116,14 @@ void MainWindow::durationHasChanged(qint64 duration)
         _progressBar->setRange(0,duration);
     }
 
-    for(int i = 0; i < _players->at(playerWhoseDurationChanged)->playlist()->mediaCount(); i++)
-    {
-        if(i == _currentPlayer->playlist()->currentIndex())
-            _playlistViews->at(playerWhoseDurationChanged)->item(i)->setTextColor("red");
+    if(playerWhoseDurationChanged != -1)
+        for(int i = 0; i < _players->at(playerWhoseDurationChanged)->playlist()->mediaCount(); i++)
+        {
+            if(i == _players->at(playerWhoseDurationChanged)->playlist()->currentIndex())
+                _playlistViews->at(playerWhoseDurationChanged)->item(i)->setTextColor("red");
 
-        else _playlistViews->at(playerWhoseDurationChanged)->item(i)->setTextColor("black");
-    }
+            else _playlistViews->at(playerWhoseDurationChanged)->item(i)->setTextColor("black");
+        }
 }
 
 void MainWindow::_shuffleButtonHasBeenPressed()
@@ -168,6 +172,8 @@ void MainWindow::_tabCloseRequested(int index)
     else
     {
         qDebug() << "More than one tab!";
+        if(_currentPlayer == _players->at(index))
+            _currentPlayer->pause();
         if(_playlistTabs->currentIndex() == index)
         {
             qDebug() << "Trying to close the current tab!";
@@ -185,9 +191,9 @@ void MainWindow::_tabCloseRequested(int index)
             }
         }
 
+        _players->remove(index);
         _playlistTabs->removeTab(index);
         _playlistViews->remove(index);
-        _players->remove(index);
     }
 }
 
@@ -199,10 +205,6 @@ void MainWindow::_currentTabIndexHasChanged(int index)
     {
         _playButton->setIcon(_playButtonPlayIcon);
         _playAct->setIcon(_playButtonPlayIcon);
-
-        for(int i = 0; i < _playlistViews->at(index)->count(); i++)
-            if(_playlistViews->at(index)->item(i)->textColor() == "red")
-                _players->at(index)->playlist()->setCurrentIndex(i);
     }
     else
     {
