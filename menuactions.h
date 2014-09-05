@@ -13,11 +13,10 @@ void MainWindow::open()
         for(QStringList::iterator file = fileNames.begin(); file < fileNames.end(); file++)
            playListFiles.append(QMediaContent(QUrl::fromLocalFile(*file)));
 
-        _currentPlayer->playlist()->clear();
-        _currentPlayer->playlist()->addMedia(playListFiles);
-        _currentPlayer->playlist()->setCurrentIndex(0);
-        _currentPlayer->stop();
-        _currentPlayer->setPlaylist(_currentPlayer->playlist());
+        _players->at(_playlistTabs->currentIndex())->stop();
+        _players->at(_playlistTabs->currentIndex())->playlist()->clear();
+        _players->at(_playlistTabs->currentIndex())->playlist()->addMedia(playListFiles);
+        _players->at(_playlistTabs->currentIndex())->playlist()->setCurrentIndex(0);
 
         if(_isPlaying) _playButtonIsPressed();
 
