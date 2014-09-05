@@ -74,7 +74,6 @@ MainWindow::MainWindow(QWidget *parent) :
     _currentPlayer->setVolume(50);
 
     setup();
-
 }
 
 MainWindow::~MainWindow()
