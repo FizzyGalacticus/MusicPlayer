@@ -128,7 +128,7 @@ void MainWindow::durationHasChanged(qint64 duration)
 
 void MainWindow::_shuffleButtonHasBeenPressed()
 {
-    _currentPlayer->playlist()->shuffle();
+    _players->at(_playlistTabs->currentIndex())->playlist()->shuffle();
     refreshPlaylistView();
 }
 
