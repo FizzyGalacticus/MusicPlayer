@@ -60,8 +60,9 @@ void MainWindow::about()
     _infoLabel->setText(tr("Invoked <b>Help|About</b>"));
     QMessageBox::about(this, tr("About Menu"),
             tr("CS 372 - Software Construction"
-               "<p>Final Project - \"Music Player\""
-               "<p>Spring Semester 2014"));
+               "<p>Final Project - \"<a href='https://github.com/FizzyGalacticus/MusicPlayer'>Music Player</a>\""
+               "<p>Spring Semester 2014"
+               "<p><b>Instructor:</b> Chris Hartman"));
 }
 
 void MainWindow::aboutQt()
@@ -80,6 +81,8 @@ void MainWindow::aboutAuthors()
                 (
                     "<b><center>Authors:</center></b>"
                     "<p>Dustin Dodson"
+
+                    "<b><center>Previous Contributors:</center></b>"
                     "<p>Erik Talvi"
                     "<p>Matthew Parrish"
                     "<p>Nate Helms"
