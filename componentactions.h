@@ -158,8 +158,12 @@ void MainWindow::resetPlaylistViewFunctionality(QListWidgetItem* item)
 
 void MainWindow::_loopCheckboxStateHasChanged(int state)
 {
-    if(state) _currentPlayer->playlist()->setPlaybackMode(QMediaPlaylist::Loop);
-    else _currentPlayer->playlist()->setPlaybackMode(QMediaPlaylist::Sequential);
+    if(state)
+        for(int i = 0; i < _players->size(); i++)
+            _players->at(i)->playlist()->setPlaybackMode(QMediaPlaylist::Loop);
+    else
+        for(int i = 0; i < _players->size(); i++)
+            _players->at(i)->playlist()->setPlaybackMode(QMediaPlaylist::Sequential);
 }
 
 void MainWindow::_tabCloseRequested(int index)
