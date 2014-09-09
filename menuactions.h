@@ -13,12 +13,21 @@ void MainWindow::open()
         for(QStringList::iterator file = fileNames.begin(); file < fileNames.end(); file++)
            playListFiles.append(QMediaContent(QUrl::fromLocalFile(*file)));
 
-        _players->at(_playlistTabs->currentIndex())->stop();
-        _players->at(_playlistTabs->currentIndex())->playlist()->clear();
-        _players->at(_playlistTabs->currentIndex())->playlist()->addMedia(playListFiles);
-        _players->at(_playlistTabs->currentIndex())->playlist()->setCurrentIndex(0);
+        if(_currentPlayer == _players->at(_playlistTabs->currentIndex()))
+        {
+            _currentPlayer->pause();
+            _currentPlayer->playlist()->clear();
+            _currentPlayer->playlist()->addMedia(playListFiles);
+            _currentPlayer->playlist()->setCurrentIndex(0);
 
-        if(_isPlaying) _playButtonIsPressed();
+            if(_isPlaying) _currentPlayer->play();
+        }
+        else
+        {
+            _players->at(_playlistTabs->currentIndex())->playlist()->clear();
+            _players->at(_playlistTabs->currentIndex())->playlist()->addMedia(playListFiles);
+            _players->at(_playlistTabs->currentIndex())->playlist()->setCurrentIndex(0);
+        }
 
         refreshPlaylistView();
     }
