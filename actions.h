@@ -2,6 +2,7 @@
 #define ACTIONS_H
 #include "mainwindow.h"
 #include <QtWidgets>
+#include <QStandardPaths>
 
 void MainWindow::createActions()
 {
@@ -81,10 +82,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         close();
 }
 
-QStringList MainWindow::_openFileDialogue()
+QStringList MainWindow::_openFileDialog()
 {
     QFileDialog openFileDialog(this);
-    openFileDialog.setDirectory(QDir::homePath().append("/Music/"));
+    qDebug() << QStandardPaths::locate(QStandardPaths::MusicLocation, "", QStandardPaths::LocateDirectory);
+    openFileDialog.setDirectory(QStandardPaths::locate(QStandardPaths::MusicLocation, "", QStandardPaths::LocateDirectory));
     openFileDialog.setNameFilter
             (
                 tr

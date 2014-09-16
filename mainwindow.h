@@ -134,7 +134,7 @@ private:
     QMediaPlayer * _currentPlayer;
 
     /*************Open file dialogue*************/
-    QStringList _openFileDialogue();
+    QStringList _openFileDialog();
 
     /**************Progress Bar*****************/
     QProgressBar * _progressBar;

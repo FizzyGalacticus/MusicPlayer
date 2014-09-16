@@ -4,7 +4,7 @@
 
 void MainWindow::open()
 {
-    QStringList fileNames = _openFileDialogue();
+    QStringList fileNames = _openFileDialog();
 
     if(fileNames.size())
     {
@@ -35,7 +35,7 @@ void MainWindow::open()
 
 void MainWindow::addMedia()
 {
-    QStringList fileNames = _openFileDialogue();
+    QStringList fileNames = _openFileDialog();
 
     if(fileNames.size())
     {
