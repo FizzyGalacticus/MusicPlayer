@@ -137,10 +137,14 @@ void MainWindow::setupOptionDash()
 
 void MainWindow::setup()
 {
+#ifdef Q_OS_Android
+    qDebug() << "Do Android stuff here!";
+#else
+    setupMenus();
+#endif
     setupPlaylistTabs();
     setupProgressBar();
     setupMetadataLabel();
-    setupMenus();
     setupOptionDash();
     setupButtons();
 }
