@@ -32,7 +32,22 @@ void MainWindow::setupButtons()
 void MainWindow::setupMenus()
 {
     createActions();
+#ifdef __ANDROID__
+    QHBoxLayout * androidButtonLayout = new QHBoxLayout(this);
+
+    QPushButton * androidOpenButton = new QPushButton("Open Music", this);
+    QPushButton * androidAddButton = new QPushButton("Add Music", this);
+
+    connect(androidOpenButton, SIGNAL(clicked()), this, SLOT(open()));
+    connect(androidAddButton, SIGNAL(clicked()), this, SLOT(addMedia()));
+
+    androidButtonLayout->addWidget(androidOpenButton);
+    androidButtonLayout->addWidget(androidAddButton);
+
+    _mainLayout->addLayout(androidButtonLayout);
+#else
     createMenus();
+#endif
 }
 
 void MainWindow::setupMetadataLabel()
@@ -137,11 +152,7 @@ void MainWindow::setupOptionDash()
 
 void MainWindow::setup()
 {
-#ifdef __ANDROID__
-    qDebug() << "Do Android stuff here!";
-#else
     setupMenus();
-#endif
     setupPlaylistTabs();
     setupProgressBar();
     setupMetadataLabel();
