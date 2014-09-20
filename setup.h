@@ -137,7 +137,7 @@ void MainWindow::setupOptionDash()
 
 void MainWindow::setup()
 {
-#ifdef Q_OS_Android
+#ifdef __ANDROID__
     qDebug() << "Do Android stuff here!";
 #else
     setupMenus();
