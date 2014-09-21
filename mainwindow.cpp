@@ -66,10 +66,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /************SETTING UP STATUS BAR********************/
 
-    #ifndef Q_OS_SYMBIAN
+#ifndef __ANDROID__
     QString message = tr("A context menu is available by right-clicking");
     statusBar()->showMessage(message);
-    #endif
+#endif
 
     _currentPlayer->setVolume(50);
 
