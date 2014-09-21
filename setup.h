@@ -32,21 +32,21 @@ void MainWindow::setupButtons()
 void MainWindow::setupMenus()
 {
     createActions();
+    createMenus();
+
 #ifdef __ANDROID__
     QHBoxLayout * androidButtonLayout = new QHBoxLayout(this);
 
-    QPushButton * androidOpenButton = new QPushButton("Open Music", this);
     QPushButton * androidAddButton = new QPushButton("Add Music", this);
+    //QPushButton * androidExitButton = new QPushButton("Exit", this);
 
-    connect(androidOpenButton, SIGNAL(clicked()), this, SLOT(open()));
     connect(androidAddButton, SIGNAL(clicked()), this, SLOT(addMedia()));
+    //connect(androidExitButton, SIGNAL(clicked()), this, SLOT(exit()));
 
-    androidButtonLayout->addWidget(androidOpenButton);
     androidButtonLayout->addWidget(androidAddButton);
+    //androidButtonLayout->addWidget(androidExitButton);
 
     _mainLayout->addLayout(androidButtonLayout);
-#else
-    createMenus();
 #endif
 }
 

@@ -7,22 +7,25 @@
 void MainWindow::createMenus()
 {
     _fileMenu = menuBar()->addMenu(tr("&File"));
+    _fileMenu->addAction(_exitAct);
+
+    _helpMenu = menuBar()->addMenu(tr("&Help"));
+    _helpMenu->addAction(_aboutAct);
+    _helpMenu->addAction(_aboutQtAct);
+    _helpMenu->addAction(_aboutAuthorsAct);
+
+#ifndef __ANDROID__
     _fileMenu->addAction(_openAct);
     _fileMenu->addSeparator();
     _fileMenu->addAction(_addMediaAct);
     _fileMenu->addSeparator();
-    _fileMenu->addAction(_exitAct);
 
     _playMenu = menuBar()->addMenu(tr("&Play"));
     _playMenu->addSeparator();
     _playMenu->addAction(_playAct);
     _playMenu->addAction(_nextSongAct);
     _playMenu->addAction(_previousSongAct);
-
-    _helpMenu = menuBar()->addMenu(tr("&Help"));
-    _helpMenu->addAction(_aboutAct);
-    _helpMenu->addAction(_aboutQtAct);
-    _helpMenu->addAction(_aboutAuthorsAct);
+#endif
 }
 
 void MainWindow::contextMenuEvent(QContextMenuEvent *event)

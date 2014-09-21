@@ -97,14 +97,12 @@ void MainWindow::playbackPositionChanged(qint64 position)
 
 void MainWindow::durationHasChanged(qint64 duration)
 {
-    qDebug() << "Duration: " << ((duration / (1000*60)) % 60) << ':' << ((duration / 1000) % 60);
     int playerWhoseDurationChanged = -1;
 
     for(int player = 0; player < _players->count(); player++)
         if(_players->at(player)->duration() == duration)
         {
             playerWhoseDurationChanged = player;
-            qDebug() << "Player whose duration changed:" << playerWhoseDurationChanged;
             break;
         }
 

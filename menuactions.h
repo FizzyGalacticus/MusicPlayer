@@ -57,7 +57,9 @@ void MainWindow::addMedia()
 
 void MainWindow::about()
 {
+#ifndef __ANDROID__
     _infoLabel->setText(tr("Invoked <b>Help|About</b>"));
+#endif
     QMessageBox::about(this, tr("About Menu"),
             tr("CS 372 - Software Construction"
                "<p>Final Project - \"<a href='https://github.com/FizzyGalacticus/MusicPlayer'>Music Player</a>\""
@@ -67,12 +69,16 @@ void MainWindow::about()
 
 void MainWindow::aboutQt()
 {
+#ifndef __ANDROID__
     _infoLabel->setText(tr("Invoked <b>Help|About Qt</b>"));
+#endif
 }
 
 void MainWindow::aboutAuthors()
 {
+#ifndef __ANDROID__
     _infoLabel->setText(tr("Invoked <b>Help|About</b>"));
+#endif
     QMessageBox::about
             (
                 this,
