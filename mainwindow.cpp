@@ -46,12 +46,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QWidget *topFiller = new QWidget;
     topFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-#ifdef Q_OS_SYMBIAN
-    _infoLabel = new QLabel(tr("<i>Choose a menu option</i>"));
-#else
+#ifndef __ANDROID__
     _infoLabel = new QLabel(tr("<i>Choose a menu option, or right-click to "
                               "invoke a context menu</i>"));
-#endif
+
     _infoLabel->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
     _infoLabel->setAlignment(Qt::AlignCenter);
 
@@ -66,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /************SETTING UP STATUS BAR********************/
 
-#ifndef __ANDROID__
+
     QString message = tr("A context menu is available by right-clicking");
     statusBar()->showMessage(message);
 #endif
