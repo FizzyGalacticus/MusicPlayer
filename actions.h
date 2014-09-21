@@ -62,7 +62,8 @@ void MainWindow::refreshPlaylistView()
         _playlistViews->at(_playlistTabs->currentIndex())->addItem(_players->at(_playlistTabs->currentIndex())->playlist()->media(i).canonicalUrl().fileName());
     }
 
-    _playlistViews->at(_playlistTabs->currentIndex())->item(_players->at(_playlistTabs->currentIndex())->playlist()->currentIndex())->setTextColor("red");
+    if(_players->at(_playlistTabs->currentIndex())->playlist()->mediaCount())
+        _playlistViews->at(_playlistTabs->currentIndex())->item(_players->at(_playlistTabs->currentIndex())->playlist()->currentIndex())->setTextColor("red");
     _playlistViews->at(_playlistTabs->currentIndex())->show();
 }
 
@@ -85,7 +86,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 QStringList MainWindow::_openFileDialog()
 {
     QFileDialog openFileDialog(this);
-    qDebug() << QStandardPaths::locate(QStandardPaths::MusicLocation, "", QStandardPaths::LocateDirectory);
     openFileDialog.setDirectory(QStandardPaths::locate(QStandardPaths::MusicLocation, "", QStandardPaths::LocateDirectory));
     openFileDialog.setNameFilter
             (

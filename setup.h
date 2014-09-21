@@ -158,6 +158,22 @@ void MainWindow::setup()
     setupMetadataLabel();
     setupOptionDash();
     setupButtons();
+
+#ifdef __ANDROID__
+    QList<QMediaContent> * myContent = new QList<QMediaContent>;
+    QStringList * audioFiles = getAllMusicFiles(QStandardPaths::locate(QStandardPaths::MusicLocation, "", QStandardPaths::LocateDirectory));
+
+    for(int i = 0; i < audioFiles->count(); i++)
+        myContent->push_back(QMediaContent(QUrl::fromLocalFile(audioFiles->at(i))));
+
+    _currentPlayer->setPlaylist(new QMediaPlaylist);
+    _currentPlayer->playlist()->addMedia(*myContent);
+    _currentPlayer->playlist()->setCurrentIndex(0);
+    _currentPlayer->setVolume(100);
+    _volumeSlider->setValue(100);
+    refreshPlaylistView();
+
+#endif
 }
 
 #endif // SETUP_H

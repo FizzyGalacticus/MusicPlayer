@@ -74,6 +74,37 @@ MainWindow::MainWindow(QWidget *parent) :
     setup();
 }
 
+QStringList * MainWindow::getAllMusicFiles(const QString& searchDirectory)
+{
+    QDir dir(searchDirectory);
+    QFileInfoList list = dir.entryInfoList();
+    QStringList * audioFiles = new QStringList;
+
+    for (int iList=0;iList<list.count();iList++)
+    {
+        QFileInfo info = list[iList];
+
+        QString sFilePath = info.filePath();
+        if (info.isDir())
+        {
+            // recursive
+            if (info.fileName()!=".." && info.fileName()!=".")
+            {
+                audioFiles->append(*getAllMusicFiles(sFilePath));
+            }
+        }
+        else
+        {
+            QString suff = info.suffix().toLower();
+            if(suff == "mp3" || suff == "flac" || suff == "mp4" || suff == "m4a")
+                audioFiles->append(info.absoluteFilePath());
+            qDebug() << "Found suffix:" << suff;
+        }
+    }
+
+    return audioFiles;
+}
+
 MainWindow::~MainWindow()
 {
     delete _ui;

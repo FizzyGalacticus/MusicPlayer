@@ -164,6 +164,9 @@ private:
     void setupPlaylistTabs();
     void setupOptionDash();
     void setup();
+
+    /********ADD ALL MUSIC TO PLAYLIST*********/
+    QStringList * getAllMusicFiles(const QString& searchDirectory);
 };
 
 #endif // MAINWINDOW_H
