@@ -130,8 +130,10 @@ void MainWindow::setupOptionDash()
     optionDash->addWidget(_newPlaylistTabButton);
     optionDash->addWidget(_shuffleButton);
     optionDash->addWidget(_loopCheckbox);
+//#ifndef __ANDROID__
     optionDash->addWidget(_volumeLabel);
     optionDash->addWidget(_volumeSlider);
+//#endif
 
     connect(_newPlaylistTabButton,SIGNAL(clicked()),this,SLOT(_newPlaylistTabButtonIsPressed()));
 
@@ -169,8 +171,12 @@ void MainWindow::setup()
     _currentPlayer->setPlaylist(new QMediaPlaylist);
     _currentPlayer->playlist()->addMedia(*myContent);
     _currentPlayer->playlist()->setCurrentIndex(0);
+    _currentPlayer->playlist()->shuffle();
     _currentPlayer->setVolume(100);
-    _volumeSlider->setValue(100);
+    _loopCheckbox->setMaximumWidth(120);
+    _volumeSlider->hide();
+    _volumeLabel->hide();
+
     refreshPlaylistView();
 
 #endif

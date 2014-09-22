@@ -12,6 +12,10 @@ int main(int argc, char *argv[])
         QApplication a(argc, argv);
         a.setStyle(QStyleFactory::create("Fusion"));
 
+#ifdef __ANDROID__
+        a.setStyleSheet("QScrollBar:horizontal {min-height:30} QScrollBar:vertical {min-width:30} QCheckBox::indicator {min-width:30px; min-height: 30px;}");
+#endif
+
         MainWindow w;
 
         w.show();

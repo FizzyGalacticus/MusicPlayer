@@ -98,7 +98,6 @@ QStringList * MainWindow::getAllMusicFiles(const QString& searchDirectory)
             QString suff = info.suffix().toLower();
             if(suff == "mp3" || suff == "flac" || suff == "mp4" || suff == "m4a")
                 audioFiles->append(info.absoluteFilePath());
-            qDebug() << "Found suffix:" << suff;
         }
     }
 

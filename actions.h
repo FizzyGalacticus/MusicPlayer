@@ -86,6 +86,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 QStringList MainWindow::_openFileDialog()
 {
     QFileDialog openFileDialog(this);
+    openFileDialog.setMinimumSize(QSize(this->width(),this->height()));
+
     openFileDialog.setDirectory(QStandardPaths::locate(QStandardPaths::MusicLocation, "", QStandardPaths::LocateDirectory));
     openFileDialog.setNameFilter
             (
