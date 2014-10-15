@@ -169,8 +169,9 @@ private:
     void setup();
 
     /*************SQLite Functions**************/
-    bool savePlaylist();
-    bool writePlaylist(const QFile *);
+    bool savePlaylist(const int &);
+    bool writePlaylist(const QFile *, const int &);
+    const QStringList * readPlaylist(const QFile *);
 
     /********ADD ALL MUSIC TO PLAYLIST*********/
     QStringList * getAllMusicFiles(const QString& searchDirectory);
