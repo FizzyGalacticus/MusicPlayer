@@ -97,7 +97,7 @@ QStringList MainWindow::_openFileDialog(const QString * fileTypes, const QString
     openFileDialog.setDirectory(*startingLocation);
     openFileDialog.setNameFilter(tr(fileTypes->toStdString().c_str()));
     openFileDialog.setViewMode(QFileDialog::List);
-    openFileDialog.setFileMode(QFileDialog::ExistingFiles);
+    //openFileDialog.setFileMode(QFileDialog::ExistingFiles);
 
     QStringList fileNames;
 
