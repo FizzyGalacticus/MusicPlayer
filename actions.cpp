@@ -83,19 +83,19 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         close();
 }
 
-QStringList MainWindow::_openFileDialog()
+const QString * MainWindow::getAudioFileTypes()
+{
+    return new QString("Audio (*.mp3 *.mp4 *.wav *.flac *.ogg *.aiff *.wma *.mid *.ra *.ram "
+                       "*.rm *.vox *.raw *.aac *.au *.ac3 *.m4a *.amr *.mod *.669 *.s3m *.mtm)");
+}
+
+QStringList MainWindow::_openFileDialog(const QString * fileTypes, const QString * startingLocation)
 {
     QFileDialog openFileDialog(this);
     openFileDialog.setMinimumSize(QSize(this->width(),this->height()));
 
-    openFileDialog.setDirectory(QStandardPaths::locate(QStandardPaths::MusicLocation, "", QStandardPaths::LocateDirectory));
-    openFileDialog.setNameFilter
-            (
-                tr
-                (
-                    "Audio (*.mp3 *.mp4 *.wav *.flac *.ogg *.aiff *.wma *.mid *.ra *.ram *.rm *.vox *.raw *.aac *.au *.ac3 *.m4a *.amr *.mod *.669 *.s3m *.mtm)"
-                )
-            );
+    openFileDialog.setDirectory(*startingLocation);
+    openFileDialog.setNameFilter(tr(fileTypes->toStdString().c_str()));
     openFileDialog.setViewMode(QFileDialog::List);
     openFileDialog.setFileMode(QFileDialog::ExistingFiles);
 

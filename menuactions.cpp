@@ -4,7 +4,8 @@
 
 void MainWindow::open()
 {
-    QStringList fileNames = _openFileDialog();
+    QString * defaultMusicDirectory = new QString(QStandardPaths::locate(QStandardPaths::MusicLocation, "", QStandardPaths::LocateDirectory));
+    QStringList fileNames = _openFileDialog(getAudioFileTypes(),defaultMusicDirectory);
 
     if(fileNames.size())
     {
@@ -35,7 +36,9 @@ void MainWindow::open()
 
 void MainWindow::addMedia()
 {
-    QStringList fileNames = _openFileDialog();
+    QString * defaultMusicDirectory = new QString(QStandardPaths::locate(QStandardPaths::MusicLocation, "", QStandardPaths::LocateDirectory));
+    QStringList fileNames = _openFileDialog(getAudioFileTypes(),defaultMusicDirectory);
+
 
     if(fileNames.size())
     {

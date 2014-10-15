@@ -133,8 +133,11 @@ private:
     QVector<QMediaPlayer *> * _players;
     QMediaPlayer * _currentPlayer;
 
+    /***********Get Audio File Types*********/
+    const QString * getAudioFileTypes();
+
     /*************Open file dialogue*************/
-    QStringList _openFileDialog();
+    QStringList _openFileDialog(const QString *, const QString *);
 
     /**************Progress Bar*****************/
     QProgressBar * _progressBar;
