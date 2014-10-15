@@ -159,7 +159,7 @@ private:
     /**************Loop Checkbox***************/
     QCheckBox * _loopCheckbox;
 
-    /*************SETUP FUNCTIONS***************/
+    /*************Setup Functions***************/
     void setupButtons();
     void setupProgressBar();
     void setupMetadataLabel();
@@ -167,6 +167,9 @@ private:
     void setupPlaylistTabs();
     void setupOptionDash();
     void setup();
+
+    /*************SQLite Functions**************/
+    bool savePlaylist(const int &);
 
     /********ADD ALL MUSIC TO PLAYLIST*********/
     QStringList * getAllMusicFiles(const QString& searchDirectory);
