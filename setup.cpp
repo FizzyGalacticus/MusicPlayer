@@ -128,12 +128,13 @@ void MainWindow::setupOptionDash()
 {
     QHBoxLayout * optionDash = new QHBoxLayout;
     optionDash->addWidget(_newPlaylistTabButton);
+    optionDash->addStretch();
     optionDash->addWidget(_shuffleButton);
+    optionDash->addStretch();
     optionDash->addWidget(_loopCheckbox);
-//#ifndef __ANDROID__
+    optionDash->addStretch();
     optionDash->addWidget(_volumeLabel);
     optionDash->addWidget(_volumeSlider);
-//#endif
 
     connect(_newPlaylistTabButton,SIGNAL(clicked()),this,SLOT(_newPlaylistTabButtonIsPressed()));
 
@@ -173,9 +174,11 @@ void MainWindow::setup()
     _currentPlayer->playlist()->setCurrentIndex(0);
     _currentPlayer->playlist()->shuffle();
     _currentPlayer->setVolume(100);
-    _loopCheckbox->setMaximumWidth(120);
+    _loopCheckbox->setMinimumWidth(120);
     _volumeSlider->hide();
     _volumeLabel->hide();
+
+    this->setMaximumSize(this->width(), this->height());
 
     refreshPlaylistView();
 

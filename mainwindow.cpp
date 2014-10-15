@@ -1,8 +1,8 @@
-#include "actions.h"
-#include "componentactions.h"
-#include "menus.h"
-#include "menuactions.h"
-#include "setup.h"
+#include "actions.cpp"
+#include "componentactions.cpp"
+#include "menus.cpp"
+#include "menuactions.cpp"
+#include "setup.cpp"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :

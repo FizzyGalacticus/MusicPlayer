@@ -13,14 +13,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    actions.cpp \
+    componentactions.cpp \
+    menuactions.cpp \
+    menus.cpp \
+    setup.cpp
 
-HEADERS  += mainwindow.h \
-    menus.h \
-    actions.h \
-    setup.h \
-    componentactions.h \
-    menuactions.h
+HEADERS  += mainwindow.h
 
 FORMS    += mainwindow.ui
 
