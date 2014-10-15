@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     componentactions.cpp \
     menuactions.cpp \
     menus.cpp \
-    setup.cpp
+    setup.cpp \
+    sqlite.cpp
 
 HEADERS  += mainwindow.h
 
