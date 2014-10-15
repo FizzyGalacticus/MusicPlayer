@@ -19,6 +19,7 @@ bool MainWindow::savePlaylist(const int & index)
         if(returnedFileNames.at(0).endsWith(".db")) databaseFile->setFileName(returnedFileNames.at(0));
         else databaseFile->setFileName(returnedFileNames.at(0) + ".db");
     }
+    else return false;
 
     if(databaseFile->exists())
     {
@@ -78,4 +79,41 @@ const QStringList * MainWindow::readPlaylist(const QFile * playlistLocation)
     }
 
     return playlistFiles;
+}
+
+bool MainWindow::loadPlaylist(const int & index)
+{
+    if(_playlistViews->at(index)->count())
+    {
+        //There's already stuff in the playlist!
+        return false;
+    }
+
+    QString * defaultMusicDirectory = new QString(QStandardPaths::locate(QStandardPaths::MusicLocation, "", QStandardPaths::LocateDirectory));
+    QDir * playlistDirectory = new QDir((*defaultMusicDirectory + "Playlists"));
+    if(!playlistDirectory->exists()) playlistDirectory->mkdir(playlistDirectory->absolutePath());
+    QStringList returnedFileNames = _openFileDialog(new QString("SQLite Database (*.db)"),new QString(playlistDirectory->absolutePath()));
+    QFile * databaseFile = new QFile;
+
+    if(returnedFileNames.count())
+        databaseFile->setFileName(returnedFileNames.at(0));
+    else return false;
+
+    const QStringList * playlistFiles = readPlaylist(databaseFile);
+
+    QList<QMediaContent> playlistMediaFiles;
+
+    for(QStringList::const_iterator file = playlistFiles->constBegin(); file < playlistFiles->constEnd(); file++)
+        playlistMediaFiles.append(QMediaContent(QUrl::fromLocalFile(*file)));
+
+    for(int i = 0; i < playlistFiles->count(); i++)
+    {
+        _players->at(index)->stop();
+        _players->at(index)->playlist()->clear();
+        _players->at(index)->playlist()->addMedia(playlistMediaFiles);
+    }
+
+    refreshPlaylistView();
+
+    return true;
 }

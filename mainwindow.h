@@ -172,6 +172,7 @@ private:
     bool savePlaylist(const int &);
     bool writePlaylist(const QFile *, const int &);
     const QStringList * readPlaylist(const QFile *);
+    bool loadPlaylist(const int &);
 
     /********ADD ALL MUSIC TO PLAYLIST*********/
     QStringList * getAllMusicFiles(const QString& searchDirectory);
