@@ -79,6 +79,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         _prevButtonIsPressed();
     else if(event->key() == Qt::Key_A && (event->modifiers() == Qt::CTRL))
         addMedia();
+    else if(event->key() == Qt::Key_S && (event->modifiers() == Qt::CTRL))
+        qDebug() << savePlaylist();
     else if((event->key()==Qt::Key_Q) && (event->modifiers()==Qt::CTRL))
         close();
 }
