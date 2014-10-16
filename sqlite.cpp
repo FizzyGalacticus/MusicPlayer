@@ -44,9 +44,14 @@ bool MainWindow::writePlaylist(const QFile * playlistLocation, const int & index
 
         for(int i = 0; i < _playlistViews->at(index)->count(); i++)
         {
+            QString audioFilePath = _players->at(index)->playlist()->media(i).canonicalUrl().url();
+            if(audioFilePath.contains("file:"))
+            {    audioFilePath.remove(0,7);
+                qDebug() << audioFilePath;}
+
             QString query = (
                         "INSERT INTO audiofiles VALUES (\"" +
-                        _playlistViews->at(index)->item(i)->text() +
+                        audioFilePath +
                         "\")");
             dbquery->exec(query);
         }
@@ -106,12 +111,10 @@ bool MainWindow::loadPlaylist(const int & index)
     for(QStringList::const_iterator file = playlistFiles->constBegin(); file < playlistFiles->constEnd(); file++)
         playlistMediaFiles.append(QMediaContent(QUrl::fromLocalFile(*file)));
 
-    for(int i = 0; i < playlistFiles->count(); i++)
-    {
-        _players->at(index)->stop();
-        _players->at(index)->playlist()->clear();
-        _players->at(index)->playlist()->addMedia(playlistMediaFiles);
-    }
+    _players->at(index)->stop();
+    _players->at(index)->playlist()->clear();
+    _players->at(index)->playlist()->addMedia(playlistMediaFiles);
+    _players->at(index)->playlist()->setCurrentIndex(0);
 
     refreshPlaylistView();
 
