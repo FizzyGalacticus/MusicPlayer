@@ -46,8 +46,7 @@ bool MainWindow::writePlaylist(const QFile * playlistLocation, const int & index
         {
             QString audioFilePath = _players->at(index)->playlist()->media(i).canonicalUrl().url();
             if(audioFilePath.contains("file:"))
-            {    audioFilePath.remove(0,7);
-                qDebug() << audioFilePath;}
+                audioFilePath.remove(0,7);
 
             QString query = (
                         "INSERT INTO audiofiles VALUES (\"" +
