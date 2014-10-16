@@ -6,6 +6,11 @@
 #include <QDir>
 #include <QFile>
 
+bool MainWindow::savePlaylist()
+{
+    return savePlaylist(_playlistTabs->currentIndex());
+}
+
 bool MainWindow::savePlaylist(const int & index)
 {
     QString * defaultMusicDirectory = new QString(QStandardPaths::locate(QStandardPaths::MusicLocation, "", QStandardPaths::LocateDirectory));
@@ -83,6 +88,11 @@ const QStringList * MainWindow::readPlaylist(const QFile * playlistLocation)
     }
 
     return playlistFiles;
+}
+
+bool MainWindow::loadPlaylist()
+{
+    return loadPlaylist(_playlistTabs->currentIndex());
 }
 
 bool MainWindow::loadPlaylist(const int & index)

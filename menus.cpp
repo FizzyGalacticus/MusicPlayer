@@ -25,6 +25,10 @@ void MainWindow::createMenus()
     _playMenu->addAction(_playAct);
     _playMenu->addAction(_nextSongAct);
     _playMenu->addAction(_previousSongAct);
+
+    _playlistMenu = menuBar()->addMenu(tr("&Playlist"));
+    _playlistMenu->addAction(_savePlaylistAct);
+    _playlistMenu->addAction(_loadPlaylistAct);
 #endif
 }
 

@@ -41,6 +41,11 @@ void MainWindow::createActions()
     _aboutAct->setIcon(_helpIcon);
     connect(_aboutAct, SIGNAL(triggered()), this, SLOT(about()));
 
+    _savePlaylistAct = new QAction(tr("&Save Playlist"),this);
+    connect(_savePlaylistAct, SIGNAL(triggered()), this, SLOT(savePlaylist()));
+    _loadPlaylistAct = new QAction(tr("&Load Playlist"), this);
+    connect(_loadPlaylistAct, SIGNAL(triggered()), this, SLOT(loadPlaylist()));
+
     _aboutQtAct = new QAction(tr("About &Qt"), this);
     _aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
     _aboutQtAct->setIcon(_qtIcon);

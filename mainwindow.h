@@ -62,6 +62,8 @@ private slots:
     void about();
     void aboutQt();
     void aboutAuthors();
+    bool savePlaylist();
+    bool loadPlaylist();
 
     /*************Media Player Slots************/
     void playbackPositionChanged(qint64 position);
@@ -108,6 +110,7 @@ private:
 
     QMenu *_fileMenu;
     QMenu *_playMenu;
+    QMenu *_playlistMenu;
     QMenu *_helpMenu;
     QAction *_openAct;
     QAction *_addMediaAct;
@@ -115,6 +118,8 @@ private:
     QAction *_nextSongAct;
     QAction *_previousSongAct;
     QAction *_exitAct;
+    QAction *_savePlaylistAct;
+    QAction *_loadPlaylistAct;
     QAction *_aboutAct;
     QAction *_aboutQtAct;
     QAction *_aboutAuthorsAct;
