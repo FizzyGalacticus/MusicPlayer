@@ -35,3 +35,7 @@ We originally wanted to use the Unity engine, but it does not seem to have decen
 *	[QListWidget](http://qt-project.org/doc/qt-5/qlistwidget.html): Handy for displaying information about the audio tracks for each given playlist.
 
 *	[QIcon](http://qt-project.org/doc/qt-5/qicon.html): Very easy to use icon object to use on all the things!
+
+###Ideal Features To Implement:
+*	Favorites
+	-	For as long as I can remember, I have listened to a handful of favorite songs immediately before listening to other stuff. I would really like to implement a feature where favorites can be selected in a playlist and then they would be played before all other songs in that playlist. Of course this would need to be data saved with the playlists as well.
