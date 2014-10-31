@@ -3,6 +3,7 @@
 
 #include "mainwindow.h"
 #include <QHBoxLayout>
+#include <QCoreApplication>
 
 void MainWindow::setupButtons()
 {
@@ -161,6 +162,13 @@ void MainWindow::setup()
     setupMetadataLabel();
     setupOptionDash();
     setupButtons();
+
+    if(QCoreApplication::arguments().size())
+    {
+        QStringList * arguments = new QStringList(QCoreApplication::arguments());
+        arguments->removeFirst();
+        addMedia(arguments);
+    }
 
 #ifdef __ANDROID__
     QList<QMediaContent> * myContent = new QList<QMediaContent>;
