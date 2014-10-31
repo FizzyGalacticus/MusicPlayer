@@ -57,8 +57,8 @@ private slots:
     void _volumeSliderValueChanged();
 
     /**************MENU OPTION SLOTS****************/
-    void open();
-    void addMedia();
+    void menuOpen();
+    void menuAddMedia();
     void about();
     void aboutQt();
     void aboutAuthors();

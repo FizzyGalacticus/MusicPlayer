@@ -9,12 +9,12 @@ void MainWindow::createActions()
     _openAct = new QAction(tr("&Open..."), this);
     _openAct->setStatusTip(tr("Open existing files"));
     _openAct->setIcon(_openIcon);
-    connect(_openAct, SIGNAL(triggered()), this, SLOT(open()));
+    connect(_openAct, SIGNAL(triggered()), this, SLOT(menuOpen()));
 
     _addMediaAct = new QAction(tr("&Add Media"), this);
     _addMediaAct->setStatusTip(tr("Add existing files to current playlist"));
     _addMediaAct->setIcon(_openIcon);
-    connect(_addMediaAct, SIGNAL(triggered()), this, SLOT(addMedia()));
+    connect(_addMediaAct, SIGNAL(triggered()), this, SLOT(menuAddMedia()));
 
     _exitAct = new QAction(tr("&Exit"), this);
     _exitAct->setStatusTip(tr("Exit the application"));
@@ -75,7 +75,7 @@ void MainWindow::refreshPlaylistView()
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if ((event->key()==Qt::Key_O) && (event->modifiers() == Qt::CTRL))
-        open();
+        menuOpen();
     else if(event->key()==Qt::Key_P || event->key() == Qt::Key_MediaPlay || event->key() == Qt::Key_MediaPause)
         _playButtonIsPressed();
     else if(event->key() == Qt::Key_MediaNext)
@@ -83,7 +83,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     else if(event->key() == Qt::Key_MediaPrevious)
         _prevButtonIsPressed();
     else if(event->key() == Qt::Key_A && (event->modifiers() == Qt::CTRL))
-        addMedia();
+        menuAddMedia();
     else if(event->key() == Qt::Key_S && (event->modifiers() == Qt::CTRL))
         qDebug() << savePlaylist(_playlistTabs->currentIndex());
     else if(event->key() == Qt::Key_L && (event->modifiers() == Qt::CTRL))

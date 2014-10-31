@@ -2,7 +2,7 @@
 #define MENUACTIONS_H
 #include "mainwindow.h"
 
-void MainWindow::open()
+void MainWindow::menuOpen()
 {
     QString * defaultMusicDirectory = new QString(QStandardPaths::locate(QStandardPaths::MusicLocation, "", QStandardPaths::LocateDirectory));
     QStringList fileNames = _openFileDialog(getAudioFileTypes(),defaultMusicDirectory);
@@ -34,7 +34,7 @@ void MainWindow::open()
     }
 }
 
-void MainWindow::addMedia()
+void MainWindow::menuAddMedia()
 {
     QString * defaultMusicDirectory = new QString(QStandardPaths::locate(QStandardPaths::MusicLocation, "", QStandardPaths::LocateDirectory));
     QStringList fileNames = _openFileDialog(getAudioFileTypes(),defaultMusicDirectory);
