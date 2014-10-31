@@ -4,61 +4,12 @@
 
 void MainWindow::menuOpen()
 {
-    QString * defaultMusicDirectory = new QString(QStandardPaths::locate(QStandardPaths::MusicLocation, "", QStandardPaths::LocateDirectory));
-    QStringList fileNames = _openFileDialog(getAudioFileTypes(),defaultMusicDirectory);
-
-    if(fileNames.size())
-    {
-        QList<QMediaContent> playListFiles;
-
-        for(QStringList::iterator file = fileNames.begin(); file < fileNames.end(); file++)
-           playListFiles.append(QMediaContent(QUrl::fromLocalFile(*file)));
-
-        if(_currentPlayer == _players->at(_playlistTabs->currentIndex()))
-        {
-            _currentPlayer->pause();
-            _currentPlayer->playlist()->clear();
-            _currentPlayer->playlist()->addMedia(playListFiles);
-            _currentPlayer->playlist()->setCurrentIndex(0);
-
-            if(_isPlaying) _currentPlayer->play();
-        }
-        else
-        {
-            _players->at(_playlistTabs->currentIndex())->playlist()->clear();
-            _players->at(_playlistTabs->currentIndex())->playlist()->addMedia(playListFiles);
-            _players->at(_playlistTabs->currentIndex())->playlist()->setCurrentIndex(0);
-        }
-
-        refreshPlaylistView();
-    }
+    openMedia(_openFileDialog(getAudioFileTypes(),_defaultMusicDirectory));
 }
 
 void MainWindow::menuAddMedia()
 {
-    QString * defaultMusicDirectory = new QString(QStandardPaths::locate(QStandardPaths::MusicLocation, "", QStandardPaths::LocateDirectory));
-    QStringList fileNames = _openFileDialog(getAudioFileTypes(),defaultMusicDirectory);
-
-
-    if(fileNames.size())
-    {
-        QList<QMediaContent> playListFiles;
-
-        for(QStringList::iterator file = fileNames.begin(); file < fileNames.end(); file++)
-            playListFiles.append(QMediaContent(QUrl::fromLocalFile(*file)));
-
-        if(_players->at(_playlistTabs->currentIndex())->playlist())
-        {
-            if(_players->at(_playlistTabs->currentIndex())->playlist()->isEmpty())
-            {
-                _players->at(_playlistTabs->currentIndex())->playlist()->addMedia(playListFiles);
-                _players->at(_playlistTabs->currentIndex())->playlist()->setCurrentIndex(0);
-            }
-            else _players->at(_playlistTabs->currentIndex())->playlist()->addMedia(playListFiles);
-        }
-
-        refreshPlaylistView();
-    }
+    addMedia(_openFileDialog(getAudioFileTypes(),_defaultMusicDirectory));
 }
 
 void MainWindow::about()

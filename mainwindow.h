@@ -138,11 +138,12 @@ private:
     QVector<QMediaPlayer *> * _players;
     QMediaPlayer * _currentPlayer;
 
-    /***********Get Audio File Types*********/
+    /*************Get Audio Files*************/
+    void addMedia(const QStringList * media);
+    void openMedia(const QStringList * media);
+    QString * _defaultMusicDirectory;
     const QString * getAudioFileTypes();
-
-    /*************Open file dialogue*************/
-    QStringList _openFileDialog(const QString *, const QString *);
+    QStringList * _openFileDialog(const QString *,const QString *);
 
     /**************Progress Bar*****************/
     QProgressBar * _progressBar;

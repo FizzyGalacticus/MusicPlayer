@@ -16,7 +16,7 @@ bool MainWindow::savePlaylist(const int & index)
     QString * defaultMusicDirectory = new QString(QStandardPaths::locate(QStandardPaths::MusicLocation, "", QStandardPaths::LocateDirectory));
     QDir * playlistDirectory = new QDir((*defaultMusicDirectory + "Playlists"));
     if(!playlistDirectory->exists()) playlistDirectory->mkdir(playlistDirectory->absolutePath());
-    QStringList returnedFileNames = _openFileDialog(new QString("SQLite Database (*.db)"),new QString(playlistDirectory->absolutePath()));
+    QStringList returnedFileNames = *_openFileDialog(new QString("SQLite Database (*.db)"),new QString(playlistDirectory->absolutePath()));
     QFile * databaseFile = new QFile;
 
     if(returnedFileNames.count())
@@ -106,7 +106,7 @@ bool MainWindow::loadPlaylist(const int & index)
     QString * defaultMusicDirectory = new QString(QStandardPaths::locate(QStandardPaths::MusicLocation, "", QStandardPaths::LocateDirectory));
     QDir * playlistDirectory = new QDir((*defaultMusicDirectory + "Playlists"));
     if(!playlistDirectory->exists()) playlistDirectory->mkdir(playlistDirectory->absolutePath());
-    QStringList returnedFileNames = _openFileDialog(new QString("SQLite Database (*.db)"),new QString(playlistDirectory->absolutePath()));
+    QStringList returnedFileNames = *_openFileDialog(new QString("SQLite Database (*.db)"),new QString(playlistDirectory->absolutePath()));
     QFile * databaseFile = new QFile;
 
     if(returnedFileNames.count())

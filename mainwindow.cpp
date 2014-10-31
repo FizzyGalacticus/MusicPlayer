@@ -4,6 +4,7 @@
 #include "menuactions.cpp"
 #include "setup.cpp"
 #include "ui_mainwindow.h"
+#include <QStandardPaths>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -30,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _fileMetadata(new QLabel(this)),
     _players(new QVector<QMediaPlayer *>),
     _currentPlayer(new QMediaPlayer),
+    _defaultMusicDirectory(new QString(QStandardPaths::locate(QStandardPaths::MusicLocation, "", QStandardPaths::LocateDirectory))),
     _progressBar(new QProgressBar(this)),
     _shuffleButton(new QPushButton),
     _playlistViews(new QVector<QListWidget *>),

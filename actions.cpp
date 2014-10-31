@@ -98,7 +98,59 @@ const QString * MainWindow::getAudioFileTypes()
                        "*.rm *.vox *.raw *.aac *.au *.ac3 *.m4a *.amr *.mod *.669 *.s3m *.mtm)");
 }
 
-QStringList MainWindow::_openFileDialog(const QString * fileTypes, const QString * startingLocation)
+void MainWindow::addMedia(const QStringList * media)
+{
+    if(media->size())
+    {
+        QList<QMediaContent> playListFiles;
+
+        for(QStringList::const_iterator file = media->begin(); file < media->end(); file++)
+            playListFiles.append(QMediaContent(QUrl::fromLocalFile(*file)));
+
+        if(_players->at(_playlistTabs->currentIndex())->playlist())
+        {
+            if(_players->at(_playlistTabs->currentIndex())->playlist()->isEmpty())
+            {
+                _players->at(_playlistTabs->currentIndex())->playlist()->addMedia(playListFiles);
+                _players->at(_playlistTabs->currentIndex())->playlist()->setCurrentIndex(0);
+            }
+            else _players->at(_playlistTabs->currentIndex())->playlist()->addMedia(playListFiles);
+        }
+
+        refreshPlaylistView();
+    }
+}
+
+void MainWindow::openMedia(const QStringList * media)
+{
+    if(media->size())
+    {
+        QList<QMediaContent> playListFiles;
+
+        for(QStringList::const_iterator file = media->begin(); file < media->end(); file++)
+           playListFiles.append(QMediaContent(QUrl::fromLocalFile(*file)));
+
+        if(_currentPlayer == _players->at(_playlistTabs->currentIndex()))
+        {
+            _currentPlayer->pause();
+            _currentPlayer->playlist()->clear();
+            _currentPlayer->playlist()->addMedia(playListFiles);
+            _currentPlayer->playlist()->setCurrentIndex(0);
+
+            if(_isPlaying) _currentPlayer->play();
+        }
+        else
+        {
+            _players->at(_playlistTabs->currentIndex())->playlist()->clear();
+            _players->at(_playlistTabs->currentIndex())->playlist()->addMedia(playListFiles);
+            _players->at(_playlistTabs->currentIndex())->playlist()->setCurrentIndex(0);
+        }
+
+        refreshPlaylistView();
+    }
+}
+
+QStringList * MainWindow::_openFileDialog(const QString * fileTypes, const QString * startingLocation)
 {
     QFileDialog openFileDialog(this);
     openFileDialog.setMinimumSize(QSize(this->width(),this->height()));
@@ -108,12 +160,10 @@ QStringList MainWindow::_openFileDialog(const QString * fileTypes, const QString
     openFileDialog.setViewMode(QFileDialog::List);
     openFileDialog.setFileMode(QFileDialog::ExistingFiles);
 
-    QStringList fileNames;
-
     if(openFileDialog.exec())
-       fileNames = openFileDialog.selectedFiles();
+       return new QStringList(openFileDialog.selectedFiles());
 
-    return fileNames;
+    return NULL;
 }
 
 const QString MainWindow::getAudioInfo(const int & index) const
