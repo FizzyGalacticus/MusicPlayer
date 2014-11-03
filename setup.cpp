@@ -41,7 +41,7 @@ void MainWindow::setupMenus()
     QPushButton * androidAddButton = new QPushButton("Add Music", this);
     //QPushButton * androidExitButton = new QPushButton("Exit", this);
 
-    connect(androidAddButton, SIGNAL(clicked()), this, SLOT(addMedia()));
+    connect(androidAddButton, SIGNAL(clicked()), this, SLOT(menuAddMedia()));
     //connect(androidExitButton, SIGNAL(clicked()), this, SLOT(exit()));
 
     androidButtonLayout->addWidget(androidAddButton);
