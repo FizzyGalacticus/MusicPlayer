@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include <QtWidgets>
 #include <QStandardPaths>
+#include <QStringList>
 
 void MainWindow::createActions()
 {
@@ -160,10 +161,12 @@ QStringList * MainWindow::_openFileDialog(const QString * fileTypes, const QStri
     openFileDialog.setViewMode(QFileDialog::List);
     openFileDialog.setFileMode(QFileDialog::ExistingFiles);
 
-    if(openFileDialog.exec())
-       return new QStringList(openFileDialog.selectedFiles());
+    QStringList * files = new QStringList();
 
-    return NULL;
+    if(openFileDialog.exec())
+       files->append(openFileDialog.selectedFiles());
+
+    return files;
 }
 
 const QString MainWindow::getAudioInfo(const int & index) const
