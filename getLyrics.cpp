@@ -2,7 +2,7 @@
 #include <mainwindow.h>
 #include <QString>
 
-const QString * MainWindow::getSongLyrics(const QString &artist, const QString &song)
+QString * MainWindow::getSongLyrics(QString artist, QString song)
 {
     QString pyGetLyrics =
     "import urllib\n\
@@ -22,7 +22,7 @@ const QString * MainWindow::getSongLyrics(const QString &artist, const QString &
     pyCommand += artist + "','";
     pyCommand += song + "')";
 
-    /*Py_Initialize();
+    Py_Initialize();
     PyRun_SimpleString(pyGetLyrics.toStdString().c_str());
     PyRun_SimpleString(pyCommand.toStdString().c_str());
 
@@ -31,6 +31,5 @@ const QString * MainWindow::getSongLyrics(const QString &artist, const QString &
     QString *lyrics = new QString(PyString_AsString(v));
     Py_Finalize();
 
-    return lyrics;*/
-    return new QString;
+    return lyrics;
 }

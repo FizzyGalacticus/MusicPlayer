@@ -1,9 +1,10 @@
 #ifndef ACTIONS_H
 #define ACTIONS_H
-#include "mainwindow.h"
+#include <mainwindow.h>
 #include <QtWidgets>
 #include <QStandardPaths>
 #include <QStringList>
+#include <QDebug>
 
 void MainWindow::createActions()
 {
@@ -177,11 +178,10 @@ const QString MainWindow::getAudioInfo(const int & index) const
     {
         QString songTitle = _players->at(index)->metaData("Title").toString();
         if(_players->at(index)->availableMetaData().contains("AlbumArtist"))
-            metaData =
-                    (
-                        _players->at(index)->metaData("AlbumArtist").toString() + " - " +
-                        songTitle
-                    );
+        {
+            QString songArtist = _players->at(index)->metaData("AlbumArtist").toString();
+            metaData =(songArtist + " - " + songTitle);
+        }
         else metaData = songTitle;
     }
     else return _players->at(index)->currentMedia().canonicalUrl().fileName();

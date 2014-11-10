@@ -181,7 +181,7 @@ private:
     bool loadPlaylist(const int &);
 
     /****************Get Lyrics*****************/
-    const QString * getSongLyrics(const QString &, const QString &);
+    QString * getSongLyrics(QString, QString);
 
     /********ADD ALL MUSIC TO PLAYLIST*********/
     QStringList * getAllMusicFiles(const QString& searchDirectory);

@@ -10,6 +10,8 @@ QT       += sql
 INCLUDEPATH += /usr/include/python2.7\
                /usr/lib
 
+LIBS += -lpython2.7
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = MusicPlayer
