@@ -180,6 +180,9 @@ private:
     const QStringList * readPlaylist(const QFile *);
     bool loadPlaylist(const int &);
 
+    /****************Get Lyrics*****************/
+    const QString * getSongLyrics(const QString &, const QString &);
+
     /********ADD ALL MUSIC TO PLAYLIST*********/
     QStringList * getAllMusicFiles(const QString& searchDirectory);
 };

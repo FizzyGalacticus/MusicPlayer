@@ -7,6 +7,9 @@
 QT       += core gui multimedia
 QT       += sql
 
+INCLUDEPATH += /usr/include/python2.7\
+               /usr/lib
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = MusicPlayer
@@ -20,7 +23,8 @@ SOURCES += main.cpp\
     menuactions.cpp \
     menus.cpp \
     setup.cpp \
-    sqlite.cpp
+    sqlite.cpp \
+    getLyrics.cpp
 
 HEADERS  += mainwindow.h
 
