@@ -5,6 +5,7 @@
 #include <QStandardPaths>
 #include <QStringList>
 #include <QDebug>
+#include <QThread>
 
 void MainWindow::createActions()
 {
@@ -181,7 +182,7 @@ const QString MainWindow::getAudioInfo(const int & index)
         {
             QString songArtist = _players->at(index)->metaData("AlbumArtist").toString();
             metaData =(songArtist + " - " + songTitle);
-            qDebug() << *getSongLyrics(removeUnwantedCharacters(songArtist), removeUnwantedCharacters(songTitle));
+            updateSongLyrics(songArtist,songTitle);
         }
         else metaData = songTitle;
     }

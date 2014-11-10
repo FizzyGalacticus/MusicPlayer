@@ -181,8 +181,9 @@ private:
     bool loadPlaylist(const int &);
 
     /****************Get Lyrics*****************/
-    QString * getSongLyrics(const QString, const QString);
+    QString * getSongLyrics(const QString &, const QString &);
     const QString removeUnwantedCharacters(QString);
+    void updateSongLyrics(const QString &, const QString &);
 
     /********ADD ALL MUSIC TO PLAYLIST*********/
     QStringList * getAllMusicFiles(const QString& searchDirectory);

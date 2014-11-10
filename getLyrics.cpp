@@ -1,6 +1,12 @@
 #include <Python.h>
 #include <mainwindow.h>
 #include <QString>
+#include <QDebug>
+
+void MainWindow::updateSongLyrics(const QString & artist, const QString & song)
+{
+    qDebug() << *getSongLyrics(removeUnwantedCharacters(artist),removeUnwantedCharacters(song));
+}
 
 const QString MainWindow::removeUnwantedCharacters(QString str)
 {
@@ -11,7 +17,7 @@ const QString MainWindow::removeUnwantedCharacters(QString str)
     return str;
 }
 
-QString * MainWindow::getSongLyrics(const QString artist, const QString song)
+QString * MainWindow::getSongLyrics(const QString & artist, const QString & song)
 {
     QString pyGetLyrics =
 "import urllib\n\
