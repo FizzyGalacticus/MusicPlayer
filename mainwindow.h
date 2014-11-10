@@ -155,7 +155,7 @@ private:
     QVector<QListWidget *> * _playlistViews;
     QListWidget * _currentPlaylistView;
     void setupPlaylistViewConnections(const QListWidget *);
-    const QString getAudioInfo(const int &) const;
+    const QString getAudioInfo(const int &);
     void refreshPlaylistView();
 
     /**************Playlist tabs***************/
@@ -181,7 +181,8 @@ private:
     bool loadPlaylist(const int &);
 
     /****************Get Lyrics*****************/
-    QString * getSongLyrics(QString, QString);
+    QString * getSongLyrics(const QString, const QString);
+    const QString removeUnwantedCharacters(QString);
 
     /********ADD ALL MUSIC TO PLAYLIST*********/
     QStringList * getAllMusicFiles(const QString& searchDirectory);

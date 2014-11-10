@@ -2,21 +2,34 @@
 #include <mainwindow.h>
 #include <QString>
 
-QString * MainWindow::getSongLyrics(QString artist, QString song)
+const QString MainWindow::removeUnwantedCharacters(QString str)
+{
+    for(QString::Iterator i = str.begin(); i < str.end(); i++)
+        if(*i == ' ' || *i == ',' || *i == '\'' || *i == '-' || *i == '!')
+            str.remove(*i);
+
+    return str;
+}
+
+QString * MainWindow::getSongLyrics(const QString artist, const QString song)
 {
     QString pyGetLyrics =
-    "import urllib\n\
-    def getLyrics(artist, song):\n\
-        beginTag = '<!-- start of lyrics -->'\n\
-        endTag = '<!-- end of lyrics -->'\n\
-        url = 'http://www.azlyrics.com/lyrics/%s/%s.html' % (artist.replace(' ','').lower(), song.replace(' ','').lower())\n\
-        page = urllib.urlopen(url).read()\n\
-        lyrics = page[page.find(beginTag)+len(beginTag):page.find(endTag)].replace('<br />','')\n\
-        thingsToLookFor = ['=']\n\
-        for thing in thingsToLookFor:\n\
-            if lyrics.find(thing) > -1:\n\
-                lyrics = 'No lyrics available.'\n\
-        return lyrics";
+"import urllib\n\
+def getLyrics(artist, song):\n\
+    beginTag = '<!-- start of lyrics -->'\n\
+    endTag = '<!-- end of lyrics -->'\n\
+    if artist[0:3].lower() == 'the':\n\
+        artist = artist[3:]\n\
+    artist = artist.lower()\n\
+    song = song.lower()\n\
+    url = 'http://www.azlyrics.com/lyrics/%s/%s.html' % (artist, song)\n\
+    page = urllib.urlopen(url).read()\n\
+    lyrics = page[page.find(beginTag)+len(beginTag):page.find(endTag)].replace('<br />','')\n\
+    thingsToLookFor = ['=']\n\
+    for thing in thingsToLookFor:\n\
+        if lyrics.find(thing) > -1:\n\
+            lyrics = 'No lyrics available.'\n\
+    return lyrics";
 
     QString pyCommand = "lyrics = getLyrics('";
     pyCommand += artist + "','";

@@ -170,7 +170,7 @@ QStringList * MainWindow::_openFileDialog(const QString * fileTypes, const QStri
     return files;
 }
 
-const QString MainWindow::getAudioInfo(const int & index) const
+const QString MainWindow::getAudioInfo(const int & index)
 {
     QString metaData = "";
 
@@ -181,6 +181,7 @@ const QString MainWindow::getAudioInfo(const int & index) const
         {
             QString songArtist = _players->at(index)->metaData("AlbumArtist").toString();
             metaData =(songArtist + " - " + songTitle);
+            qDebug() << *getSongLyrics(removeUnwantedCharacters(songArtist), removeUnwantedCharacters(songTitle));
         }
         else metaData = songTitle;
     }
