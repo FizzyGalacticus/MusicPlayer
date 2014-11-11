@@ -21,6 +21,7 @@
 #include <QVBoxLayout>
 #include <QVector>
 #include <QDockWidget>
+#include <QTextEdit>
 
 class QAction;
 class QActionGroup;
@@ -173,6 +174,7 @@ private:
     void setupMenus();
     void setupPlaylistTabs();
     void setupOptionDash();
+    void setupLyricsWidget();
     void setup();
 
     /*************SQLite Functions**************/
@@ -185,6 +187,7 @@ private:
     QString * getSongLyrics(const QString &, const QString &);
     const QString removeUnwantedCharacters(QString);
     void updateSongLyrics(const QString &, const QString &);
+    QTextEdit * _lyricsTextBox;
     QDockWidget * _lyricsWidget;
 
     /********ADD ALL MUSIC TO PLAYLIST*********/

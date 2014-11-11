@@ -5,7 +5,7 @@
 
 void MainWindow::updateSongLyrics(const QString & artist, const QString & song)
 {
-    qDebug() << *getSongLyrics(removeUnwantedCharacters(artist),removeUnwantedCharacters(song));
+    _lyricsTextBox->setText(*getSongLyrics(removeUnwantedCharacters(artist),removeUnwantedCharacters(song)));
 }
 
 const QString MainWindow::removeUnwantedCharacters(QString str)

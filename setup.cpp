@@ -4,6 +4,7 @@
 #include "mainwindow.h"
 #include <QHBoxLayout>
 #include <QCoreApplication>
+#include <QFont>
 
 void MainWindow::setupButtons()
 {
@@ -154,6 +155,20 @@ void MainWindow::setupOptionDash()
     _mainLayout->addLayout(optionDash);
 }
 
+void MainWindow::setupLyricsWidget()
+{
+    QFont * comicSans = new QFont("Comic Sans MS",12);
+
+    _lyricsTextBox->setFont(*comicSans);
+    _lyricsTextBox->setText("Hello, world!");
+    _lyricsTextBox->setReadOnly(true);
+
+    _lyricsWidget->setAllowedAreas(Qt::RightDockWidgetArea | Qt::NoDockWidgetArea);
+    _lyricsWidget->setMinimumWidth(200);
+    _lyricsWidget->setWidget(_lyricsTextBox);
+    addDockWidget(Qt::RightDockWidgetArea,_lyricsWidget);
+}
+
 void MainWindow::setup()
 {
     setupMenus();
@@ -162,6 +177,7 @@ void MainWindow::setup()
     setupMetadataLabel();
     setupOptionDash();
     setupButtons();
+    setupLyricsWidget();
 
     if(QCoreApplication::arguments().size())
     {
