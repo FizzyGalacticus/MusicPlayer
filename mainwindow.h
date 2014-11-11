@@ -20,6 +20,7 @@
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QVector>
+#include <QDockWidget>
 
 class QAction;
 class QActionGroup;
@@ -180,10 +181,11 @@ private:
     const QStringList * readPlaylist(const QFile *);
     bool loadPlaylist(const int &);
 
-    /****************Get Lyrics*****************/
+    /*************Get & Display Lyrics**********/
     QString * getSongLyrics(const QString &, const QString &);
     const QString removeUnwantedCharacters(QString);
     void updateSongLyrics(const QString &, const QString &);
+    QDockWidget * _lyricsWidget;
 
     /********ADD ALL MUSIC TO PLAYLIST*********/
     QStringList * getAllMusicFiles(const QString& searchDirectory);

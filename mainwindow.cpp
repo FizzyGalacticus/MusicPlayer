@@ -38,11 +38,15 @@ MainWindow::MainWindow(QWidget *parent) :
     _currentPlaylistView(new QListWidget),
     _playlistTabs(new QTabWidget(this)),
     _newPlaylistTabButton(new QPushButton("New Playlist")),
-    _loopCheckbox(new QCheckBox(this))
+    _loopCheckbox(new QCheckBox(this)),
+    _lyricsWidget(new QDockWidget("Lyrics", this))
 {
     setWindowIcon(_mainWindowIcon);
     setWindowTitle("Music Player");
     setCentralWidget(_centralWidget);
+
+    _lyricsWidget->setAllowedAreas(Qt::RightDockWidgetArea | Qt::NoDockWidgetArea);
+    addDockWidget(Qt::RightDockWidgetArea,_lyricsWidget);
 
     /****************SETTING UP STATUS BAR*********************/
     QWidget *topFiller = new QWidget;
