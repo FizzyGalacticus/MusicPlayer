@@ -7,6 +7,11 @@
 QT       += core gui multimedia
 QT       += sql
 
+win32{
+    INCLUDEPATH += C:\\Python27\\include
+    LIBS += -LC:\\Python27\\libs\
+	    -lpython27
+}
 unix{
 INCLUDEPATH += /usr/include/python2.7\
                /usr/lib
