@@ -11,7 +11,7 @@ void MainWindow::updateSongLyrics(const QString & artist, const QString & song)
 const QString MainWindow::removeUnwantedCharacters(QString str)
 {
     for(QString::Iterator i = str.begin(); i < str.end(); i++)
-        if(*i == ' ' || *i == ',' || *i == '\'' || *i == '-' || *i == '!')
+        if(*i == ' ' || *i == ',' || *i == '\'' || *i == '-' || *i == '!' || *i == '(' || *i == ')')
             str.remove(*i);
 
     return str;

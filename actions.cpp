@@ -186,7 +186,11 @@ const QString MainWindow::getAudioInfo(const int & index)
         }
         else metaData = songTitle;
     }
-    else return _players->at(index)->currentMedia().canonicalUrl().fileName();
+    else
+    {
+        _lyricsTextBox->setText("");
+        return _players->at(index)->currentMedia().canonicalUrl().fileName();
+    }
 
     return metaData;
 }
