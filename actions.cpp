@@ -188,7 +188,7 @@ const QString MainWindow::getAudioInfo(const int & index)
     }
     else
     {
-        _lyricsTextBox->setText("");
+        _lyricsTextBox->setText("No lyrics available.");
         return _players->at(index)->currentMedia().canonicalUrl().fileName();
     }
 

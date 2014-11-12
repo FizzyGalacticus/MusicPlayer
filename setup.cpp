@@ -160,7 +160,7 @@ void MainWindow::setupLyricsWidget()
     QFont * comicSans = new QFont("Comic Sans MS",12);
 
     _lyricsTextBox->setFont(*comicSans);
-    _lyricsTextBox->setText("Hello, world!");
+    _lyricsTextBox->setText("If your song has the appropriate metadata (Artist & Song Title), the lyrics will show up here!");
     _lyricsTextBox->setReadOnly(true);
 
     _lyricsWidget->setAllowedAreas(Qt::RightDockWidgetArea | Qt::NoDockWidgetArea);
