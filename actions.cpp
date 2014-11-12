@@ -49,6 +49,9 @@ void MainWindow::createActions()
     _loadPlaylistAct = new QAction(tr("&Load Playlist"), this);
     connect(_loadPlaylistAct, SIGNAL(triggered()), this, SLOT(loadPlaylist()));
 
+    _toggleLyricsBox = new QAction(tr("&Hide Lyrics"), this);
+    connect(_toggleLyricsBox, SIGNAL(triggered()), this, SLOT(menuToggleLyricsBox()));
+
     _aboutQtAct = new QAction(tr("About &Qt"), this);
     _aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
     _aboutQtAct->setIcon(_qtIcon);
