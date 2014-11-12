@@ -112,7 +112,7 @@ private:
 
     QMenu *_fileMenu;
     QMenu *_playMenu;
-    QMenu *_playlistMenu;
+    QMenu *_optionsMenu;
     QMenu *_helpMenu;
     QAction *_openAct;
     QAction *_addMediaAct;
