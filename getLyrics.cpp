@@ -29,12 +29,17 @@ def getLyrics(artist, song):\n\
     artist = artist.lower()\n\
     song = song.lower()\n\
     url = 'http://www.azlyrics.com/lyrics/%s/%s.html' % (artist, song)\n\
+    print 'Attempting to pull lyrics from %s' % url\n\
     page = urllib.urlopen(url).read()\n\
     lyrics = page[page.find(beginTag)+len(beginTag):page.find(endTag)].replace('<br />','')\n\
     thingsToLookFor = ['=']\n\
     for thing in thingsToLookFor:\n\
         if lyrics.find(thing) > -1:\n\
             lyrics = 'No lyrics available.'\n\
+    if lyrics == 'No lyrics available.':\n\
+        print 'No lyrics found!'\n\
+    else:\n\
+        print 'Lyrics found!'\n\
     return lyrics";
 
     QString pyCommand = "lyrics = getLyrics('";

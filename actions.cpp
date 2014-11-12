@@ -187,7 +187,11 @@ const QString MainWindow::getAudioInfo(const int & index)
             metaData =(songArtist + " - " + songTitle);
             updateSongLyrics(songArtist,songTitle);
         }
-        else metaData = songTitle;
+        else
+        {
+            metaData = songTitle;
+            _lyricsTextBox->setText("No lyrics available.");
+        }
     }
     else
     {
