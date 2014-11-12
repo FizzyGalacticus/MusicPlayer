@@ -9,16 +9,7 @@ void MainWindow::createMenus()
     _fileMenu = menuBar()->addMenu(tr("&File"));
     _fileMenu->addAction(_exitAct);
 
-    _helpMenu = menuBar()->addMenu(tr("&Help"));
-    _helpMenu->addAction(_aboutAct);
-    _helpMenu->addAction(_aboutQtAct);
-    _helpMenu->addAction(_aboutAuthorsAct);
-
 #ifndef __ANDROID__
-    _fileMenu->addAction(_openAct);
-    _fileMenu->addSeparator();
-    _fileMenu->addAction(_addMediaAct);
-    _fileMenu->addSeparator();
 
     _playMenu = menuBar()->addMenu(tr("&Play"));
     _playMenu->addSeparator();
@@ -26,10 +17,18 @@ void MainWindow::createMenus()
     _playMenu->addAction(_nextSongAct);
     _playMenu->addAction(_previousSongAct);
 
-    _playlistMenu = menuBar()->addMenu(tr("&Playlist"));
-    _playlistMenu->addAction(_savePlaylistAct);
-    _playlistMenu->addAction(_loadPlaylistAct);
+    _optionsMenu = menuBar()->addMenu(tr("&Options"));
+    _optionsMenu->addAction(_openAct);
+    _optionsMenu->addAction(_addMediaAct);
+    _optionsMenu->addSeparator();
+    _optionsMenu->addAction(_savePlaylistAct);
+    _optionsMenu->addAction(_loadPlaylistAct);
 #endif
+
+    _helpMenu = menuBar()->addMenu(tr("&Help"));
+    _helpMenu->addAction(_aboutAct);
+    _helpMenu->addAction(_aboutQtAct);
+    _helpMenu->addAction(_aboutAuthorsAct);
 }
 
 void MainWindow::contextMenuEvent(QContextMenuEvent *event)
