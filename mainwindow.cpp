@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _mainLayout(new QVBoxLayout(_centralWidget)),
     _isPlaying(false),
     _isShuffled(false),
+    _networkManager(new QNetworkAccessManager(this)),
     _prevButton(new QPushButton(this)),
     _prevButtonIcon(":/Resources/icons/Button-Prev-icon.png"),
     _playButton(new QPushButton(this)),
@@ -45,6 +46,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowIcon(_mainWindowIcon);
     setWindowTitle("Music Player");
     setCentralWidget(_centralWidget);
+
+    connect(_networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(_lyricsRetrieved(QNetworkReply*)));
 
     /****************SETTING UP STATUS BAR*********************/
     QWidget *topFiller = new QWidget;

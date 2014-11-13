@@ -22,6 +22,7 @@
 #include <QVector>
 #include <QDockWidget>
 #include <QTextEdit>
+#include <QNetworkAccessManager>
 
 class QAction;
 class QActionGroup;
@@ -86,6 +87,9 @@ private slots:
     void _tabCloseRequested(int);
     void _currentTabIndexHasChanged(int);
 
+    /*************RETRIEVE LYRICS PAGE************/
+    void _lyricsRetrieved(QNetworkReply*);
+
 private:
     Ui::MainWindow *_ui;
     QIcon _mainWindowIcon;
@@ -94,6 +98,9 @@ private:
 
     bool _isPlaying;
     bool _isShuffled;
+
+    /*************Network Manager****************/
+    QNetworkAccessManager * _networkManager;
 
     /************Prev Button Objects*************/
     QPushButton *_prevButton;
@@ -135,7 +142,7 @@ private:
     QLabel *_volumeLabel;
     QSlider *_volumeSlider;
 
-    /************File Name Display**************/
+    /************Metadata Display****************/
     QLabel * _fileMetadata;
 
     /***********Media Player*********************/
@@ -186,9 +193,9 @@ private:
     bool loadPlaylist(const int &);
 
     /*************Get & Display Lyrics**********/
-    QString * getSongLyrics(const QString &, const QString &);
-    const QString removeUnwantedCharacters(QString);
-    void updateSongLyrics(const QString &, const QString &);
+    QString * getSongLyrics(QString, QString);
+    QString removeUnwantedCharacters(QString);
+    void updateSongLyrics(QString, QString);
     QTextEdit * _lyricsTextBox;
     QDockWidget * _lyricsWidget;
 

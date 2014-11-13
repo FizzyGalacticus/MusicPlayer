@@ -2,13 +2,14 @@
 #include <mainwindow.h>
 #include <QString>
 #include <QDebug>
+#include <QNetworkReply>
 
-void MainWindow::updateSongLyrics(const QString & artist, const QString & song)
+void MainWindow::updateSongLyrics(QString artist, QString song)
 {
     _lyricsTextBox->setText(*getSongLyrics(removeUnwantedCharacters(artist),removeUnwantedCharacters(song)));
 }
 
-const QString MainWindow::removeUnwantedCharacters(QString str)
+QString MainWindow::removeUnwantedCharacters(QString str)
 {
     for(QString::Iterator i = str.begin(); i < str.end(); i++)
         if(*i == ' ' || *i == ',' || *i == '\'' || *i == '-' || *i == '!' || *i == '(' || *i == ')')
@@ -17,7 +18,31 @@ const QString MainWindow::removeUnwantedCharacters(QString str)
     return str;
 }
 
-QString * MainWindow::getSongLyrics(const QString & artist, const QString & song)
+void MainWindow::_lyricsRetrieved(QNetworkReply * response)
+{
+
+    connect(_networkManager, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)), response, SLOT(ignoreSslErrors()));
+
+    QString page = QString::fromUtf8(response->readAll());
+    qDebug() << page;
+    qDebug() << response->errorString();
+    QString beginTag = "<!-- start of lyrics -->";
+    QString endTag = "<!-- end of lyrics -->";
+    QString lyrics = "No lyrics available.";
+
+    if(response->error() == QNetworkReply::NoError)
+    {
+        const int beginOfLyrics = page.indexOf(beginTag) + beginTag.length();
+        const int endOfLyrics = page.indexOf(endTag,beginOfLyrics);
+
+        lyrics = page.midRef(beginOfLyrics,endOfLyrics-beginOfLyrics).toString();
+    }
+    else qDebug() << response->error();
+
+    _lyricsTextBox->setText(lyrics);
+}
+
+QString * MainWindow::getSongLyrics(QString artist, QString song)
 {
     QString pyGetLyrics =
 "import urllib\n\
@@ -46,14 +71,30 @@ def getLyrics(artist, song):\n\
     pyCommand += artist + "','";
     pyCommand += song + "')";
 
-    Py_Initialize();
-    PyRun_SimpleString(pyGetLyrics.toStdString().c_str());
-    PyRun_SimpleString(pyCommand.toStdString().c_str());
+//    Py_Initialize();
+//    PyRun_SimpleString(pyGetLyrics.toStdString().c_str());
+//    PyRun_SimpleString(pyCommand.toStdString().c_str());
 
-    PyObject *pyMainModule = PyImport_AddModule("__main__");
-    PyObject *v = PyObject_GetAttrString(pyMainModule, "lyrics");
-    QString *lyrics = new QString(PyString_AsString(v));
-    Py_Finalize();
+//    PyObject *pyMainModule = PyImport_AddModule("__main__");
+//    PyObject *v = PyObject_GetAttrString(pyMainModule, "lyrics");
+//    QString *lyrics = new QString(PyString_AsString(v));
+//    Py_Finalize();
 
-    return lyrics;
+//    return lyrics;
+
+    if(artist.left(3).toLower() == "the")
+        artist = artist.right(artist.size()-3);
+
+    QUrl pageURL = "http://www.azlyrics.com/lyrics/" + artist.toLower() + '/' + song.toLower() + ".html";
+    QNetworkRequest request = QNetworkRequest(pageURL);
+
+    QSslConfiguration config = QSslConfiguration::defaultConfiguration();
+    config.setProtocol(QSsl::SslV3);
+    request.setSslConfiguration(config);
+
+    _networkManager->get(request);
+
+    qDebug() << "Looking for lyrics at:" << pageURL.toString();
+
+    return new QString;
 }
