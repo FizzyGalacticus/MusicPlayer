@@ -20,24 +20,26 @@ QString MainWindow::removeUnwantedCharacters(QString str)
 
 void MainWindow::_lyricsRetrieved(QNetworkReply * response)
 {
+    qDebug() << "Bytes available: " << response->bytesAvailable();
 
     connect(_networkManager, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)), response, SLOT(ignoreSslErrors()));
 
-    QString page = QString::fromUtf8(response->readAll());
-    qDebug() << page;
-    qDebug() << response->errorString();
+    QString page = "";
+
     QString beginTag = "<!-- start of lyrics -->";
     QString endTag = "<!-- end of lyrics -->";
     QString lyrics = "No lyrics available.";
 
     if(response->error() == QNetworkReply::NoError)
     {
+        page = QString::fromUtf8(response->readAll());
+
         const int beginOfLyrics = page.indexOf(beginTag) + beginTag.length();
         const int endOfLyrics = page.indexOf(endTag,beginOfLyrics);
 
         lyrics = page.midRef(beginOfLyrics,endOfLyrics-beginOfLyrics).toString();
     }
-    else qDebug() << response->error();
+    else qDebug() << "Error #: " << response->error() << '-' << response->errorString();
 
     _lyricsTextBox->setText(lyrics);
 }
@@ -86,15 +88,10 @@ def getLyrics(artist, song):\n\
         artist = artist.right(artist.size()-3);
 
     QUrl pageURL = "http://www.azlyrics.com/lyrics/" + artist.toLower() + '/' + song.toLower() + ".html";
-    QNetworkRequest request = QNetworkRequest(pageURL);
-
-    QSslConfiguration config = QSslConfiguration::defaultConfiguration();
-    config.setProtocol(QSsl::SslV3);
-    request.setSslConfiguration(config);
-
-    _networkManager->get(request);
-
+    qDebug() << "Active Network Configuration:" << _networkManager->activeConfiguration().name();
     qDebug() << "Looking for lyrics at:" << pageURL.toString();
+    _networkManager->connectToHost("www.azlyrics.com");
+    _networkManager->get(QNetworkRequest(pageURL));
 
     return new QString;
 }

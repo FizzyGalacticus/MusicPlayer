@@ -58,16 +58,11 @@ void MainWindow::aboutAuthors()
 
 void MainWindow::menuToggleLyricsBox()
 {
+    _lyricsWidget->toggleViewAction()->trigger();
     if(_lyricsTextBox->isHidden())
-    {
-        _lyricsTextBox->show();
         _toggleLyricsBox->setText(tr("Hide Lyrics"));
-    }
     else
-    {
-        _lyricsTextBox->hide();
         _toggleLyricsBox->setText(tr("Show Lyrics"));
-    }
 }
 
 #endif // MENUACTIONS_H

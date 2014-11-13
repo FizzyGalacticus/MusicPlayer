@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui multimedia
-QT       += sql
+QT       += sql network
 
 win32{
     INCLUDEPATH += C:\\Python27\\include
