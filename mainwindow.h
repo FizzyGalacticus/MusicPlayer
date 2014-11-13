@@ -66,6 +66,7 @@ private slots:
     void aboutAuthors();
     bool savePlaylist();
     bool loadPlaylist();
+    void menuToggleLyricsBox();
 
     /*************Media Player Slots************/
     void playbackPositionChanged(qint64 position);
@@ -122,6 +123,7 @@ private:
     QAction *_exitAct;
     QAction *_savePlaylistAct;
     QAction *_loadPlaylistAct;
+    QAction *_toggleLyricsBox;
     QAction *_aboutAct;
     QAction *_aboutQtAct;
     QAction *_aboutAuthorsAct;

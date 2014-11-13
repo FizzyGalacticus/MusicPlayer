@@ -23,6 +23,8 @@ void MainWindow::createMenus()
     _optionsMenu->addSeparator();
     _optionsMenu->addAction(_savePlaylistAct);
     _optionsMenu->addAction(_loadPlaylistAct);
+    _optionsMenu->addSeparator();
+    _optionsMenu->addAction(_toggleLyricsBox);
 #endif
 
     _helpMenu = menuBar()->addMenu(tr("&Help"));

@@ -1,6 +1,7 @@
 #ifndef MENUACTIONS_H
 #define MENUACTIONS_H
 #include "mainwindow.h"
+#include <QAction>
 
 void MainWindow::menuOpen()
 {
@@ -53,6 +54,20 @@ void MainWindow::aboutAuthors()
                     "<p>Thomas Cerny"
                 )
             );
+}
+
+void MainWindow::menuToggleLyricsBox()
+{
+    if(_lyricsTextBox->isHidden())
+    {
+        _lyricsTextBox->show();
+        _toggleLyricsBox->setText(tr("Hide Lyrics"));
+    }
+    else
+    {
+        _lyricsTextBox->hide();
+        _toggleLyricsBox->setText(tr("Show Lyrics"));
+    }
 }
 
 #endif // MENUACTIONS_H
