@@ -7,17 +7,6 @@
 QT       += core gui multimedia
 QT       += sql network
 
-win32{
-    INCLUDEPATH += C:\\Python27\\include
-    LIBS += -LC:\\Python27\\libs\
-	    -lpython27
-}
-unix{
-INCLUDEPATH += /usr/include/python2.7\
-               /usr/lib
-LIBS += -lpython2.7
-}
-
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = MusicPlayer

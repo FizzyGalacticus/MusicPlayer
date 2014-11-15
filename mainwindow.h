@@ -193,8 +193,7 @@ private:
     bool loadPlaylist(const int &);
 
     /*************Get & Display Lyrics**********/
-    QString * getSongLyrics(QString, QString);
-    QString removeUnwantedCharacters(QString);
+    void removeUnwantedCharacters(QString &);
     void updateSongLyrics(QString, QString);
     QTextEdit * _lyricsTextBox;
     QDockWidget * _lyricsWidget;
