@@ -9,8 +9,8 @@ void MainWindow::updateSongLyrics(QString artist, QString song)
     if(artist.left(3).toLower() == "the")
         artist = artist.right(artist.size()-3);
 
-    removeUnwantedCharacters(artist);
-    removeUnwantedCharacters(song);
+    formatLyricsUrlString(artist);
+    formatLyricsUrlString(song);
     QString urlString = "http://www.metrolyrics.com/" + song + "-lyrics-" + artist + ".html";
 
     qDebug() << "Attempting to get lyrics from:" << urlString.toLower();
@@ -18,7 +18,7 @@ void MainWindow::updateSongLyrics(QString artist, QString song)
     _networkManager->get(QNetworkRequest(QUrl(urlString.toLower())));
 }
 
-void MainWindow::removeUnwantedCharacters(QString & str)
+void MainWindow::formatLyricsUrlString(QString & str)
 {
     for(QString::Iterator i = str.begin(); i < str.end(); i++)
         if(*i == '-' || *i == ',' || *i == '\'' || *i == '!' || *i == '(' || *i == ')' || *i == '/')
@@ -29,11 +29,9 @@ void MainWindow::removeUnwantedCharacters(QString & str)
 
 void MainWindow::_lyricsRetrieved(QNetworkReply * response)
 {
-    QByteArray data = response->readAll();
-
     QString beginTag = "<p class='verse'>";
     QString endTag = "<div id=\"selected-song-meaning-open\" unselectable=\"on\" style=\"display:none;\">";
-    QString page = QString(data);
+    QString page = QString(response->readAll());
 
     const int beginOfLyrics = page.indexOf(beginTag);
     const int endOfLyrics = page.indexOf(endTag,beginOfLyrics);
