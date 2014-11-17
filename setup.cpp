@@ -70,6 +70,7 @@ void MainWindow::setupProgressBar()
 
     connect(_currentPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(playbackPositionChanged(qint64)));
     connect(_currentPlayer, SIGNAL(durationChanged(qint64)),this, SLOT(durationHasChanged(qint64)));
+    connect(_currentPlayer, SIGNAL(error(QMediaPlayer::Error)), this, SLOT(playerError(QMediaPlayer::Error)));
 
     _mainLayout->addLayout(progBar);
 }

@@ -81,6 +81,7 @@ void MainWindow::_newPlaylistTabButtonIsPressed()
 
     connect(_players->at(_players->count()-1),SIGNAL(durationChanged(qint64)),this,SLOT(durationHasChanged(qint64)));
     connect(_players->at(_players->count()-1),SIGNAL(positionChanged(qint64)),this,SLOT(playbackPositionChanged(qint64)));
+    connect(_players->at(_players->count()-1),SIGNAL(error(QMediaPlayer::Error)),this,SLOT(playerError(QMediaPlayer::Error)));
 
     qDebug() << "Added new playlist tab!";
 }
@@ -122,6 +123,11 @@ void MainWindow::durationHasChanged(qint64 duration)
 
             else _playlistViews->at(playerWhoseDurationChanged)->item(i)->setTextColor("black");
         }
+}
+
+void MainWindow::playerError(QMediaPlayer::Error error)
+{
+    qDebug() << "Player Error:" << _currentPlayer->errorString();
 }
 
 void MainWindow::_shuffleButtonHasBeenPressed()

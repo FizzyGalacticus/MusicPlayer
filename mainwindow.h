@@ -72,6 +72,7 @@ private slots:
     /*************Media Player Slots************/
     void playbackPositionChanged(qint64 position);
     void durationHasChanged(qint64 duration);
+    void playerError(QMediaPlayer::Error);
 
     /*************SHUFFLE BUTTON SLOT*********/
     void _shuffleButtonHasBeenPressed();
