@@ -39,6 +39,7 @@ void MainWindow::formatLyricsUrlString(QString & str)
     }
 
     str.replace(" ", "-");
+    str.replace('&',"and");
 }
 
 void MainWindow::_lyricsRetrieved(QNetworkReply * response)
