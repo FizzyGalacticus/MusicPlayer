@@ -7,7 +7,7 @@
 void MainWindow::updateSongLyrics(QString artist, QString song)
 {
     if(artist.left(3).toLower() == "the")
-        artist = artist.right(artist.size()-3);
+        artist = artist.right(artist.size()-4);
 
     formatLyricsUrlString(artist);
     formatLyricsUrlString(song);
@@ -21,8 +21,22 @@ void MainWindow::updateSongLyrics(QString artist, QString song)
 void MainWindow::formatLyricsUrlString(QString & str)
 {
     for(QString::Iterator i = str.begin(); i < str.end(); i++)
-        if(*i == '-' || *i == ',' || *i == '\'' || *i == '!' || *i == '(' || *i == ')' || *i == '/')
-            str.remove(*i);
+    {\
+        switch(i->toLatin1())
+        {
+            case '-':
+            case ',':
+            case '\'':
+            case '!':
+            case '(':
+            case ')':
+            case '/':
+            case '.':
+            case '?':
+                str.remove(*i);
+            break;
+        }
+    }
 
     str.replace(" ", "-");
 }
