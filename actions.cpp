@@ -181,9 +181,11 @@ const QString MainWindow::getAudioInfo(const int & index)
     if(_players->at(index)->availableMetaData().contains("Title"))
     {
         QString songTitle = _players->at(index)->metaData("Title").toString();
-        if(_players->at(index)->availableMetaData().contains("AlbumArtist"))
+        if(_players->at(index)->availableMetaData().contains("AlbumArtist") ||
+           _players->at(index)->availableMetaData().contains("ContributingArtist"))
         {
             QString songArtist = _players->at(index)->metaData("AlbumArtist").toString();
+            songArtist = songArtist.size()?songArtist:_players->at(index)->metaData("ContributingArtist").toString();
             metaData =(songArtist + " - " + songTitle);
             updateSongLyrics(songArtist,songTitle);
         }
