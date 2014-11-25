@@ -181,6 +181,16 @@ const QString MainWindow::getAudioInfo(const int & index)
     if(_players->at(index)->availableMetaData().contains("Title"))
     {
         QString songTitle = _players->at(index)->metaData("Title").toString();
+        int songHasFeatureInfoInTitle = songTitle.indexOf("(feat");
+
+        if(songHasFeatureInfoInTitle > -1)
+        {
+            songTitle.remove(songHasFeatureInfoInTitle, songTitle.size()-songHasFeatureInfoInTitle);
+
+            if(songTitle.at(songTitle.size()-1) == ' ')
+                songTitle.remove(songTitle.size()-1,1);
+        }
+
         if(_players->at(index)->availableMetaData().contains("AlbumArtist") ||
            _players->at(index)->availableMetaData().contains("ContributingArtist"))
         {
