@@ -7,12 +7,20 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     _player(new mediaPlayerTabWidget),
-    _controlPanel(new controlPanel)
+    _controlPanel(new controlPanel),
+    _mainWindowIcon(":/icons/mainWindowIcon.png"),
+    _previousButtonIcon(":/icons/Button-Prev-icon.png"),
+    _nextButtonIcon(":/icons/Button-Next-icon.png"),
+    _playButtonIcon(":/icons/Button-Play-icon.png"),
+    _pauseButtonIcon(":/icons/Button-Pause-icon.png")
 {
     ui->setupUi(this);
 
     QWidget * centralWidget = new QWidget;
     QVBoxLayout * centralLayout = new QVBoxLayout;
+
+    setWindowIcon(_mainWindowIcon);
+    setWindowTitle("Music Player");
 
     if(QCoreApplication::arguments().size())
     {

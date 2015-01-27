@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "mediaplayertabwidget.h"
 #include "controlpanel.h"
+#include <QIcon>
 
 namespace Ui {
 class MainWindow;
@@ -21,6 +22,10 @@ private:
     Ui::MainWindow *ui;
     mediaPlayerTabWidget * _player;
     controlPanel * _controlPanel;
+
+    //Icons
+    QIcon _mainWindowIcon, _previousButtonIcon, _nextButtonIcon, _playButtonIcon,
+            _pauseButtonIcon;
 };
 
 #endif // MAINWINDOW_H
