@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/Button-Next-icon.png</file>
+        <file>icons/Button-Pause-icon.png</file>
+        <file>icons/Button-Play-icon.png</file>
+        <file>icons/Button-Prev-icon.png</file>
+        <file>icons/mainWindowIcon.png</file>
+        <file>icons/Menu-Exit-icon.png</file>
+        <file>icons/Menu-Help-icon.png</file>
+        <file>icons/Menu-Info-icon.png</file>
+        <file>icons/Menu-Open-icon.png</file>
+        <file>icons/Qt-icon.ico</file>
+    </qresource>
+</RCC>

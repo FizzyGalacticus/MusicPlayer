@@ -24,3 +24,6 @@ HEADERS  += mainwindow.h \
     mediaplayertabwidget.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    Resources.qrc
