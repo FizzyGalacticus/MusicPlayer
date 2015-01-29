@@ -45,11 +45,22 @@ const QObject * controlPanel::widget(Widget widget)
 void controlPanel::setPlayButtonIcon(const QIcon &icon)
 {
     _playButtonIcon = icon;
+
+    _playPauseButton->text().clear();
+
+    if(_currentState == controlPanel::Paused)
+        _playPauseButton->setIcon(icon);
+
 }
 
 void controlPanel::setPauseButtonIcon(const QIcon &icon)
 {
     _pauseButtonIcon = icon;
+
+    _playPauseButton->text().clear();
+
+    if(_currentState == controlPanel::Playing)
+        _playPauseButton->setIcon(icon);
 }
 
 void controlPanel::setNextButtonIcon(const QIcon &icon)
@@ -62,4 +73,30 @@ void controlPanel::setPreviousButtonIcon(const QIcon &icon)
 {
     _previousButton->text().clear();
     _previousButton->setIcon(icon);
+}
+
+void controlPanel::togglePlayPauseState()
+{
+    if(_currentState == controlPanel::Paused)
+    {
+        _currentState = controlPanel::Playing;
+        if(!_playButtonIcon.isNull())
+            _playPauseButton->setIcon(_pauseButtonIcon);
+        else
+        {
+            _playPauseButton->setIcon(QIcon());
+            _playPauseButton->setText("Pause");
+        }
+    }
+    else if(_currentState == controlPanel::Playing)
+    {
+        _currentState = controlPanel::Paused;
+        if(!_pauseButtonIcon.isNull())
+            _playPauseButton->setIcon(_playButtonIcon);
+        else
+        {
+            _playPauseButton->setIcon(QIcon());
+            _playPauseButton->setText("Play");
+        }
+    }
 }

@@ -15,6 +15,7 @@ public:
     explicit controlPanel(QWidget *parent = 0);
 
     const QObject * widget(controlPanel::Widget widget);
+
     void setPlayButtonIcon(const QIcon &);
     void setPauseButtonIcon(const QIcon &);
     void setNextButtonIcon(const QIcon &);
@@ -23,6 +24,7 @@ public:
 signals:
 
 public slots:
+    void togglePlayPauseState();
 
 private:
     QPushButton * _playPauseButton;

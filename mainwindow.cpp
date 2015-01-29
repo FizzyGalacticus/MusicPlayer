@@ -30,9 +30,16 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
     connect(_controlPanel->widget(controlPanel::PlayPauseButton), SIGNAL(clicked()), _player, SLOT(togglePlayPause()));
+    connect(_controlPanel->widget(controlPanel::PlayPauseButton), SIGNAL(clicked()), _controlPanel, SLOT(togglePlayPauseState()));
     connect(_controlPanel->widget(controlPanel::NextButton), SIGNAL(clicked()), _player, SLOT(next()));
     connect(_controlPanel->widget(controlPanel::PreviousButton), SIGNAL(clicked()), _player, SLOT(previous()));
     connect(_controlPanel->widget(controlPanel::VolumeSlider), SIGNAL(sliderMoved(int)), _player, SLOT(setVolume(int)));
+
+    _controlPanel->setPlayButtonIcon(_playButtonIcon);
+    _controlPanel->setPauseButtonIcon(_pauseButtonIcon);
+    _controlPanel->setNextButtonIcon(_nextButtonIcon);
+    _controlPanel->setPreviousButtonIcon(_previousButtonIcon);
+
 
     centralLayout->addWidget(_player);
     centralLayout->addWidget(_controlPanel);
