@@ -83,10 +83,7 @@ void controlPanel::togglePlayPauseState()
         if(!_playButtonIcon.isNull())
             _playPauseButton->setIcon(_pauseButtonIcon);
         else
-        {
             _playPauseButton->setIcon(QIcon());
-            _playPauseButton->setText("Pause");
-        }
     }
     else if(_currentState == controlPanel::Playing)
     {
@@ -94,9 +91,6 @@ void controlPanel::togglePlayPauseState()
         if(!_pauseButtonIcon.isNull())
             _playPauseButton->setIcon(_playButtonIcon);
         else
-        {
             _playPauseButton->setIcon(QIcon());
-            _playPauseButton->setText("Play");
-        }
     }
 }
