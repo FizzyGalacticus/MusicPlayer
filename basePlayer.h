@@ -17,6 +17,7 @@ public:
     bool openMedia(const QList<QMediaContent> & items);
     bool addMedia(const QMediaContent & content);
     bool addMedia(const QList<QMediaContent> & items);
+    static const QList<QMediaContent> * getMediaContentFromFilePaths(const QStringList *);
 
 signals:
     void stateChanged(QMediaPlayer::State state);
@@ -31,6 +32,8 @@ public slots:
 private slots:
     void currentIndexHasChanged(int index);
     void metaDataAvailablityHasChanged(bool isMetaDataAvailable);
+    void initiateAddMedia();
+    void initiateOpenMedia();
 
 private:
     QListWidget * _basePlayerView;
@@ -42,6 +45,8 @@ private:
 
     bool clear();
     void removeFeaturingArtistFromTitle();
+    const QString * getAudioFileTypes();
+    QStringList * openFileDialog();
 };
 
 #endif // PLAYLIST_H

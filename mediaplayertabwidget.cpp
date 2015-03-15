@@ -28,13 +28,13 @@ mediaPlayerTabWidget::mediaPlayerTabWidget(QWidget *parent) :
 
 bool mediaPlayerTabWidget::addMedia(const QStringList *filenames)
 {
-    const QList<QMediaContent> media = *getMediaContentFromFilePaths(filenames);
+    const QList<QMediaContent> media = *basePlayer::getMediaContentFromFilePaths(filenames);
     return _players->at(_tabs->currentIndex())->addMedia(media);
 }
 
 bool mediaPlayerTabWidget::openMedia(const QStringList *filenames)
 {
-    const QList<QMediaContent> media = *getMediaContentFromFilePaths(filenames);
+    const QList<QMediaContent> media = *basePlayer::getMediaContentFromFilePaths(filenames);
     return false;
 }
 
@@ -52,16 +52,6 @@ void mediaPlayerTabWidget::setLyricBox(lyricBox * lyricsBox)
     _lyricsBox = lyricsBox;
 }
 
-const QList<QMediaContent> * mediaPlayerTabWidget::getMediaContentFromFilePaths(const QStringList *filenames)
-{
-    QList<QMediaContent> * media = new QList<QMediaContent>;
-
-    for(QStringList::const_iterator i = filenames->begin(); i < filenames->end(); i++)
-        media->push_back(QMediaContent(QUrl::fromLocalFile(*i)));
-
-    return media;
-}
-
 void mediaPlayerTabWidget::newMetaDataReceived(const QString &artist, const QString &title)
 {
     if(QObject::sender() == _currentlyPlayingPlayer)
@@ -69,14 +59,12 @@ void mediaPlayerTabWidget::newMetaDataReceived(const QString &artist, const QStr
         if(title.size())
         {
             if(artist.size())
-            {
                 _metaData->setText(artist + " - " + title);
-
-                if(_lyricsBox != NULL) _lyricsBox->getLyrics(artist, title);
-            }
             else _metaData->setText(title);
         }
         else _metaData->setText("No Metadata Available.");
+
+        if(_lyricsBox != NULL) _lyricsBox->getLyrics(artist, title);
     }
 }
 

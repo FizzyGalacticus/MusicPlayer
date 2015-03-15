@@ -6,6 +6,9 @@
 #include <QtMultimedia/QMediaPlayer>
 #include <QUrl>
 #include <QDebug>
+#include <QStandardPaths>
+#include <QFileDialog>
+#include <QAction>
 
 basePlayer::basePlayer(QWidget *parent) :
     QWidget(parent),
@@ -17,6 +20,16 @@ basePlayer::basePlayer(QWidget *parent) :
     QHBoxLayout * layout = new QHBoxLayout;
     layout->addWidget(_basePlayerView);
     this->setLayout(layout);
+
+    QAction * add = new QAction(QString(tr("Add Media")),this);
+    QAction * open = new QAction(QString(tr("Open Media")),this);
+    connect(add, SIGNAL(triggered()), this, SLOT(initiateAddMedia()));
+    connect(open, SIGNAL(triggered()), this, SLOT(initiateOpenMedia()));
+
+    _basePlayerView->addAction(add);
+    _basePlayerView->addAction(open);
+
+    _basePlayerView->setContextMenuPolicy(Qt::ActionsContextMenu);
 
     _player->setPlaylist(new QMediaPlaylist);
     _player->setVolume(50);
@@ -144,4 +157,48 @@ void basePlayer::removeFeaturingArtistFromTitle()
         if(_currentlyPlayingTitle.at(_currentlyPlayingTitle.size()-1) == '(')
             _currentlyPlayingTitle.remove(_currentlyPlayingTitle.size()-1,_currentlyPlayingTitle.size()-1);
     }while(_currentlyPlayingTitle.at(_currentlyPlayingTitle.size()-1) == ' ');
+}
+
+const QList<QMediaContent> * basePlayer::getMediaContentFromFilePaths(const QStringList *filenames)
+{
+    QList<QMediaContent> * media = new QList<QMediaContent>;
+
+    for(QStringList::const_iterator i = filenames->begin(); i < filenames->end(); i++)
+        media->push_back(QMediaContent(QUrl::fromLocalFile(*i)));
+
+    return media;
+}
+
+QStringList * basePlayer::openFileDialog()
+{
+    QFileDialog openFileDialog(this);
+    openFileDialog.setMinimumSize(QSize(this->width(),this->height()));
+
+    openFileDialog.setDirectory(QStandardPaths::locate(QStandardPaths::MusicLocation,"",QStandardPaths::LocateDirectory));
+    openFileDialog.setNameFilter(getAudioFileTypes()->toStdString().c_str());
+    openFileDialog.setViewMode(QFileDialog::List);
+    openFileDialog.setFileMode(QFileDialog::ExistingFiles);
+
+    QStringList * files = new QStringList();
+
+    if(openFileDialog.exec())
+       files->append(openFileDialog.selectedFiles());
+
+    return files;
+}
+
+const QString * basePlayer::getAudioFileTypes()
+{
+    return new QString("Audio (*.mp3 *.mp4 *.wav *.flac *.ogg *.aiff *.wma *.mid *.ra *.ram "
+                       "*.rm *.vox *.raw *.aac *.au *.ac3 *.m4a *.amr *.mod *.669 *.s3m *.mtm)");
+}
+
+void basePlayer::initiateAddMedia()
+{
+    addMedia(*getMediaContentFromFilePaths(openFileDialog()));
+}
+
+void basePlayer::initiateOpenMedia()
+{
+    openMedia(*getMediaContentFromFilePaths(openFileDialog()));
 }

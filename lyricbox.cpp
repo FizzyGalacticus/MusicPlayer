@@ -91,10 +91,14 @@ void lyricBox::_lyricsRetrieved(QNetworkReply * response)
 
     QString lyrics = page.midRef(beginOfLyrics,endOfLyrics-beginOfLyrics).toString();
 
-    if(lyrics == "") lyrics = "No lyrics available.";
+    if(lyrics == "")
+    {
+        lyrics = "No lyrics available.";
+        _retrievedFromSiteLabel->setText("Lyrics retrieved from: Metrolyrics");
+    }
+    else _retrievedFromSiteLabel->setText("");
 
     _lyricsTextBox->setText(lyrics);
-    _retrievedFromSiteLabel->setText("Lyrics retrieved from: Metrolyrics.com");
 
     emit _lyricsTextBox->toPlainText();
 }

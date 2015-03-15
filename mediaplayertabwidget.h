@@ -40,8 +40,6 @@ private:
     basePlayer * _currentlyPlayingPlayer;
     controlPanel * _controlPanel;
     lyricBox * _lyricsBox;
-
-    const QList<QMediaContent> * getMediaContentFromFilePaths(const QStringList *filenames);
 };
 
 #endif // MEDIAPLAYERTABWIDGET_H
