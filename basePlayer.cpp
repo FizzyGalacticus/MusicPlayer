@@ -90,7 +90,7 @@ void basePlayer::currentIndexHasChanged(int index)
     for(int i = 0; i < _basePlayerView->count(); i++)
         _basePlayerView->item(i)->setTextColor("black");
     if(index > -1) _basePlayerView->item(index)->setTextColor("red");
-    else if(_basePlayerView->count()) _basePlayerView->item(0)->setTextColor("red");
+    else if(_basePlayerView->count())_basePlayerView->item(0)->setTextColor("red");
 }
 
 void basePlayer::metaDataAvailablityHasChanged(bool isMetaDataAvailable)

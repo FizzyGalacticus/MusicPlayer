@@ -21,6 +21,8 @@ public:
     void setNextButtonIcon(const QIcon &);
     void setPreviousButtonIcon(const QIcon &);
 
+    void setState(controlPanel::PlayPauseButtonState);
+
 signals:
 
 public slots:

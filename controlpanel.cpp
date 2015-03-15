@@ -97,3 +97,9 @@ void controlPanel::togglePlayPauseState()
             _playPauseButton->setIcon(QIcon());
     }
 }
+
+void controlPanel::setState(controlPanel::PlayPauseButtonState state)
+{
+    if(state != _currentState)
+        togglePlayPauseState();
+}

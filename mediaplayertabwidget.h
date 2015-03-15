@@ -27,6 +27,9 @@ public slots:
     void previous();
     void setVolume(int volume);
 
+private slots:
+    void playerStateHasChanged(QMediaPlayer::State);
+
 private:
     QTabWidget *_tabs;
     QLabel *_metaData;

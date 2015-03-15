@@ -18,6 +18,7 @@ mediaPlayerTabWidget::mediaPlayerTabWidget(QWidget *parent) :
     _tabs->addTab(_currentlyPlayingPlayer,"Playlist " + QString::number(_tabs->count()+1));
 
     connect(_currentlyPlayingPlayer, SIGNAL(metaDataChanged(QString,QString)), this, SLOT(newMetaDataReceived(QString,QString)));
+    connect(_currentlyPlayingPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(playerStateHasChanged(QMediaPlayer::State)));
 
     layout->addWidget(_tabs);
     layout->addWidget(_metaData);
@@ -92,4 +93,15 @@ void mediaPlayerTabWidget::previous()
 void mediaPlayerTabWidget::setVolume(int volume)
 {
     _currentlyPlayingPlayer->setVolume(volume);
+}
+
+void mediaPlayerTabWidget::playerStateHasChanged(QMediaPlayer::State state)
+{
+    if(_controlPanel != NULL)
+    {
+        if(state == QMediaPlayer::PausedState || state == QMediaPlayer::StoppedState)
+            _controlPanel->setState(controlPanel::Paused);
+        else if(state == QMediaPlayer::PlayingState)
+            _controlPanel->setState(controlPanel::Playing);
+    }
 }
