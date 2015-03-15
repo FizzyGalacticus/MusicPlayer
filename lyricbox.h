@@ -2,6 +2,7 @@
 #define LYRICBOX_H
 
 #include <QWidget>
+#include <QTextEdit>
 
 class lyricBox : public QWidget
 {
@@ -13,6 +14,8 @@ signals:
 
 public slots:
 
+private:
+    QTextEdit * _lyricsTextBox;
 };
 
 #endif // LYRICBOX_H
