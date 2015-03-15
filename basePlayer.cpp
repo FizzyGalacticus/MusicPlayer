@@ -30,6 +30,22 @@ bool basePlayer::clear()
     return _player->playlist()->clear();
 }
 
+bool basePlayer::openMedia(const QMediaContent &content)
+{
+    _player->stop();
+    _player->playlist()->clear();
+
+    return addMedia(content);
+}
+
+bool basePlayer::openMedia(const QList<QMediaContent> &items)
+{
+    _player->stop();
+    _player->playlist()->clear();
+
+    return addMedia(items);
+}
+
 bool basePlayer::addMedia(const QList<QMediaContent> &items)
 {
     _player->playlist()->addMedia(items);
