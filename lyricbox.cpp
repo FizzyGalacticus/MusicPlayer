@@ -3,6 +3,9 @@
 #include <QString>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QAction>
+#include <QClipboard>
+#include <QApplication>
 
 lyricBox::lyricBox(QWidget *parent) :
     QWidget(parent),
@@ -16,6 +19,13 @@ lyricBox::lyricBox(QWidget *parent) :
 
     _lyricsTextBox->setAcceptDrops(false);
     _lyricsTextBox->setReadOnly(true);
+
+    QAction * copyText = new QAction(QString(tr("Copy Lyrics")), this);
+
+    connect(copyText, SIGNAL(triggered()), this, SLOT(copyLyricsToClipboard()));
+
+    _lyricsTextBox->addAction(copyText);
+    _lyricsTextBox->setContextMenuPolicy(Qt::ActionsContextMenu);
 
     QVBoxLayout * centralLayout = new QVBoxLayout;
     centralLayout->addWidget(_lyricsTextBox);
@@ -85,4 +95,10 @@ void lyricBox::_lyricsRetrieved(QNetworkReply * response)
 
     _lyricsTextBox->setText(lyrics);
     _retrievedFromSiteLabel->setText("Lyrics retrieved from: Metrolyrics.com");
+}
+
+void lyricBox::copyLyricsToClipboard()
+{
+    QClipboard * clipboard = QApplication::clipboard();
+    clipboard->setText(_lyricsTextBox->toPlainText());
 }

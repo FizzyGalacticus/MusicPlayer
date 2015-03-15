@@ -5,6 +5,7 @@
 #include <QTextEdit>
 #include <QLabel>
 #include <QNetworkAccessManager>
+#include <QMenu>
 
 class lyricBox : public QWidget
 {
@@ -17,6 +18,9 @@ signals:
 public slots:
     void getLyrics(QString, QString);
     void _lyricsRetrieved(QNetworkReply *);
+
+private slots:
+    void copyLyricsToClipboard();
 
 private:
     QTextEdit * _lyricsTextBox;
