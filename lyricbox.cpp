@@ -6,7 +6,7 @@
 
 lyricBox::lyricBox(QWidget *parent) :
     QWidget(parent),
-    _lyricsTextBox(new QTextEdit),
+    _lyricsTextBox(new QTextEdit("Lyrics will show here as available.")),
     _retrievedFromSiteLabel(new QLabel),
     _networkManager(new QNetworkAccessManager),
     _artist(""),
@@ -20,6 +20,8 @@ lyricBox::lyricBox(QWidget *parent) :
     QVBoxLayout * centralLayout = new QVBoxLayout;
     centralLayout->addWidget(_lyricsTextBox);
     centralLayout->addWidget(_retrievedFromSiteLabel);
+
+    this->setLayout(centralLayout);
 }
 
 void lyricBox::getLyrics(QString artist, QString title)
@@ -70,12 +72,12 @@ void lyricBox::formatLyricsUrlStringMetro(QString & str)
 
 void lyricBox::_lyricsRetrieved(QNetworkReply * response)
 {
-    QString beginTag = "<p class='verse'>";
-    QString endTag = "<div id=\"selected-song-meaning-open\" unselectable=\"on\" style=\"display:none;\">";
+    QString beginTag = "<div id=\"lyrics-body-text\">";
+    QString endTag = "</div>";
     QString page = QString(response->readAll());
 
     const int beginOfLyrics = page.indexOf(beginTag);
-    const int endOfLyrics = page.indexOf(endTag,beginOfLyrics);
+    const int endOfLyrics = page.indexOf(endTag,beginOfLyrics+1);
 
     QString lyrics = page.midRef(beginOfLyrics,endOfLyrics-beginOfLyrics).toString();
 

@@ -10,7 +10,8 @@ mediaPlayerTabWidget::mediaPlayerTabWidget(QWidget *parent) :
     _metaData(new QLabel("Metadata will show up here as available.")),
     _players(new QList<basePlayer *>),
     _currentlyPlayingPlayer(new basePlayer),
-    _controlPanel(NULL)
+    _controlPanel(NULL),
+    _lyricsBox(NULL)
 {
     QVBoxLayout * layout = new QVBoxLayout;
 
@@ -46,6 +47,11 @@ void mediaPlayerTabWidget::setControlPanel(controlPanel * panel)
     connect(_controlPanel->widget(controlPanel::VolumeSlider), SIGNAL(sliderMoved(int)), this, SLOT(setVolume(int)));
 }
 
+void mediaPlayerTabWidget::setLyricBox(lyricBox * lyricsBox)
+{
+    _lyricsBox = lyricsBox;
+}
+
 const QList<QMediaContent> * mediaPlayerTabWidget::getMediaContentFromFilePaths(const QStringList *filenames)
 {
     QList<QMediaContent> * media = new QList<QMediaContent>;
@@ -63,7 +69,11 @@ void mediaPlayerTabWidget::newMetaDataReceived(const QString &artist, const QStr
         if(title.size())
         {
             if(artist.size())
+            {
                 _metaData->setText(artist + " - " + title);
+
+                if(_lyricsBox != NULL) _lyricsBox->getLyrics(artist, title);
+            }
             else _metaData->setText(title);
         }
         else _metaData->setText("No Metadata Available.");

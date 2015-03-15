@@ -16,6 +16,7 @@ signals:
 
 public slots:
     void getLyrics(QString, QString);
+    void _lyricsRetrieved(QNetworkReply *);
 
 private:
     QTextEdit * _lyricsTextBox;
@@ -25,7 +26,6 @@ private:
 
     const QString removePrecedingThe(const QString &);
     void formatLyricsUrlStringMetro(QString &);
-    void _lyricsRetrieved(QNetworkReply *);
 };
 
 #endif // LYRICBOX_H

@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QList>
 #include "controlpanel.h"
+#include "lyricbox.h"
 
 class mediaPlayerTabWidget : public QWidget
 {
@@ -17,6 +18,7 @@ public:
     bool addMedia(const QStringList *filenames);
     bool openMedia(const QStringList *filenames);
     void setControlPanel(controlPanel *);
+    void setLyricBox(lyricBox *);
 
 signals:
 
@@ -37,6 +39,7 @@ private:
     QList<basePlayer *> * _players;
     basePlayer * _currentlyPlayingPlayer;
     controlPanel * _controlPanel;
+    lyricBox * _lyricsBox;
 
     const QList<QMediaContent> * getMediaContentFromFilePaths(const QStringList *filenames);
 };
