@@ -26,6 +26,8 @@ controlPanel::controlPanel(QWidget *parent) :
     layout->addLayout(optionsLayout);
     layout->addLayout(buttonLayout);
 
+    connect(_playPauseButton, SIGNAL(clicked()), this, SLOT(togglePlayPauseState()));
+
     this->setLayout(layout);
 }
 
