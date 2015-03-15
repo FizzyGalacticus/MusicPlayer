@@ -41,7 +41,7 @@ private:
     QString _currentlyPlayingTitle;
 
     bool clear();
-
+    void removeFeaturingArtistFromTitle();
 };
 
 #endif // PLAYLIST_H

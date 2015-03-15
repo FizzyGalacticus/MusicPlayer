@@ -100,7 +100,10 @@ void basePlayer::metaDataAvailablityHasChanged(bool isMetaDataAvailable)
         if(_player->availableMetaData().contains("AlbumArtist"))
             _currentlyPlayingArtist = _player->metaData("AlbumArtist").toString();
         if(_player->availableMetaData().contains("Title"))
+        {
             _currentlyPlayingTitle = _player->metaData("Title").toString();
+            removeFeaturingArtistFromTitle();
+        }
     }
     else
     {
@@ -109,4 +112,20 @@ void basePlayer::metaDataAvailablityHasChanged(bool isMetaDataAvailable)
     }
 
     emit metaDataChanged(_currentlyPlayingArtist, _currentlyPlayingTitle);
+}
+
+void basePlayer::removeFeaturingArtistFromTitle()
+{
+    if(_currentlyPlayingTitle.contains("feat",Qt::CaseInsensitive))
+        _currentlyPlayingTitle.remove(
+                    _currentlyPlayingTitle.indexOf("feat",0,Qt::CaseInsensitive),
+                    _currentlyPlayingTitle.size()-1
+                    );
+    do
+    {
+        if(_currentlyPlayingTitle.at(_currentlyPlayingTitle.size()-1) == ' ')
+            _currentlyPlayingTitle.remove(_currentlyPlayingTitle.size()-1,_currentlyPlayingTitle.size()-1);
+        if(_currentlyPlayingTitle.at(_currentlyPlayingTitle.size()-1) == '(')
+            _currentlyPlayingTitle.remove(_currentlyPlayingTitle.size()-1,_currentlyPlayingTitle.size()-1);
+    }while(_currentlyPlayingTitle.at(_currentlyPlayingTitle.size()-1) == ' ');
 }
