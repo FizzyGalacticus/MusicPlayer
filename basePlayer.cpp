@@ -72,6 +72,9 @@ void basePlayer::next()
 {
     if(_player->playlist()->playbackMode() == QMediaPlaylist::Loop || _player->playlist()->currentIndex() != _player->playlist()->mediaCount()-1)
         _player->playlist()->next();
+    //DEBUG
+    _player->setPosition(373000);
+    //*****
 }
 
 void basePlayer::previous()
@@ -89,7 +92,8 @@ void basePlayer::currentIndexHasChanged(int index)
 {
     for(int i = 0; i < _basePlayerView->count(); i++)
         _basePlayerView->item(i)->setTextColor("black");
-    _basePlayerView->item(index)->setTextColor("red");
+    if(index > -1) _basePlayerView->item(index)->setTextColor("red");
+    else if(_basePlayerView->count()) _basePlayerView->item(0)->setTextColor("red");
 }
 
 void basePlayer::metaDataAvailablityHasChanged(bool isMetaDataAvailable)
