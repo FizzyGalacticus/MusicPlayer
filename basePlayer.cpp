@@ -72,9 +72,6 @@ void basePlayer::next()
 {
     if(_player->playlist()->playbackMode() == QMediaPlaylist::Loop || _player->playlist()->currentIndex() != _player->playlist()->mediaCount()-1)
         _player->playlist()->next();
-    //DEBUG
-    _player->setPosition(373000);
-    //*****
 }
 
 void basePlayer::previous()
@@ -98,7 +95,6 @@ void basePlayer::currentIndexHasChanged(int index)
 
 void basePlayer::metaDataAvailablityHasChanged(bool isMetaDataAvailable)
 {
-    qDebug() << "New metadata is available!";
     if(isMetaDataAvailable)
     {
         if(_player->availableMetaData().contains("AlbumArtist"))
