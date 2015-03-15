@@ -5,7 +5,6 @@
 #include <QTextEdit>
 #include <QLabel>
 #include <QNetworkAccessManager>
-#include <QMenu>
 
 class lyricBox : public QWidget
 {
@@ -14,6 +13,7 @@ public:
     explicit lyricBox(QWidget *parent = 0);
 
 signals:
+    void lyricsChanged(const QString lyrics);
 
 public slots:
     void getLyrics(QString, QString);

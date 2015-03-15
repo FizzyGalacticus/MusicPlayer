@@ -95,6 +95,8 @@ void lyricBox::_lyricsRetrieved(QNetworkReply * response)
 
     _lyricsTextBox->setText(lyrics);
     _retrievedFromSiteLabel->setText("Lyrics retrieved from: Metrolyrics.com");
+
+    emit _lyricsTextBox->toPlainText();
 }
 
 void lyricBox::copyLyricsToClipboard()
