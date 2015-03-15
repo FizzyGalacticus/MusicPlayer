@@ -9,7 +9,8 @@ mediaPlayerTabWidget::mediaPlayerTabWidget(QWidget *parent) :
     _tabs(new QTabWidget),
     _metaData(new QLabel("Metadata will show up here as available.")),
     _players(new QList<basePlayer *>),
-    _currentlyPlayingPlayer(new basePlayer)
+    _currentlyPlayingPlayer(new basePlayer),
+    _controlPanel(NULL)
 {
     QVBoxLayout * layout = new QVBoxLayout;
 
@@ -33,6 +34,15 @@ bool mediaPlayerTabWidget::openMedia(const QStringList *filenames)
 {
     const QList<QMediaContent> media = *getMediaContentFromFilePaths(filenames);
     return false;
+}
+
+void mediaPlayerTabWidget::setControlPanel(controlPanel * panel)
+{
+    _controlPanel = panel;
+    connect(_controlPanel->widget(controlPanel::PlayPauseButton), SIGNAL(clicked()), this, SLOT(togglePlayPause()));
+    connect(_controlPanel->widget(controlPanel::NextButton), SIGNAL(clicked()), this, SLOT(next()));
+    connect(_controlPanel->widget(controlPanel::PreviousButton), SIGNAL(clicked()), this, SLOT(previous()));
+    connect(_controlPanel->widget(controlPanel::VolumeSlider), SIGNAL(sliderMoved(int)), this, SLOT(setVolume(int)));
 }
 
 const QList<QMediaContent> * mediaPlayerTabWidget::getMediaContentFromFilePaths(const QStringList *filenames)

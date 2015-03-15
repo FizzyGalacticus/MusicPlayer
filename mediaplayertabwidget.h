@@ -6,6 +6,7 @@
 #include "basePlayer.h"
 #include <QLabel>
 #include <QList>
+#include "controlpanel.h"
 
 class mediaPlayerTabWidget : public QWidget
 {
@@ -15,6 +16,7 @@ public:
 
     bool addMedia(const QStringList *filenames);
     bool openMedia(const QStringList *filenames);
+    void setControlPanel(controlPanel *);
 
 signals:
 
@@ -31,6 +33,7 @@ private:
 
     QList<basePlayer *> * _players;
     basePlayer * _currentlyPlayingPlayer;
+    controlPanel * _controlPanel;
 
     const QList<QMediaContent> * getMediaContentFromFilePaths(const QStringList *filenames);
 };

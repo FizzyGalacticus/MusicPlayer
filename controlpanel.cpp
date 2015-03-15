@@ -46,32 +46,33 @@ void controlPanel::setPlayButtonIcon(const QIcon &icon)
 {
     _playButtonIcon = icon;
 
-    _playPauseButton->text().clear();
-
     if(_currentState == controlPanel::Paused)
+    {
+        _playPauseButton->setText("");
         _playPauseButton->setIcon(icon);
-
+    }
 }
 
 void controlPanel::setPauseButtonIcon(const QIcon &icon)
 {
     _pauseButtonIcon = icon;
 
-    _playPauseButton->text().clear();
-
     if(_currentState == controlPanel::Playing)
+    {
+        _playPauseButton->setText("");
         _playPauseButton->setIcon(icon);
+    }
 }
 
 void controlPanel::setNextButtonIcon(const QIcon &icon)
 {
-    _nextButton->text().clear();
+    _nextButton->setText("");
     _nextButton->setIcon(icon);
 }
 
 void controlPanel::setPreviousButtonIcon(const QIcon &icon)
 {
-    _previousButton->text().clear();
+    _previousButton->setText("");
     _previousButton->setIcon(icon);
 }
 
