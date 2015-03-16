@@ -103,7 +103,7 @@ void lyricBox::_lyricsRetrieved(QNetworkReply * response)
 
     _lyricsTextBox->setText(lyrics);
 
-    emit _lyricsTextBox->toPlainText();
+    emit lyricsChanged(_lyricsTextBox->toPlainText());
 }
 
 void lyricBox::copyLyricsToClipboard()
