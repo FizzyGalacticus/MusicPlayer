@@ -21,10 +21,13 @@ lyricBox::lyricBox(QWidget *parent) :
     _lyricsTextBox->setReadOnly(true);
 
     QAction * copyText = new QAction(QString(tr("Copy Lyrics")), this);
+    QAction * copySelected = new QAction(QString(tr("Copy Selected")), this);
 
     connect(copyText, SIGNAL(triggered()), this, SLOT(copyLyricsToClipboard()));
+    connect(copySelected, SIGNAL(triggered()), this, SLOT(copySelectedToClipboard()));
 
     _lyricsTextBox->addAction(copyText);
+    _lyricsTextBox->addAction(copySelected);
     _lyricsTextBox->setContextMenuPolicy(Qt::ActionsContextMenu);
 
     QVBoxLayout * centralLayout = new QVBoxLayout;
@@ -107,4 +110,9 @@ void lyricBox::copyLyricsToClipboard()
 {
     QClipboard * clipboard = QApplication::clipboard();
     clipboard->setText(_lyricsTextBox->toPlainText());
+}
+
+void lyricBox::copySelectedToClipboard()
+{
+    _lyricsTextBox->copy();
 }

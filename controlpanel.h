@@ -10,7 +10,7 @@ class controlPanel : public QWidget
 {
     Q_OBJECT
 public:
-    enum Widget{ PreviousButton, PlayPauseButton, NextButton, VolumeSlider};
+    enum Widget{ PreviousButton, PlayPauseButton, NextButton};
     enum PlayPauseButtonState{Playing, Paused};
     explicit controlPanel(QWidget *parent = 0);
 

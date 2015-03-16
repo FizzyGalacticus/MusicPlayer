@@ -41,8 +41,6 @@ const QObject * controlPanel::widget(Widget widget)
         return _nextButton;
     else if(widget == controlPanel::PreviousButton)
         return _previousButton;
-    else if(widget == controlPanel::VolumeSlider)
-        return _volumeSlider;
     else return new QObject;
 }
 

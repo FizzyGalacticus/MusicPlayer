@@ -21,6 +21,7 @@ public slots:
 
 private slots:
     void copyLyricsToClipboard();
+    void copySelectedToClipboard();
 
 private:
     QTextEdit * _lyricsTextBox;
