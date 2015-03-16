@@ -44,7 +44,7 @@ void mediaPlayerTabWidget::setControlPanel(controlPanel * panel)
     connect(_controlPanel->widget(controlPanel::PlayPauseButton), SIGNAL(clicked()), this, SLOT(togglePlayPause()));
     connect(_controlPanel->widget(controlPanel::NextButton), SIGNAL(clicked()), this, SLOT(next()));
     connect(_controlPanel->widget(controlPanel::PreviousButton), SIGNAL(clicked()), this, SLOT(previous()));
-    connect(_controlPanel->widget(controlPanel::VolumeSlider), SIGNAL(sliderMoved(int)), this, SLOT(setVolume(int)));
+    connect(_controlPanel, SIGNAL(volumeSliderValueChanged(int)), _currentlyPlayingPlayer, SLOT(setVolume(int)));
 }
 
 void mediaPlayerTabWidget::setLyricBox(lyricBox * lyricsBox)

@@ -24,9 +24,11 @@ public:
     void setState(controlPanel::PlayPauseButtonState);
 
 signals:
+    void volumeSliderValueChanged(int value);
 
 public slots:
     void togglePlayPauseState();
+    void recieveNewVolumeSliderValue(int value);
 
 private:
     QPushButton * _playPauseButton;

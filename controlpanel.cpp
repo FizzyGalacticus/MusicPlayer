@@ -1,6 +1,7 @@
 #include "controlpanel.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QDebug>
 
 controlPanel::controlPanel(QWidget *parent) :
     QWidget(parent),
@@ -27,6 +28,7 @@ controlPanel::controlPanel(QWidget *parent) :
     layout->addLayout(buttonLayout);
 
     connect(_playPauseButton, SIGNAL(clicked()), this, SLOT(togglePlayPauseState()));
+    connect(_volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(recieveNewVolumeSliderValue(int)));
 
     this->setLayout(layout);
 }
@@ -96,6 +98,12 @@ void controlPanel::togglePlayPauseState()
         else
             _playPauseButton->setIcon(QIcon());
     }
+}
+
+void controlPanel::recieveNewVolumeSliderValue(int value)
+{
+    qDebug() << "Value changed to:" << value;
+    emit volumeSliderValueChanged(value);
 }
 
 void controlPanel::setState(controlPanel::PlayPauseButtonState state)
