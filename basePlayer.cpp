@@ -21,8 +21,8 @@ basePlayer::basePlayer(QWidget *parent) :
     layout->addWidget(_basePlayerView);
     this->setLayout(layout);
 
-    QAction * add = new QAction(QString(tr("Add Media")),this);
-    QAction * open = new QAction(QString(tr("Open Media")),this);
+    QAction * add = new QAction(tr("Add Media"),this);
+    QAction * open = new QAction(tr("Open Media"),this);
     connect(add, SIGNAL(triggered()), this, SLOT(initiateAddMedia()));
     connect(open, SIGNAL(triggered()), this, SLOT(initiateOpenMedia()));
 

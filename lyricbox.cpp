@@ -20,8 +20,8 @@ lyricBox::lyricBox(QWidget *parent) :
     _lyricsTextBox->setAcceptDrops(false);
     _lyricsTextBox->setReadOnly(true);
 
-    QAction * copyText = new QAction(QString(tr("Copy Lyrics")), this);
-    QAction * copySelected = new QAction(QString(tr("Copy Selected")), this);
+    QAction * copyText = new QAction(tr("Copy Lyrics"), this);
+    QAction * copySelected = new QAction(tr("Copy Selected"), this);
 
     connect(copyText, SIGNAL(triggered()), this, SLOT(copyLyricsToClipboard()));
     connect(copySelected, SIGNAL(triggered()), this, SLOT(copySelectedToClipboard()));
