@@ -13,6 +13,7 @@ progressBar::progressBar(QWidget *parent) :
 
     _progressBar->setMinimum(0);
     _progressBar->setMaximum(0);
+    _progressBar->setTextVisible(false);
 
     this->setLayout(layout);
 }
