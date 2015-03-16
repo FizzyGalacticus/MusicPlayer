@@ -6,6 +6,7 @@
 #include <QtMultimedia/QMediaPlayer>
 #include <QtMultimedia/QMediaPlaylist>
 #include <QString>
+#include <QVideoWidget>
 
 class basePlayer : public QWidget
 {
@@ -39,11 +40,13 @@ private slots:
     void initiateOpenMedia();
     void mediaDurationChanged(qint64);
     void mediaPositionChanged(qint64);
+    void videoAvailableChanged(bool videoAvailable);
 
 private:
     QListWidget * _basePlayerView;
     QMediaPlayer * _player;
     QMediaPlaylist * _mediaPlaylist;
+    QVideoWidget * _videoWidget;
 
     QString _currentlyPlayingArtist;
     QString _currentlyPlayingTitle;

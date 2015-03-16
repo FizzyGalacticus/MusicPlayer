@@ -14,11 +14,13 @@ basePlayer::basePlayer(QWidget *parent) :
     QWidget(parent),
     _basePlayerView(new QListWidget),
     _player(new QMediaPlayer),
+    _videoWidget(new QVideoWidget),
     _currentlyPlayingArtist(""),
     _currentlyPlayingTitle("")
 {
     QHBoxLayout * layout = new QHBoxLayout;
     layout->addWidget(_basePlayerView);
+    layout->addWidget(_videoWidget);
     this->setLayout(layout);
 
     QAction * add = new QAction(tr("Add Media"),this);
@@ -33,10 +35,12 @@ basePlayer::basePlayer(QWidget *parent) :
 
     _player->setPlaylist(new QMediaPlaylist);
     _player->setVolume(50);
+    _player->setVideoOutput(_videoWidget);
     connect(_player->playlist(), SIGNAL(currentIndexChanged(int)), this, SLOT(currentIndexHasChanged(int)));
     connect(_player, SIGNAL(metaDataAvailableChanged(bool)), this, SLOT(metaDataAvailablityHasChanged(bool)));
     connect(_player, SIGNAL(durationChanged(qint64)), this, SLOT(mediaDurationChanged(qint64)));
     connect(_player, SIGNAL(positionChanged(qint64)), this, SLOT(mediaPositionChanged(qint64)));
+    connect(_player, SIGNAL(videoAvailableChanged(bool)), this, SLOT(videoAvailableChanged(bool)));
 }
 
 bool basePlayer::clear()
@@ -220,4 +224,18 @@ void basePlayer::mediaDurationChanged(qint64 duration)
 void basePlayer::mediaPositionChanged(qint64 position)
 {
     emit positionChanged(position);
+}
+
+void basePlayer::videoAvailableChanged(bool videoAvailable)
+{
+    if(videoAvailable)
+    {
+        _basePlayerView->setHidden(true);
+        _videoWidget->setHidden(false);
+    }
+    else
+    {
+        _basePlayerView->setHidden(false);
+        _videoWidget->setHidden(true);
+    }
 }
