@@ -5,6 +5,7 @@
 #include "mediaplayertabwidget.h"
 #include "controlpanel.h"
 #include "lyricbox.h"
+#include "progressbar.h"
 #include <QIcon>
 
 namespace Ui {
@@ -24,6 +25,7 @@ private:
     mediaPlayerTabWidget * _player;
     controlPanel * _controlPanel;
     lyricBox * _lyricsBox;
+    progressBar * _progressBar;
 
     //Icons
     QIcon _mainWindowIcon, _previousButtonIcon, _nextButtonIcon, _playButtonIcon,

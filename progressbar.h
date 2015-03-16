@@ -12,8 +12,16 @@ public:
     ~progressBar();
 
 signals:
+    void valueChanged(int);
 
 public slots:
+
+private slots:
+    void progressBarValueChanged(int);
+
+protected:
+    void mousePressEvent(QMouseEvent *);
+    void mouseMoveEvent(QMouseEvent *);
 
 private:
     QProgressBar * _progressBar;

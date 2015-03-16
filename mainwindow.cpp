@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _player(new mediaPlayerTabWidget),
     _controlPanel(new controlPanel),
     _lyricsBox(new lyricBox),
+    _progressBar(new progressBar),
     _mainWindowIcon(":/icons/mainWindowIcon.png"),
     _previousButtonIcon(":/icons/Button-Prev-icon.png"),
     _nextButtonIcon(":/icons/Button-Next-icon.png"),
@@ -42,8 +43,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     playerAndLyricsLayout->addWidget(_player);
     playerAndLyricsLayout->addWidget(_lyricsBox);
-    centralLayout->addLayout(playerAndLyricsLayout);
-    centralLayout->addWidget(_controlPanel);
+//    centralLayout->addLayout(playerAndLyricsLayout);
+//    centralLayout->addWidget(_controlPanel);
+    centralLayout->addStretch(0);
+    centralLayout->addWidget(_progressBar);
+    centralLayout->addStretch(0);
 
     centralWidget->setLayout(centralLayout);
 
