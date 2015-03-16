@@ -64,7 +64,7 @@ void mediaPlayerTabWidget::newMetaDataReceived(const QString &artist, const QStr
         }
         else _metaData->setText("No Metadata Available.");
 
-        if(_lyricsBox != NULL) _lyricsBox->getLyrics(artist, title);
+        if(_lyricsBox != NULL) _lyricsBox->retrieveLyrics(artist, title);
     }
 }
 

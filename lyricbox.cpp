@@ -15,7 +15,7 @@ lyricBox::lyricBox(QWidget *parent) :
     _artist(""),
     _title("")
 {
-    connect(_networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(_lyricsRetrieved(QNetworkReply*)));
+    connect(_networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(lyricsRetrieved(QNetworkReply*)));
 
     _lyricsTextBox->setAcceptDrops(false);
     _lyricsTextBox->setReadOnly(true);
@@ -37,7 +37,7 @@ lyricBox::lyricBox(QWidget *parent) :
     this->setLayout(centralLayout);
 }
 
-void lyricBox::getLyrics(QString artist, QString title)
+void lyricBox::retrieveLyrics(QString artist, QString title)
 {
     _artist = artist;
     _title = title;
@@ -83,7 +83,7 @@ void lyricBox::formatLyricsUrlStringMetro(QString & str)
     str.replace('&',"and");
 }
 
-void lyricBox::_lyricsRetrieved(QNetworkReply * response)
+void lyricBox::lyricsRetrieved(QNetworkReply * response)
 {
     QString beginTag = "<div id=\"lyrics-body-text\">";
     QString endTag = "</div>";

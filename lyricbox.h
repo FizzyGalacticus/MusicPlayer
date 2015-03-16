@@ -16,8 +16,8 @@ signals:
     void lyricsChanged(const QString lyrics);
 
 public slots:
-    void getLyrics(QString, QString);
-    void _lyricsRetrieved(QNetworkReply *);
+    void retrieveLyrics(QString, QString);
+    void lyricsRetrieved(QNetworkReply *);
 
 private slots:
     void copyLyricsToClipboard();
