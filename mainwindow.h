@@ -7,6 +7,7 @@
 #include "lyricbox.h"
 #include "progressbar.h"
 #include <QIcon>
+#include <QVideoWidget>
 
 namespace Ui {
 class MainWindow;
@@ -23,6 +24,7 @@ public:
 private:
     Ui::MainWindow *ui;
     mediaPlayerTabWidget * _player;
+    QVideoWidget * _videoWidget;
     controlPanel * _controlPanel;
     lyricBox * _lyricsBox;
     progressBar * _progressBar;

@@ -10,6 +10,7 @@ mediaPlayerTabWidget::mediaPlayerTabWidget(QWidget *parent) :
     _tabs(new QTabWidget),
     _metaData(new QLabel("Metadata will show up here as available.")),
     _players(new QList<basePlayer *>),
+    _videoWidget(NULL),
     _currentlyPlayingPlayer(new basePlayer),
     _controlPanel(NULL),
     _lyricsBox(NULL),
@@ -24,6 +25,7 @@ mediaPlayerTabWidget::mediaPlayerTabWidget(QWidget *parent) :
     connect(_currentlyPlayingPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(playerStateHasChanged(QMediaPlayer::State)));
     connect(_currentlyPlayingPlayer, SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
     connect(_currentlyPlayingPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+    connect(_currentlyPlayingPlayer, SIGNAL(videoAvailabilityChanged(bool)), this, SLOT(videoAvailableChanged(bool)));
 
     layout->addWidget(_tabs);
     layout->addWidget(_metaData);
@@ -40,6 +42,12 @@ bool mediaPlayerTabWidget::openMedia(const QStringList *filenames)
 {
     const QList<QMediaContent> media = *basePlayer::getMediaContentFromFilePaths(filenames);
     return false;
+}
+
+void mediaPlayerTabWidget::setVideoWidget(QVideoWidget * videoWidget)
+{
+    _videoWidget = videoWidget;
+    _currentlyPlayingPlayer->setVideoWidget(_videoWidget);
 }
 
 void mediaPlayerTabWidget::setControlPanel(controlPanel * panel)
@@ -129,4 +137,25 @@ void mediaPlayerTabWidget::durationChanged(qint64 duration)
 void mediaPlayerTabWidget::positionChanged(qint64 position)
 {
     emit currentPlayerPositionChanged(position);
+}
+
+void mediaPlayerTabWidget::videoAvailableChanged(bool videoAvailable)
+{
+    if(_videoWidget != NULL)
+    {
+        if(videoAvailable)
+        {
+            _tabs->setHidden(true);
+            _lyricsBox->setHidden(true);
+            _metaData->setHidden(true);
+            _videoWidget->setHidden(false);
+        }
+        else
+        {
+            _tabs->setHidden(false);
+            _lyricsBox->setHidden(false);
+            _metaData->setHidden(false);
+            _videoWidget->setHidden(true);
+        }
+    }
 }
