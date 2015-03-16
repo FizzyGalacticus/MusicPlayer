@@ -2,6 +2,7 @@
 #include <QVBoxLayout>
 #include <QMouseEvent>
 #include <QSpacerItem>
+#include <QDebug>
 
 progressBar::progressBar(QWidget *parent) :
     QWidget(parent),
@@ -10,11 +11,8 @@ progressBar::progressBar(QWidget *parent) :
     QVBoxLayout * layout = new QVBoxLayout;
     layout->addWidget(_progressBar);
 
-    //DEBUG
     _progressBar->setMinimum(0);
-    _progressBar->setMaximum(100);
-    _progressBar->setValue(50);
-    //
+    _progressBar->setMaximum(0);
 
     this->setLayout(layout);
 }
@@ -24,6 +22,16 @@ progressBar::~progressBar()
 
 }
 
+void progressBar::setProgressBarValue(qint64 value)
+{
+    _progressBar->setValue(value);
+}
+
+void progressBar::setProgressBarMaximum(qint64 maximum)
+{
+    _progressBar->setMaximum(maximum);
+}
+
 void progressBar::progressBarValueChanged(int value)
 {
     emit valueChanged(value);
@@ -31,8 +39,9 @@ void progressBar::progressBarValueChanged(int value)
 
 void progressBar::mousePressEvent(QMouseEvent * event)
 {
-    int value = (_progressBar->maximum()*event->x())/this->width();
+    int value = ((_progressBar->maximum()*event->x())/this->width());
     _progressBar->setValue(value);
+    emit valueChanged(value);
 }
 
 void progressBar::mouseMoveEvent(QMouseEvent * event)

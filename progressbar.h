@@ -15,6 +15,8 @@ signals:
     void valueChanged(int);
 
 public slots:
+    void setProgressBarValue(qint64);
+    void setProgressBarMaximum(qint64);
 
 private slots:
     void progressBarValueChanged(int);

@@ -2,6 +2,7 @@
 #include <QVBoxLayout>
 #include <QStringList>
 #include <QMediaContent>
+#include <QMediaPlayer>
 #include <QDebug>
 
 mediaPlayerTabWidget::mediaPlayerTabWidget(QWidget *parent) :
@@ -11,7 +12,8 @@ mediaPlayerTabWidget::mediaPlayerTabWidget(QWidget *parent) :
     _players(new QList<basePlayer *>),
     _currentlyPlayingPlayer(new basePlayer),
     _controlPanel(NULL),
-    _lyricsBox(NULL)
+    _lyricsBox(NULL),
+    _progressBar(NULL)
 {
     QVBoxLayout * layout = new QVBoxLayout;
 
@@ -20,6 +22,8 @@ mediaPlayerTabWidget::mediaPlayerTabWidget(QWidget *parent) :
 
     connect(_currentlyPlayingPlayer, SIGNAL(metaDataChanged(QString,QString)), this, SLOT(newMetaDataReceived(QString,QString)));
     connect(_currentlyPlayingPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(playerStateHasChanged(QMediaPlayer::State)));
+    connect(_currentlyPlayingPlayer, SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
+    connect(_currentlyPlayingPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
 
     layout->addWidget(_tabs);
     layout->addWidget(_metaData);
@@ -50,6 +54,14 @@ void mediaPlayerTabWidget::setControlPanel(controlPanel * panel)
 void mediaPlayerTabWidget::setLyricBox(lyricBox * lyricsBox)
 {
     _lyricsBox = lyricsBox;
+}
+
+void mediaPlayerTabWidget::setProgressBar(progressBar * progressbar)
+{
+    _progressBar = progressbar;
+    connect(_progressBar, SIGNAL(valueChanged(int)), this, SLOT(setMediaPosition(int)));
+    connect(this, SIGNAL(currentPlayerDurationChanged(qint64)), _progressBar, SLOT(setProgressBarMaximum(qint64)));
+    connect(this, SIGNAL(currentPlayerPositionChanged(qint64)), _progressBar, SLOT(setProgressBarValue(qint64)));
 }
 
 void mediaPlayerTabWidget::newMetaDataReceived(const QString &artist, const QString &title)
@@ -93,6 +105,11 @@ void mediaPlayerTabWidget::setVolume(int volume)
     _currentlyPlayingPlayer->setVolume(volume);
 }
 
+void mediaPlayerTabWidget::setMediaPosition(int position)
+{
+    _currentlyPlayingPlayer->setMediaPosition(position);
+}
+
 void mediaPlayerTabWidget::playerStateHasChanged(QMediaPlayer::State state)
 {
     if(_controlPanel != NULL)
@@ -102,4 +119,14 @@ void mediaPlayerTabWidget::playerStateHasChanged(QMediaPlayer::State state)
         else if(state == QMediaPlayer::PlayingState)
             _controlPanel->setState(controlPanel::Playing);
     }
+}
+
+void mediaPlayerTabWidget::durationChanged(qint64 duration)
+{
+    emit currentPlayerDurationChanged(duration);
+}
+
+void mediaPlayerTabWidget::positionChanged(qint64 position)
+{
+    emit currentPlayerPositionChanged(position);
 }

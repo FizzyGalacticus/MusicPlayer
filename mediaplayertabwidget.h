@@ -8,6 +8,7 @@
 #include <QList>
 #include "controlpanel.h"
 #include "lyricbox.h"
+#include "progressbar.h"
 
 class mediaPlayerTabWidget : public QWidget
 {
@@ -19,8 +20,11 @@ public:
     bool openMedia(const QStringList *filenames);
     void setControlPanel(controlPanel *);
     void setLyricBox(lyricBox *);
+    void setProgressBar(progressBar *);
 
 signals:
+    void currentPlayerDurationChanged(qint64);
+    void currentPlayerPositionChanged(qint64);
 
 public slots:
     void newMetaDataReceived(const QString&artist, const QString &title);
@@ -28,9 +32,12 @@ public slots:
     void next();
     void previous();
     void setVolume(int volume);
+    void setMediaPosition(int position);
 
 private slots:
     void playerStateHasChanged(QMediaPlayer::State);
+    void durationChanged(qint64);
+    void positionChanged(qint64);
 
 private:
     QTabWidget *_tabs;
@@ -40,6 +47,7 @@ private:
     basePlayer * _currentlyPlayingPlayer;
     controlPanel * _controlPanel;
     lyricBox * _lyricsBox;
+    progressBar * _progressBar;
 };
 
 #endif // MEDIAPLAYERTABWIDGET_H

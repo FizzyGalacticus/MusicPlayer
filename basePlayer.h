@@ -22,18 +22,23 @@ public:
 signals:
     void stateChanged(QMediaPlayer::State state);
     void metaDataChanged(const QString &artist, const QString &title);
+    void durationChanged(qint64 duration);
+    void positionChanged(qint64 position);
 
 public slots:
     void togglePlayPause();
     void next();
     void previous();
     void setVolume(int volume);
+    void setMediaPosition(qint64);
 
 private slots:
     void currentIndexHasChanged(int index);
     void metaDataAvailablityHasChanged(bool isMetaDataAvailable);
     void initiateAddMedia();
     void initiateOpenMedia();
+    void mediaDurationChanged(qint64);
+    void mediaPositionChanged(qint64);
 
 private:
     QListWidget * _basePlayerView;

@@ -35,6 +35,8 @@ basePlayer::basePlayer(QWidget *parent) :
     _player->setVolume(50);
     connect(_player->playlist(), SIGNAL(currentIndexChanged(int)), this, SLOT(currentIndexHasChanged(int)));
     connect(_player, SIGNAL(metaDataAvailableChanged(bool)), this, SLOT(metaDataAvailablityHasChanged(bool)));
+    connect(_player, SIGNAL(durationChanged(qint64)), this, SLOT(mediaDurationChanged(qint64)));
+    connect(_player, SIGNAL(positionChanged(qint64)), this, SLOT(mediaPositionChanged(qint64)));
 }
 
 bool basePlayer::clear()
@@ -83,6 +85,11 @@ bool basePlayer::addMedia(const QMediaContent &content)
     contentList.push_back(content);
 
     return addMedia(contentList);
+}
+
+void basePlayer::setMediaPosition(qint64 position)
+{
+    if(_player->duration() >= position) _player->setPosition(position);
 }
 
 void basePlayer::togglePlayPause()
@@ -203,4 +210,14 @@ void basePlayer::initiateAddMedia()
 void basePlayer::initiateOpenMedia()
 {
     openMedia(*getMediaContentFromFilePaths(openFileDialog()));
+}
+
+void basePlayer::mediaDurationChanged(qint64 duration)
+{
+    emit durationChanged(duration);
+}
+
+void basePlayer::mediaPositionChanged(qint64 position)
+{
+    emit positionChanged(position);
 }
