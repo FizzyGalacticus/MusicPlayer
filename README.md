@@ -15,7 +15,7 @@ My group and I originally wanted to use the Unity engine, but it does not seem t
 	-	For as long as I can remember, I have listened to a handful of favorite songs immediately before listening to other stuff. I would really like to implement a feature where favorites can be selected in a playlist and then they would be played before all other songs in that playlist. Of course this would need to be data saved with the playlists as well.
 *	Statistics
 	-	A database system that keeps track of the number of times a user has listened to a particular song.
-*	Video Playback
-	-	Because why not? This honestly shouldn't take that much effort, as the player currently can play audio for video files. It just needs the video portion added.
+*	~~Video Playback~~
+	-	~~Because why not? This honestly shouldn't take that much effort, as the player currently can play audio for video files. It just needs the video portion added.~~
 *	Compatibility
 	-	Capability to automatically install GStreamer (*nix) or DirectShow (Windoze) codecs, or to bundle codecs with application.
