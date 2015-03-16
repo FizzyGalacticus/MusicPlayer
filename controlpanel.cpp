@@ -100,7 +100,6 @@ void controlPanel::togglePlayPauseState()
 
 void controlPanel::recieveNewVolumeSliderValue(int value)
 {
-    qDebug() << "Value changed to:" << value;
     emit volumeSliderValueChanged(value);
 }
 
