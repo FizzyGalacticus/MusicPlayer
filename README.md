@@ -3,10 +3,12 @@ Final Project for UAF 372 class
 ![MainIcon](https://raw.githubusercontent.com/FizzyGalacticus/MusicPlayer/master/icons/mainWindowIcon.png)
 
 ##Purpose
-This media player began as a group project for my CS372 (Software Construction) class. The original purpose was to have us create an application using a GUI framework, since most of us had not played around with GUI programming before. We decided to create a media player that could have a layout and features that we have wanted in existing players. I have since taken on this project solo, but I am looking for contributors!
+This media player began as a group project for my CS372 (Software Construction) class. The original purpose was to have us create an application using a GUI framework, since most of us had not played around with GUI programming before. We decided to create a media player that could have a layout and features that we have wanted in existing players. 
+
+I have since taken on this project solo, but I am looking for contributors! I am currently working on completely re-writing everything due to the spaghetti-code. All new work is currently being pushed to the "newMusicPlayer" branch.
 
 ##GUI Framework:
-We originally wanted to use the Unity engine, but it does not seem to have decent support for file input. We decided to use QT instead, which proved to be a great success. Qt's framework has allowed us to quickly throw together something in the small window we had to turn in the assignment, and was easy enough to learn to continue development afterward. I've so far spent the last year's worth of free time to learn more about what Qt has to offer.
+My group and I originally wanted to use the Unity engine, but it does not seem to have decent support for file input. We decided to use QT instead, which proved to be a great success. Qt's framework has allowed us to quickly throw together something in the small window we had to turn in the assignment, and was easy enough to learn to continue development afterward. I've so far spent the last year's worth of free time to learn more about what Qt has to offer.
 
 ###Ideal Features To Implement:
 *	Favorites
@@ -14,6 +16,6 @@ We originally wanted to use the Unity engine, but it does not seem to have decen
 *	Statistics
 	-	A database system that keeps track of the number of times a user has listened to a particular song.
 *	Video Playback
-	-	Because why not?
+	-	Because why not? This honestly shouldn't take that much effort, as the player currently can play audio for video files. It just needs the video portion added.
 *	Compatibility
 	-	Capability to automatically install GStreamer (*nix) or DirectShow (Windoze) codecs, or to bundle codecs with application.
