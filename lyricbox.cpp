@@ -97,9 +97,9 @@ void lyricBox::_lyricsRetrieved(QNetworkReply * response)
     if(lyrics == "")
     {
         lyrics = "No lyrics available.";
-        _retrievedFromSiteLabel->setText("Lyrics retrieved from: Metrolyrics");
+        _retrievedFromSiteLabel->setText("");
     }
-    else _retrievedFromSiteLabel->setText("");
+    else _retrievedFromSiteLabel->setText("Lyrics retrieved from: Metrolyrics");
 
     _lyricsTextBox->setText(lyrics);
 
