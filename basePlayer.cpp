@@ -14,13 +14,11 @@ basePlayer::basePlayer(QWidget *parent) :
     QWidget(parent),
     _basePlayerView(new QListWidget),
     _player(new QMediaPlayer),
-    _videoWidget(new QVideoWidget),
     _currentlyPlayingArtist(""),
     _currentlyPlayingTitle("")
 {
     QHBoxLayout * layout = new QHBoxLayout;
     layout->addWidget(_basePlayerView);
-    layout->addWidget(_videoWidget);
     this->setLayout(layout);
 
     QAction * add = new QAction(tr("Add Media"),this);
@@ -35,7 +33,6 @@ basePlayer::basePlayer(QWidget *parent) :
 
     _player->setPlaylist(new QMediaPlaylist);
     _player->setVolume(50);
-    _player->setVideoOutput(_videoWidget);
     connect(_player->playlist(), SIGNAL(currentIndexChanged(int)), this, SLOT(currentIndexHasChanged(int)));
     connect(_player, SIGNAL(metaDataAvailableChanged(bool)), this, SLOT(metaDataAvailablityHasChanged(bool)));
     connect(_player, SIGNAL(durationChanged(qint64)), this, SLOT(mediaDurationChanged(qint64)));
@@ -206,6 +203,11 @@ const QString * basePlayer::getAudioFileTypes()
                        "*.rm *.vox *.raw *.aac *.au *.ac3 *.m4a *.amr *.mod *.669 *.s3m *.mtm)");
 }
 
+void basePlayer::setVideoWidget(QVideoWidget * videoWidget)
+{
+    _player->setVideoOutput(videoWidget);
+}
+
 void basePlayer::initiateAddMedia()
 {
     addMedia(*getMediaContentFromFilePaths(openFileDialog()));
@@ -228,14 +230,5 @@ void basePlayer::mediaPositionChanged(qint64 position)
 
 void basePlayer::videoAvailableChanged(bool videoAvailable)
 {
-    if(videoAvailable)
-    {
-        _basePlayerView->setHidden(true);
-        _videoWidget->setHidden(false);
-    }
-    else
-    {
-        _basePlayerView->setHidden(false);
-        _videoWidget->setHidden(true);
-    }
+    emit videoAvailabilityChanged(videoAvailable);
 }

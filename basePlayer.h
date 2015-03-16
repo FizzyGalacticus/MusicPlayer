@@ -19,12 +19,14 @@ public:
     bool addMedia(const QMediaContent & content);
     bool addMedia(const QList<QMediaContent> & items);
     static const QList<QMediaContent> * getMediaContentFromFilePaths(const QStringList *);
+    void setVideoWidget(QVideoWidget *);
 
 signals:
     void stateChanged(QMediaPlayer::State state);
     void metaDataChanged(const QString &artist, const QString &title);
     void durationChanged(qint64 duration);
     void positionChanged(qint64 position);
+    void videoAvailabilityChanged(bool videoAvailable);
 
 public slots:
     void togglePlayPause();
@@ -46,7 +48,6 @@ private:
     QListWidget * _basePlayerView;
     QMediaPlayer * _player;
     QMediaPlaylist * _mediaPlaylist;
-    QVideoWidget * _videoWidget;
 
     QString _currentlyPlayingArtist;
     QString _currentlyPlayingTitle;
