@@ -13,7 +13,7 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+	mainwindow.cpp \
     basePlayer.cpp \
     controlpanel.cpp \
     mediaplayertabwidget.cpp \
@@ -30,4 +30,10 @@ FORMS    += mainwindow.ui
 RESOURCES += \
     Resources.qrc
 
+win32 {
 QMAKE_CXXFLAGS += -std=c++11
+}
+
+unix {
+QMAKE_CXXFLAGS += -std=c++0x
+}
