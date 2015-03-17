@@ -18,14 +18,16 @@ SOURCES += main.cpp\
     controlpanel.cpp \
     mediaplayertabwidget.cpp \
     lyricbox.cpp \
-    progressbar.cpp
+    progressbar.cpp \
+    videowidget.cpp
 
 HEADERS  += mainwindow.h \
     basePlayer.h \
     controlpanel.h \
     mediaplayertabwidget.h \
     lyricbox.h \
-    progressbar.h
+    progressbar.h \
+    videowidget.h
 
 FORMS    += mainwindow.ui
 

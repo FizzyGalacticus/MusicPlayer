@@ -9,7 +9,7 @@
 #include "controlpanel.h"
 #include "lyricbox.h"
 #include "progressbar.h"
-#include <QVideoWidget>
+#include "videowidget.h"
 
 class mediaPlayerTabWidget : public QWidget
 {
@@ -19,7 +19,7 @@ public:
 
     bool addMedia(const QStringList *filenames);
     bool openMedia(const QStringList *filenames);
-    void setVideoWidget(QVideoWidget *);
+    void setVideoWidget(videoWidget *);
     void setControlPanel(controlPanel *);
     void setLyricBox(lyricBox *);
     void setProgressBar(progressBar *);
@@ -47,7 +47,7 @@ private:
     QLabel *_metaData;
 
     QList<basePlayer *> * _players;
-    QVideoWidget * _videoWidget;
+    videoWidget * _videoWidget;
     basePlayer * _currentlyPlayingPlayer;
     controlPanel * _controlPanel;
     lyricBox * _lyricsBox;

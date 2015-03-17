@@ -6,7 +6,7 @@
 #include <QtMultimedia/QMediaPlayer>
 #include <QtMultimedia/QMediaPlaylist>
 #include <QString>
-#include <QVideoWidget>
+#include "videowidget.h"
 
 class basePlayer : public QWidget
 {
@@ -19,7 +19,7 @@ public:
     bool addMedia(const QMediaContent & content);
     bool addMedia(const QList<QMediaContent> & items);
     static const QList<QMediaContent> * getMediaContentFromFilePaths(const QStringList *);
-    void setVideoWidget(QVideoWidget *);
+    void setVideoWidget(videoWidget *);
 
 signals:
     void stateChanged(QMediaPlayer::State state);

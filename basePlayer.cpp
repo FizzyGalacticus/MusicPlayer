@@ -203,7 +203,7 @@ const QString * basePlayer::getAudioFileTypes()
                        "*.rm *.vox *.raw *.aac *.au *.ac3 *.m4a *.amr *.mod *.669 *.s3m *.mtm)");
 }
 
-void basePlayer::setVideoWidget(QVideoWidget * videoWidget)
+void basePlayer::setVideoWidget(videoWidget * videoWidget)
 {
     _player->setVideoOutput(videoWidget);
 }

@@ -3,12 +3,14 @@
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QMouseEvent>
+#include <QKeyEvent>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     _player(new mediaPlayerTabWidget),
-    _videoWidget(new QVideoWidget),
+    _videoWidget(new videoWidget),
     _controlPanel(new controlPanel),
     _lyricsBox(new lyricBox),
     _progressBar(new progressBar),

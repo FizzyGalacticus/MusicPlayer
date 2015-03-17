@@ -44,7 +44,7 @@ bool mediaPlayerTabWidget::openMedia(const QStringList *filenames)
     return false;
 }
 
-void mediaPlayerTabWidget::setVideoWidget(QVideoWidget * videoWidget)
+void mediaPlayerTabWidget::setVideoWidget(videoWidget * videoWidget)
 {
     _videoWidget = videoWidget;
     _currentlyPlayingPlayer->setVideoWidget(_videoWidget);
