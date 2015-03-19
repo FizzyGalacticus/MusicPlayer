@@ -37,6 +37,12 @@ lyricBox::lyricBox(QWidget *parent) :
     this->setLayout(centralLayout);
 }
 
+void lyricBox::setFont(const QFont & font)
+{
+    _lyricsTextBox->setFont(font);
+    _retrievedFromSiteLabel->setFont(font);
+}
+
 void lyricBox::retrieveLyrics(QString artist, QString title)
 {
     _artist = artist;

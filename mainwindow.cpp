@@ -41,6 +41,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _player->setLyricBox(_lyricsBox);
     _player->setProgressBar(_progressBar);
 
+    _lyricsBox->setFont(QFont("Comic Sans MS"));
+
     _controlPanel->setPlayButtonIcon(_playButtonIcon);
     _controlPanel->setPauseButtonIcon(_pauseButtonIcon);
     _controlPanel->setNextButtonIcon(_nextButtonIcon);

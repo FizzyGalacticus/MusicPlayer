@@ -11,6 +11,7 @@ class lyricBox : public QWidget
     Q_OBJECT
 public:
     explicit lyricBox(QWidget *parent = 0);
+    void setFont(const QFont &);
 
 signals:
     void lyricsChanged(const QString lyrics);
