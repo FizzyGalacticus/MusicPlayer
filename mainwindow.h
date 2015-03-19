@@ -8,6 +8,7 @@
 #include "progressbar.h"
 #include <QIcon>
 #include "videowidget.h"
+#include <QMenu>
 
 namespace Ui {
 class MainWindow;
@@ -28,10 +29,15 @@ private:
     controlPanel * _controlPanel;
     lyricBox * _lyricsBox;
     progressBar * _progressBar;
+    QMenu * _menu;
 
     //Icons
     QIcon _mainWindowIcon, _previousButtonIcon, _nextButtonIcon, _playButtonIcon,
             _pauseButtonIcon;
+
+    void setupPlayer();
+    void setupLyricsAndControlPanel();
+    void setWidgetPositions();
 };
 
 #endif // MAINWINDOW_H
