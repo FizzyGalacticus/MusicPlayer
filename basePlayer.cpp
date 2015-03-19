@@ -9,6 +9,7 @@
 #include <QStandardPaths>
 #include <QFileDialog>
 #include <QAction>
+#include <QTapAndHoldGesture>
 
 basePlayer::basePlayer(QWidget *parent) :
     QWidget(parent),
@@ -17,6 +18,7 @@ basePlayer::basePlayer(QWidget *parent) :
     _currentlyPlayingArtist(""),
     _currentlyPlayingTitle("")
 {
+    grabGesture(Qt::TapAndHoldGesture);
     QHBoxLayout * layout = new QHBoxLayout;
     layout->addWidget(_basePlayerView);
     this->setLayout(layout);
@@ -182,7 +184,7 @@ const QList<QMediaContent> * basePlayer::getMediaContentFromFilePaths(const QStr
 QStringList * basePlayer::openFileDialog()
 {
     QFileDialog openFileDialog(this);
-    openFileDialog.setMinimumSize(QSize(this->width(),this->height()));
+    openFileDialog.setMinimumSize(QSize(this->parentWidget()->width(),this->parentWidget()->height()));
 
     openFileDialog.setDirectory(QStandardPaths::locate(QStandardPaths::MusicLocation,"",QStandardPaths::LocateDirectory));
     openFileDialog.setNameFilter(getAudioFileTypes()->toStdString().c_str());
@@ -231,4 +233,14 @@ void basePlayer::mediaPositionChanged(qint64 position)
 void basePlayer::videoAvailableChanged(bool videoAvailable)
 {
     emit videoAvailabilityChanged(videoAvailable);
+}
+
+bool basePlayer::event(QEvent * event)
+{
+    if(event->type() == QEvent::Gesture)
+    {
+        if (QGesture *tap = static_cast<QGestureEvent*>(event)->gesture(Qt::TapAndHoldGesture))
+            addMedia(*getMediaContentFromFilePaths(openFileDialog()));
+    }
+    return true;
 }

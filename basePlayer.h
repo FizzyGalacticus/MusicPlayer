@@ -44,6 +44,9 @@ private slots:
     void mediaPositionChanged(qint64);
     void videoAvailableChanged(bool videoAvailable);
 
+protected:
+    bool event(QEvent *);
+
 private:
     QListWidget * _basePlayerView;
     QMediaPlayer * _player;
