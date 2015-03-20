@@ -8,6 +8,8 @@
 #include <QAction>
 #include <QList>
 #include <QMenu>
+#include <QtSql/QSqlDatabase>
+#include <QSqlError>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -36,6 +38,24 @@ MainWindow::MainWindow(QWidget *parent) :
     setWidgetPositions();
 
     setupMenuBar();
+
+    QSqlDatabase database = QSqlDatabase::addDatabase("QMYSQL");
+    database.setHostName("Localhost");
+    database.setUserName("root");
+    database.setPassword("rootpass");
+
+    bool ok = database.open();
+
+    if(ok)
+    {
+        qDebug() << "Database opened!";
+        database.close();
+    }
+    else
+    {
+        qDebug() << "Could not open database!";
+        qDebug() << "Error:" << database.lastError().text();
+    }
 }
 
 MainWindow::~MainWindow()
