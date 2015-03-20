@@ -10,6 +10,8 @@
 #include <QMenu>
 #include <QtSql/QSqlDatabase>
 #include <QSqlError>
+#include <QSqlQuery>
+#include <QSqlResult>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -49,6 +51,13 @@ MainWindow::MainWindow(QWidget *parent) :
     if(ok)
     {
         qDebug() << "Database opened!";
+
+        QSqlQuery query("CREATE DATABASE IF NOT EXISTS `Foo`;", database);
+        query.exec("USE `Test`;");
+
+        while(query.next())
+            qDebug() << query.result()->handle().toString();
+
         database.close();
     }
     else
