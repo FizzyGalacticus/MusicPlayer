@@ -52,8 +52,13 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         qDebug() << "Database opened!";
 
-        QSqlQuery query("CREATE DATABASE IF NOT EXISTS `Foo`;", database);
-        query.exec("USE `Test`;");
+        QSqlQuery query("", database);
+        if(!query.exec("CREATE DATABASE IF NOT EXISTS `Foo`;"))
+            qDebug() << "Could not create database 'Foo'";
+        if(!query.exec("USE `Foo`;"))
+            qDebug() << "Couldn't switch to database 'Test'";
+        if(!query.exec("CREATE TABLE IF NOT EXISTS `Foo`.`Artist` (Name VARCHAR(45) PRIMARY KEY, `# of Albums` INT);"))
+            qDebug() << "Could not create table `Foo`.'Artist'";
 
         while(query.next())
             qDebug() << query.result()->handle().toString();
@@ -109,6 +114,7 @@ void MainWindow::setWidgetPositions()
     centralLayout->addLayout(playerAndLyricsLayout);
     centralLayout->addWidget(_progressBar);
     centralLayout->addWidget(_controlPanel);
+    centralLayout->setContentsMargins(2,2,2,2);
 
     centralWidget->setLayout(centralLayout);
 
