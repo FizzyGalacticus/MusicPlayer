@@ -90,6 +90,8 @@ void MainWindow::setupMenuBar()
 {
     QAction * openMedia = new QAction(tr("Open Media"), this);
     QAction * addMedia = new QAction(tr("Add Media"), this);
+    openMedia->setShortcut(QKeySequence("CTRL+O"));
+    addMedia->setShortcut(QKeySequence("CTRL+A"));
     connect (openMedia, SIGNAL(triggered()), _player, SLOT(openMedia()));
     connect (addMedia, SIGNAL(triggered()), _player, SLOT(addMedia()));
 
