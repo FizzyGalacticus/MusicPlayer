@@ -29,6 +29,8 @@ signals:
     void currentPlayerPositionChanged(qint64);
 
 public slots:
+    bool addMedia();
+    bool openMedia();
     void newMetaDataReceived(const QString&artist, const QString &title);
     void togglePlayPause();
     void next();

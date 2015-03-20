@@ -41,7 +41,18 @@ bool mediaPlayerTabWidget::addMedia(const QStringList *filenames)
 bool mediaPlayerTabWidget::openMedia(const QStringList *filenames)
 {
     const QList<QMediaContent> media = *basePlayer::getMediaContentFromFilePaths(filenames);
-    return false;
+    _players->at(_tabs->currentIndex())->clear();
+    return _players->at(_tabs->currentIndex())->addMedia(media);
+}
+
+bool mediaPlayerTabWidget::addMedia()
+{
+    return addMedia(_players->at(_tabs->currentIndex())->openFileDialog());
+}
+
+bool mediaPlayerTabWidget::openMedia()
+{
+    return openMedia(_players->at(_tabs->currentIndex())->openFileDialog());
 }
 
 void mediaPlayerTabWidget::setVideoWidget(videoWidget * videoWidget)

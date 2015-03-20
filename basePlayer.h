@@ -20,6 +20,8 @@ public:
     bool addMedia(const QList<QMediaContent> & items);
     static const QList<QMediaContent> * getMediaContentFromFilePaths(const QStringList *);
     void setVideoWidget(videoWidget *);
+    bool clear();
+    QStringList * openFileDialog();
 
 signals:
     void stateChanged(QMediaPlayer::State state);
@@ -55,10 +57,8 @@ private:
     QString _currentlyPlayingArtist;
     QString _currentlyPlayingTitle;
 
-    bool clear();
     void removeFeaturingArtistFromTitle();
     const QString * getAudioFileTypes();
-    QStringList * openFileDialog();
 };
 
 #endif // PLAYLIST_H

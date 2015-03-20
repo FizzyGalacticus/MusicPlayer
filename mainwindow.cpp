@@ -5,6 +5,8 @@
 #include <QHBoxLayout>
 #include <QMouseEvent>
 #include <QKeyEvent>
+#include <QAction>
+#include <QList>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _controlPanel(new controlPanel),
     _lyricsBox(new lyricBox),
     _progressBar(new progressBar),
-    _menu(new QMenu),
+    _menu(new QMenuBar),
     _mainWindowIcon(":/icons/mainWindowIcon.png"),
     _previousButtonIcon(":/icons/Button-Prev-icon.png"),
     _nextButtonIcon(":/icons/Button-Next-icon.png"),
@@ -31,6 +33,20 @@ MainWindow::MainWindow(QWidget *parent) :
     setupLyricsAndControlPanel();
 
     setWidgetPositions();
+
+    QAction * openMedia = new QAction("Open Media", this);
+    QAction * addMedia = new QAction("Add Media", this);
+    connect (openMedia, SIGNAL(triggered()), _player, SLOT(openMedia()));
+    connect (addMedia, SIGNAL(triggered()), _player, SLOT(addMedia()));
+
+    QList<QAction *> actions;
+
+    actions.push_back(addMedia);
+    actions.push_back(openMedia);
+
+    _menu->addActions(actions);
+
+    this->setMenuBar(_menu);
 }
 
 MainWindow::~MainWindow()
