@@ -7,23 +7,7 @@
 #include <QKeyEvent>
 #include <QAction>
 #include <QList>
-
-void MainWindow::setupMenuBar()
-{
-    QAction * openMedia = new QAction("Open Media", this);
-    QAction * addMedia = new QAction("Add Media", this);
-    connect (openMedia, SIGNAL(triggered()), _player, SLOT(openMedia()));
-    connect (addMedia, SIGNAL(triggered()), _player, SLOT(addMedia()));
-
-    QList<QAction *> actions;
-
-    actions.push_back(addMedia);
-    actions.push_back(openMedia);
-
-    _menu->addActions(actions);
-
-    this->setMenuBar(_menu);
-}
+#include <QMenu>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -43,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     setWindowIcon(_mainWindowIcon);
-    setWindowTitle("Music Player");
+    setWindowTitle(tr("Music Player"));
 
     setupPlayer();
 
@@ -100,4 +84,25 @@ void MainWindow::setWidgetPositions()
     centralWidget->setLayout(centralLayout);
 
     this->setCentralWidget(centralWidget);
+}
+
+void MainWindow::setupMenuBar()
+{
+    QAction * openMedia = new QAction(tr("Open Media"), this);
+    QAction * addMedia = new QAction(tr("Add Media"), this);
+    connect (openMedia, SIGNAL(triggered()), _player, SLOT(openMedia()));
+    connect (addMedia, SIGNAL(triggered()), _player, SLOT(addMedia()));
+
+    QList<QAction *> actions;
+
+    actions.push_back(addMedia);
+    actions.push_back(openMedia);
+
+    QMenu * m = new QMenu(tr("File"));
+
+    m->addActions(actions);
+
+    _menu->addMenu(m);
+
+    this->setMenuBar(_menu);
 }
