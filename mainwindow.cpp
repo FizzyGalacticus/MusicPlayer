@@ -8,6 +8,23 @@
 #include <QAction>
 #include <QList>
 
+void MainWindow::setupMenuBar()
+{
+    QAction * openMedia = new QAction("Open Media", this);
+    QAction * addMedia = new QAction("Add Media", this);
+    connect (openMedia, SIGNAL(triggered()), _player, SLOT(openMedia()));
+    connect (addMedia, SIGNAL(triggered()), _player, SLOT(addMedia()));
+
+    QList<QAction *> actions;
+
+    actions.push_back(addMedia);
+    actions.push_back(openMedia);
+
+    _menu->addActions(actions);
+
+    this->setMenuBar(_menu);
+}
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -34,19 +51,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWidgetPositions();
 
-    QAction * openMedia = new QAction("Open Media", this);
-    QAction * addMedia = new QAction("Add Media", this);
-    connect (openMedia, SIGNAL(triggered()), _player, SLOT(openMedia()));
-    connect (addMedia, SIGNAL(triggered()), _player, SLOT(addMedia()));
-
-    QList<QAction *> actions;
-
-    actions.push_back(addMedia);
-    actions.push_back(openMedia);
-
-    _menu->addActions(actions);
-
-    this->setMenuBar(_menu);
+    setupMenuBar();
 }
 
 MainWindow::~MainWindow()

@@ -162,6 +162,11 @@ void basePlayer::removeFeaturingArtistFromTitle()
                     _currentlyPlayingTitle.indexOf("feat",0,Qt::CaseInsensitive),
                     _currentlyPlayingTitle.size()-1
                     );
+    if(_currentlyPlayingTitle.contains("Ft.",Qt::CaseInsensitive))
+        _currentlyPlayingTitle.remove(
+                    _currentlyPlayingTitle.indexOf("Ft.",0,Qt::CaseInsensitive),
+                    _currentlyPlayingTitle.size()-1
+                    );
     do
     {
         if(_currentlyPlayingTitle.at(_currentlyPlayingTitle.size()-1) == ' ')

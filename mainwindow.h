@@ -38,6 +38,7 @@ private:
     void setupPlayer();
     void setupLyricsAndControlPanel();
     void setWidgetPositions();
+    void setupMenuBar();
 };
 
 #endif // MAINWINDOW_H
