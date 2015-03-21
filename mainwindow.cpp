@@ -18,11 +18,11 @@ MainWindow::MainWindow(QWidget *parent) :
     _lyricsBox(new lyricBox),
     _progressBar(new progressBar),
     _menu(new QMenuBar),
-    _mainWindowIcon(":/icons/mainWindowIcon.png"),
-    _previousButtonIcon(":/icons/Button-Prev-icon.png"),
-    _nextButtonIcon(":/icons/Button-Next-icon.png"),
-    _playButtonIcon(":/icons/Button-Play-icon.png"),
-    _pauseButtonIcon(":/icons/Button-Pause-icon.png")
+    _mainWindowIcon(":/resources/icons/mainWindowIcon.png"),
+    _previousButtonIcon(":/resources/icons/Button-Prev-icon.png"),
+    _nextButtonIcon(":/resources/icons/Button-Next-icon.png"),
+    _playButtonIcon(":/resources/icons/Button-Play-icon.png"),
+    _pauseButtonIcon(":/resources/icons/Button-Pause-icon.png")
 {
     ui->setupUi(this);
 
