@@ -23,7 +23,7 @@ My group and I originally wanted to use the Unity engine, but it does not seem t
 ###Compiling MySQL drivers
 This has proved to be quite a challenge for both Linux & Windows systems, so I though I would document my process.
 
-First, it is necessary to build the qsqlmysql driver. From *some* posts I've read, QT5 supposedly comes with them pre-build, but I have not found sufficient evidence to support this. Make sure that you have qmake **from the Qt version of the driver that you wish to build* in your PATH. Also, you **need to have the same architecture of MySQL server installed as the version of Qt that you're building for.** A 32-bit Qt application *can* talk to a 64-bit server, but you must have the 32-bit **libmysql** library for the Qt application to talk to. 
+First, it is necessary to build the qsqlmysql driver. From *some* posts I've read, QT5 supposedly comes with them pre-build, but I have not found sufficient evidence to support this. Make sure that you have qmake **from the Qt version of the driver that you wish to build** in your PATH. Also, you **need to have the same architecture of MySQL server installed as the version of Qt that you're building for.** A 32-bit Qt application *can* talk to a 64-bit server, but you must have the 32-bit **libmysql** library for the Qt application to talk to. 
 
 To build, navigate to your Qt\VERSION\Src\qtbase\src\plugins\sqldrivers\mysql folder in the terminal. Then type the following command on Linux:
 ```Bash
