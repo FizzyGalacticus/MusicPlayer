@@ -9,7 +9,6 @@ mediaDatabase::mediaDatabase(QObject *parent) :
     _db(QSqlDatabase::addDatabase("QMYSQL")),
     _query(new QSqlQuery(_db))
 {
-    _db.setPort(3307);
     _db.setHostName("127.0.0.1");
     _db.setUserName("root");
     _db.setPassword("rootpass");
