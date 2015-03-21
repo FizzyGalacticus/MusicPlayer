@@ -2,6 +2,8 @@
 #define MEDIADATABASE_H
 
 #include <QObject>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 
 class mediaDatabase : public QObject
 {
@@ -13,6 +15,10 @@ public:
 signals:
 
 public slots:
+
+private:
+    QSqlDatabase * _db;
+    QSqlQuery * _query;
 };
 
 #endif // MEDIADATABASE_H

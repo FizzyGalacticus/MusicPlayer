@@ -8,10 +8,6 @@
 #include <QAction>
 #include <QList>
 #include <QMenu>
-#include <QtSql/QSqlDatabase>
-#include <QSqlError>
-#include <QSqlQuery>
-#include <QSqlResult>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -40,37 +36,6 @@ MainWindow::MainWindow(QWidget *parent) :
     setWidgetPositions();
 
     setupMenuBar();
-
-    QSqlDatabase database = QSqlDatabase::addDatabase("QMYSQL");
-    database.setPort(3307);
-    database.setHostName("127.0.0.1");
-    database.setUserName("root");
-    database.setPassword("rootpass");
-
-    bool ok = database.open();
-
-    if(ok)
-    {
-        qDebug() << "Database opened!";
-
-        QSqlQuery query("", database);
-        if(!query.exec("CREATE DATABASE IF NOT EXISTS `Foo`;"))
-            qDebug() << "Could not create database 'Foo'";
-        if(!query.exec("USE `Foo`;"))
-            qDebug() << "Couldn't switch to database 'Test'";
-        if(!query.exec("CREATE TABLE IF NOT EXISTS `Foo`.`Artist` (Name VARCHAR(45) PRIMARY KEY, `# of Albums` INT);"))
-            qDebug() << "Could not create table `Foo`.'Artist'";
-
-        while(query.next())
-            qDebug() << query.result()->handle().toString();
-
-        database.close();
-    }
-    else
-    {
-        qDebug() << "Could not open database!";
-        qDebug() << "Error:" << database.lastError().text();
-    }
 }
 
 MainWindow::~MainWindow()
