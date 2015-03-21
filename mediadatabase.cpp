@@ -1,37 +1,53 @@
 #include "mediadatabase.h"
 #include <QDebug>
 #include <QSqlError>
+#include <QSqlResult>
+#include <QFile>
 
 mediaDatabase::mediaDatabase(QObject *parent) :
     QObject(parent),
-    _db(new QSqlDatabase),
-    _query(new QSqlQuery(*_db))
+    _db(QSqlDatabase::addDatabase("QMYSQL")),
+    _query(new QSqlQuery(_db))
 {
-    _db->addDatabase("QMYSQL",tr("Media Player"));
-    _db->setPort(3307);
-    _db->setHostName("127.0.0.1");
-    _db->setUserName("root");
-    _db->setPassword("rootpass");
+    _db.setPort(3307);
+    _db.setHostName("127.0.0.1");
+    _db.setUserName("root");
+    _db.setPassword("rootpass");
 
-    bool ok = _db->open();
+    bool ok = _db.open();
 
     if(ok)
     {
         qDebug() << "Database opened!";
+        bool schemaExists = false;
 
-        if(!_query->exec("CREATE DATABASE IF NOT EXISTS `Foo`;"))
-            qDebug() << "Could not create database 'Foo'";
-        if(!_query->exec("USE `Foo`;"))
-            qDebug() << "Couldn't switch to database 'Test'";
-        if(!_query->exec("CREATE TABLE IF NOT EXISTS `Foo`.`Artist` (Name VARCHAR(45) PRIMARY KEY, `# of Albums` INT);"))
-            qDebug() << "Could not create table `Foo`.'Artist'";
+//        Media_Player
 
-        _db->close();
+        if(!_query->exec("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'Media_Player';"))
+            qDebug() << _query->lastError().text();
+        else
+        {
+            while(_query->next())
+                schemaExists = _query->value(0).toInt();
+
+            if(!schemaExists)
+            {
+                QFile::copy(":/resources/schema.sql","schema.sql");
+                QFile * schemaFile = new QFile("schema.sql");
+                schemaFile->open(QFile::ReadOnly);
+                if(!_query->exec(schemaFile->readAll().toStdString().c_str()))
+                    qDebug() << "Could not initiate schema!";
+                else qDebug() << "Created schema.";
+                schemaFile->close();
+            }
+        }
+
+        _db.close();
     }
     else
     {
         qDebug() << "Could not open database!";
-        qDebug() << "Error:" << _db->lastError().text();
+        qDebug() << "Error:" << _db.lastError().text();
     }
 }
 

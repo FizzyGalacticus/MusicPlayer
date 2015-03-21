@@ -8,6 +8,7 @@
 #include <QAction>
 #include <QList>
 #include <QMenu>
+#include "mediadatabase.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -36,6 +37,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setWidgetPositions();
 
     setupMenuBar();
+
+    mediaDatabase * db = new mediaDatabase;
 }
 
 MainWindow::~MainWindow()

@@ -17,7 +17,7 @@ signals:
 public slots:
 
 private:
-    QSqlDatabase * _db;
+    QSqlDatabase _db;
     QSqlQuery * _query;
 };
 
