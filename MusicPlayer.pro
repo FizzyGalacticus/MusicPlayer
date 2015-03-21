@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     mediaplayertabwidget.cpp \
     lyricbox.cpp \
     progressbar.cpp \
-    videowidget.cpp
+    videowidget.cpp \
+    mediadatabase.cpp
 
 HEADERS  += mainwindow.h \
     basePlayer.h \
@@ -26,7 +27,8 @@ HEADERS  += mainwindow.h \
     mediaplayertabwidget.h \
     lyricbox.h \
     progressbar.h \
-    videowidget.h
+    videowidget.h \
+    mediadatabase.h
 
 FORMS    += mainwindow.ui
 
