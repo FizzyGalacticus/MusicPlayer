@@ -39,6 +39,6 @@ make	#Whatever version of make you're using
 make install
 ```
 
-If everything goes well, then you shouldn't have any errors, and the drivers should have been installed into your Qt\VERSION\COMPILER\bin directory. If not, feel free to message me and I'll see if I've made an error. (*oops*)
+If everything goes well, then you shouldn't have any errors, and the drivers should have been installed into your Qt\VERSION\COMPILER\plugins\sqldrivers directory. If not, feel free to message me and I'll see if I've made an error. (*oops*)
 
 If you by chance get an error about the main.moc having been created by an earlier version, then simply **delete** the main.moc file. Then re-run the above commands. A "make clean" might not be a bad idea either.
