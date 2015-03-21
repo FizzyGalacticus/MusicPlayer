@@ -19,3 +19,26 @@ My group and I originally wanted to use the Unity engine, but it does not seem t
 	-	~~Because why not? This honestly shouldn't take that much effort, as the player currently can play audio for video files. It just needs the video portion added.~~
 *	Compatibility
 	-	Capability to automatically install GStreamer (*nix) or DirectShow (Windoze) codecs, or to bundle codecs with application.
+
+###Compiling MySQL drivers
+This has proved to be quite a challenge for both Linux & Windows systems, so I though I would document my process.
+
+First, it is necessary to build the qsqlmysql driver. From *some* posts I've read, QT5 supposedly comes with them pre-build, but I have not found sufficient evidence to support this. Make sure that you have qmake **from the Qt version of the driver that you wish to build* in your PATH. Also, you **need to have the same architecture of MySQL server installed as the version of Qt that you're building for.** A 32-bit Qt application *can* talk to a 64-bit server, but you must have the 32-bit **libmysql** library for the Qt application to talk to. 
+
+To build, navigate to your Qt\VERSION\Src\qtbase\src\plugins\sqldrivers\mysql folder in the terminal. Then type the following command on Linux:
+```Bash
+qmake "INCLUDEPATH+=/PATH/TO/MYSQL/include" "LIBS+=/PATH/TO/MYSQL/lib -lmysqlclient_r" mysql.pro
+make
+make install
+```
+
+or on Windows:
+```Bash
+qmake "INCLUDEPATH+=\PATH\TO\MYSQL\include" "LIBS+=\PATH\TO\MYSQL\lib\mysqlclient" mysql.pro
+make	#Whatever version of make you're using
+make install
+```
+
+If everything goes well, then you shouldn't have any errors, and the drivers should have been installed into your Qt\VERSION\COMPILER\bin directory. If not, feel free to message me and I'll see if I've made an error. (*oops*)
+
+If you by chance get an error about the main.moc having been created by an earlier version, then simply **delete** the main.moc file. Then re-run the above commands. A "make clean" might not be a bad idea either.

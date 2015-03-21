@@ -42,7 +42,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setupMenuBar();
 
     QSqlDatabase database = QSqlDatabase::addDatabase("QMYSQL");
-    database.setHostName("Localhost");
+    database.setPort(3307);
+    database.setHostName("127.0.0.1");
     database.setUserName("root");
     database.setPassword("rootpass");
 
