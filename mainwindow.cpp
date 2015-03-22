@@ -40,8 +40,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mediaDatabase * db = new mediaDatabase;
     _player->setMediaDatabase(db);
-
-    db->addArtist("Billy Talent");
 }
 
 MainWindow::~MainWindow()

@@ -13,6 +13,7 @@ public:
     ~mediaDatabase();
 
     bool addArtist(const QString & newArtist);
+    bool addAlbum(const QString & artist, const QString & album, const QByteArray * albumCover = new QByteArray);
 
 signals:
 
