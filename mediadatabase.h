@@ -19,6 +19,8 @@ public slots:
 private:
     QSqlDatabase _db;
     QSqlQuery * _query;
+
+    void initiateSchema();
 };
 
 #endif // MEDIADATABASE_H

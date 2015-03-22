@@ -13,14 +13,22 @@ mediaDatabase::mediaDatabase(QObject *parent) :
     _db.setUserName("root");
     _db.setPassword("rootpass");
 
+    initiateSchema();
+}
+
+mediaDatabase::~mediaDatabase()
+{
+
+}
+
+void mediaDatabase::initiateSchema()
+{
     bool ok = _db.open();
 
     if(ok)
     {
         qDebug() << "Database opened!";
         bool schemaExists = false;
-
-//        Media_Player
 
         if(!_query->exec("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'Media_Player';"))
             qDebug() << _query->lastError().text();
@@ -49,9 +57,3 @@ mediaDatabase::mediaDatabase(QObject *parent) :
         qDebug() << "Error:" << _db.lastError().text();
     }
 }
-
-mediaDatabase::~mediaDatabase()
-{
-
-}
-
