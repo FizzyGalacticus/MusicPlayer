@@ -39,7 +39,9 @@ MainWindow::MainWindow(QWidget *parent) :
     setupMenuBar();
 
     mediaDatabase * db = new mediaDatabase;
-    db->addArtist("The White Stripes");
+    _player->setMediaDatabase(db);
+
+    db->addArtist("Billy Talent");
 }
 
 MainWindow::~MainWindow()

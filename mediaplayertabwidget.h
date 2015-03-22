@@ -10,6 +10,7 @@
 #include "lyricbox.h"
 #include "progressbar.h"
 #include "videowidget.h"
+#include "mediadatabase.h"
 
 class mediaPlayerTabWidget : public QWidget
 {
@@ -23,6 +24,7 @@ public:
     void setControlPanel(controlPanel *);
     void setLyricBox(lyricBox *);
     void setProgressBar(progressBar *);
+    void setMediaDatabase(mediaDatabase * db);
 
 signals:
     void currentPlayerDurationChanged(qint64);
@@ -54,6 +56,7 @@ private:
     controlPanel * _controlPanel;
     lyricBox * _lyricsBox;
     progressBar * _progressBar;
+    mediaDatabase * _db;
 };
 
 #endif // MEDIAPLAYERTABWIDGET_H

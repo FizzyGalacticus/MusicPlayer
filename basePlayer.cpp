@@ -15,6 +15,7 @@ basePlayer::basePlayer(QWidget *parent) :
     QWidget(parent),
     _basePlayerView(new QListWidget),
     _player(new QMediaPlayer),
+    _db(NULL),
     _currentlyPlayingArtist(""),
     _currentlyPlayingTitle("")
 {
@@ -140,17 +141,21 @@ void basePlayer::metaDataAvailablityHasChanged(bool isMetaDataAvailable)
     {
         if(_player->availableMetaData().contains("AlbumArtist"))
             _currentlyPlayingArtist = _player->metaData("AlbumArtist").toString();
+        else _currentlyPlayingArtist = "Unknown Artist";
         if(_player->availableMetaData().contains("Title"))
         {
             _currentlyPlayingTitle = _player->metaData("Title").toString();
             removeFeaturingArtistFromTitle();
         }
+        else _currentlyPlayingTitle = "Unknown Track";
     }
     else
     {
         _currentlyPlayingArtist = "";
         _currentlyPlayingTitle = "";
     }
+
+    if(_db != NULL) _db->addArtist(_currentlyPlayingArtist);
 
     emit metaDataChanged(_currentlyPlayingArtist, _currentlyPlayingTitle);
 }
@@ -213,6 +218,11 @@ const QString * basePlayer::getAudioFileTypes()
 void basePlayer::setVideoWidget(videoWidget * videoWidget)
 {
     _player->setVideoOutput(videoWidget);
+}
+
+void basePlayer::setMediaDatabase(mediaDatabase *db)
+{
+    _db = db;
 }
 
 void basePlayer::initiateAddMedia()

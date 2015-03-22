@@ -29,29 +29,24 @@ bool mediaDatabase::addArtist(const QString & newArtist)
     {
         if(!_query->exec("USE media_player;"))
             qDebug() << "Could not open media_player database!";
-        if(!_query->exec("SELECT COUNT(*) FROM artist WHERE name='" + newArtist + "';"))
-            qDebug() << "Could not check if artist exists!";
-        else
+        if(!checkIfValueExists("artist","name",newArtist))
         {
-            _query->next();
-            if(_query->value(0).toInt() == 0)
+            if(!_query->exec("INSERT INTO `media_player`.`artist` VALUES ('" + newArtist + "');"))
+                qDebug() << "Could not add new artist!";
+            else
             {
-                if(!_query->exec("INSERT INTO `media_player`.`artist` VALUES ('" + newArtist + "');"))
-                    qDebug() << "Could not add new artist!";
-                else
-                {
-                    qDebug() << "New artist added!";
-                    succeeded = true;
-                }
+                qDebug() << "New artist added!";
+                succeeded = true;
             }
         }
+
+        _db.close();
     }
     else
     {
         qDebug() << "Could not open database to add new artist.";
     }
 
-    _db.close();
     return succeeded;
 }
 
@@ -91,4 +86,20 @@ void mediaDatabase::initiateSchema()
         qDebug() << "Could not open database!";
         qDebug() << "Error:" << _db.lastError().text();
     }
+}
+
+bool mediaDatabase::checkIfValueExists(const QString & tableName, const QString & columnName, const QString & value)
+{
+    bool exists = true;
+
+    if(!_query->exec("SELECT COUNT(*) FROM `media_player`.`" + tableName + "` WHERE `" + columnName + "`='" + value + "';"))
+        qDebug() << "Could not check the existence of" << value;
+    else
+    {
+        _query->next();
+        if(!_query->value(0).toBool()) exists = false;
+        else qDebug() << "`media_player`.`" + tableName + "`.`" + columnName + "` contains \"" + value + "\"";
+    }
+
+    return exists;
 }

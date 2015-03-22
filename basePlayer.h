@@ -7,6 +7,7 @@
 #include <QtMultimedia/QMediaPlaylist>
 #include <QString>
 #include "videowidget.h"
+#include "mediadatabase.h"
 
 class basePlayer : public QWidget
 {
@@ -20,6 +21,7 @@ public:
     bool addMedia(const QList<QMediaContent> & items);
     static const QList<QMediaContent> * getMediaContentFromFilePaths(const QStringList *);
     void setVideoWidget(videoWidget *);
+    void setMediaDatabase(mediaDatabase * db);
     bool clear();
     QStringList * openFileDialog();
 
@@ -53,6 +55,7 @@ private:
     QListWidget * _basePlayerView;
     QMediaPlayer * _player;
     QMediaPlaylist * _mediaPlaylist;
+    mediaDatabase * _db;
 
     QString _currentlyPlayingArtist;
     QString _currentlyPlayingTitle;

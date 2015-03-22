@@ -4,6 +4,7 @@
 #include <QMediaContent>
 #include <QMediaPlayer>
 #include <QDebug>
+#include "basePlayer.h"
 
 mediaPlayerTabWidget::mediaPlayerTabWidget(QWidget *parent) :
     QWidget(parent),
@@ -14,7 +15,8 @@ mediaPlayerTabWidget::mediaPlayerTabWidget(QWidget *parent) :
     _currentlyPlayingPlayer(new basePlayer),
     _controlPanel(NULL),
     _lyricsBox(NULL),
-    _progressBar(NULL)
+    _progressBar(NULL),
+    _db(NULL)
 {
     QVBoxLayout * layout = new QVBoxLayout;
 
@@ -81,6 +83,13 @@ void mediaPlayerTabWidget::setProgressBar(progressBar * progressbar)
     connect(_progressBar, SIGNAL(valueChanged(int)), this, SLOT(setMediaPosition(int)));
     connect(this, SIGNAL(currentPlayerDurationChanged(qint64)), _progressBar, SLOT(setProgressBarMaximum(qint64)));
     connect(this, SIGNAL(currentPlayerPositionChanged(qint64)), _progressBar, SLOT(setProgressBarValue(qint64)));
+}
+
+void mediaPlayerTabWidget::setMediaDatabase(mediaDatabase *db)
+{
+    _db = db;
+    for(int i = 0; i < _players->size(); i++)
+        _players->at(i)->setMediaDatabase(_db);
 }
 
 void mediaPlayerTabWidget::newMetaDataReceived(const QString &artist, const QString &title)

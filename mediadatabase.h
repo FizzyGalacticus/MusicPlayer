@@ -23,6 +23,7 @@ private:
     QSqlQuery * _query;
 
     void initiateSchema();
+    bool checkIfValueExists(const QString & tableName, const QString & columnName, const QString & value);
 };
 
 #endif // MEDIADATABASE_H
