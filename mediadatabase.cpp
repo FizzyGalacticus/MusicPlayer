@@ -58,12 +58,17 @@ bool mediaDatabase::addAlbum(const QString &artist, const QString &album, const 
     {
         if(!checkIfValueExists("album","Artist_name",artist) && !checkIfValueExists("album","Title",album))
         {
-            QString qry = "INSERT INTO `Media_Player`.`album` (Title, AlbumCover, Artist_name) VALUES ('";
-            qry += album + "', " + *albumCover + ", '" + artist + "');";
-            if(!_query->exec(qry))
-                qDebug() << "Could not add album!";
+            QString qry = "INSERT INTO `Media_Player`.`album` "
+                    "(Title, AlbumCover, Artist_name) VALUES ('";
+            qry += album + "', :albumCover, '" + artist + "');";
+            _query->prepare(qry);
+            _query->bindValue(":albumCover", *albumCover);
+            if(!_query->exec())
+                qDebug() << "Could not add album!" << _query->lastError().text();
             else qDebug() << "Added album!";
         }
+
+        _db.close();
     }
     else
     {

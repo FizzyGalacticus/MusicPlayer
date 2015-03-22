@@ -137,11 +137,15 @@ void basePlayer::currentIndexHasChanged(int index)
 
 void basePlayer::metaDataAvailablityHasChanged(bool isMetaDataAvailable)
 {
+    QString albumTitle;
     if(isMetaDataAvailable)
     {
         if(_player->availableMetaData().contains("AlbumArtist"))
             _currentlyPlayingArtist = _player->metaData("AlbumArtist").toString();
         else _currentlyPlayingArtist = "Unknown Artist";
+        if(_player->availableMetaData().contains("AlbumTitle"))
+            albumTitle = _player->metaData("AlbumTitle").toString();
+        else albumTitle = "Unknown Album";
         if(_player->availableMetaData().contains("Title"))
         {
             _currentlyPlayingTitle = _player->metaData("Title").toString();
@@ -155,7 +159,8 @@ void basePlayer::metaDataAvailablityHasChanged(bool isMetaDataAvailable)
         _currentlyPlayingTitle = "";
     }
 
-    if(_db != NULL) _db->addArtist(_currentlyPlayingArtist);
+    qDebug() << albumTitle;
+    if(_db != NULL) _db->addAlbum(_currentlyPlayingArtist, albumTitle);
 
     emit metaDataChanged(_currentlyPlayingArtist, _currentlyPlayingTitle);
 }
