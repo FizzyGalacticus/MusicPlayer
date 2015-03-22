@@ -12,6 +12,8 @@ public:
     explicit mediaDatabase(QObject *parent = 0);
     ~mediaDatabase();
 
+    bool addArtist(const QString & newArtist);
+
 signals:
 
 public slots:

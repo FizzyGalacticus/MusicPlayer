@@ -6,7 +6,7 @@
 
 mediaDatabase::mediaDatabase(QObject *parent) :
     QObject(parent),
-    _db(QSqlDatabase::addDatabase("QMYSQL")),
+    _db(QSqlDatabase::addDatabase("QMYSQL","Media-Player")),
     _query(new QSqlQuery(_db))
 {
     _db.setHostName("127.0.0.1");
@@ -19,6 +19,40 @@ mediaDatabase::mediaDatabase(QObject *parent) :
 mediaDatabase::~mediaDatabase()
 {
 
+}
+
+bool mediaDatabase::addArtist(const QString & newArtist)
+{
+    bool ok = _db.open(), succeeded = false;
+
+    if(ok)
+    {
+        if(!_query->exec("USE media_player;"))
+            qDebug() << "Could not open media_player database!";
+        if(!_query->exec("SELECT COUNT(*) FROM artist WHERE name='" + newArtist + "';"))
+            qDebug() << "Could not check if artist exists!";
+        else
+        {
+            _query->next();
+            if(_query->value(0).toInt() == 0)
+            {
+                if(!_query->exec("INSERT INTO `media_player`.`artist` VALUES ('" + newArtist + "');"))
+                    qDebug() << "Could not add new artist!";
+                else
+                {
+                    qDebug() << "New artist added!";
+                    succeeded = true;
+                }
+            }
+        }
+    }
+    else
+    {
+        qDebug() << "Could not open database to add new artist.";
+    }
+
+    _db.close();
+    return succeeded;
 }
 
 void mediaDatabase::initiateSchema()
@@ -35,7 +69,7 @@ void mediaDatabase::initiateSchema()
         else
         {
             while(_query->next())
-                schemaExists = _query->value(0).toInt();
+                schemaExists = _query->value(0).toBool();
 
             if(!schemaExists)
             {
@@ -47,6 +81,7 @@ void mediaDatabase::initiateSchema()
                 else qDebug() << "Created schema.";
                 schemaFile->close();
             }
+            else qDebug() << "Schema exists!";
         }
 
         _db.close();
