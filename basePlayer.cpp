@@ -163,7 +163,6 @@ void basePlayer::metaDataAvailablityHasChanged(bool isMetaDataAvailable)
     if(_db != NULL) _db->addSong(_currentlyPlayingTitle, albumTitle, _currentlyPlayingArtist);
 
     emit metaDataChanged(_currentlyPlayingArtist, _currentlyPlayingTitle);
-    this->next();
 }
 
 void basePlayer::removeFeaturingArtistFromTitle()

@@ -27,11 +27,11 @@ bool mediaDatabase::addArtist(const QString & newArtist)
 
     if(ok)
     {
-        if(!_query->exec("USE media_player;"))
+        if(!_query->exec("USE Media_Player;"))
             qDebug() << "Could not open media_player database!";
-        if(!checkIfValueExists("artist","name",newArtist))
+        if(!checkIfValueExists("Artist","name",newArtist))
         {
-            if(!_query->exec("INSERT INTO `media_player`.`artist` VALUES ('" + newArtist + "');"))
+            if(!_query->exec("INSERT INTO `Media_Player`.`Artist` VALUES ('" + newArtist + "');"))
                 qDebug() << "Could not add new artist!";
             else
             {
@@ -56,7 +56,7 @@ bool mediaDatabase::addAlbum(const QString &artist, const QString &album)
 
     if(ok)
     {
-         QString qry = "INSERT INTO `Media_Player`.`album` "
+         QString qry = "INSERT INTO `Media_Player`.`Album` "
                 "(Title, Artist_name) VALUES (':album', ':artist');";
         qry.replace(":album", album);
         qry.replace(":artist", artist);
@@ -92,7 +92,7 @@ bool mediaDatabase::addSong(const QString &songTitle, const QString &albumTitle,
 
     if(ok)
     {
-        QString qry = "INSERT INTO `Media_Player`.`song` "
+        QString qry = "INSERT INTO `Media_Player`.`Song` "
                       "(Title, Album_Title, Album_Artist_name) "
                       "VALUES (':song', ':album', ':artist');";
         qry.replace(":song", song);
@@ -157,13 +157,13 @@ bool mediaDatabase::checkIfValueExists(const QString & tableName, const QString 
 {
     bool exists = true;
 
-    if(!_query->exec("SELECT COUNT(*) FROM `media_player`.`" + tableName + "` WHERE `" + columnName + "`='" + value + "';"))
+    if(!_query->exec("SELECT COUNT(*) FROM `Media_Player`.`" + tableName + "` WHERE `" + columnName + "`='" + value + "';"))
         qDebug() << "Could not check the existence of" << value;
     else
     {
         _query->next();
         if(!_query->value(0).toBool()) exists = false;
-        else qDebug() << "`media_player`.`" + tableName + "`.`" + columnName + "` contains \"" + value + "\"";
+        else qDebug() << "`Media_Player`.`" + tableName + "`.`" + columnName + "` contains \"" + value + "\"";
     }
 
     return exists;
