@@ -14,6 +14,7 @@ public:
 
     bool addArtist(const QString & newArtist);
     bool addAlbum(const QString & artist, const QString & album, const QByteArray * albumCover = new QByteArray);
+    bool addSong(const QString & songTitle, const QString & albumTitle, const QString & artistName);
 
 signals:
 
@@ -25,6 +26,7 @@ private:
 
     void initiateSchema();
     bool checkIfValueExists(const QString & tableName, const QString & columnName, const QString & value);
+    const QString insertFormattingCharacters(const QString & str) const;
 };
 
 #endif // MEDIADATABASE_H

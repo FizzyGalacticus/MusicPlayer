@@ -78,6 +78,40 @@ bool mediaDatabase::addAlbum(const QString &artist, const QString &album, const 
     return succeeded;
 }
 
+bool mediaDatabase::addSong(const QString &songTitle, const QString &albumTitle, const QString &artistName)
+{
+    QString song = insertFormattingCharacters(songTitle), album = insertFormattingCharacters(albumTitle),
+            artist = insertFormattingCharacters(artistName);
+
+    addArtist(artist);
+    addAlbum(artist,album);
+
+    bool ok = _db.open(), succeeded = false;
+
+    if(ok)
+    {
+        QString qry = "INSERT INTO `Media_Player`.`song` "
+                      "(Title, Album_Title, Album_Artist_name) "
+                      "VALUES (':song', ':album', ':artist');";
+        _query->prepare(qry);
+        _query->bindValue(":song", song);
+        _query->bindValue(":album", album);
+        _query->bindValue(":artist", artist);
+        if(!_query->exec())
+        {
+            qDebug() << _query->lastQuery();
+            qDebug() << "Could not insert song into database!" << _query->lastError().text();
+        }
+        else succeeded = true;
+    }
+    else
+    {
+        qDebug() << "Could not open database to insert new song!";
+    }
+
+    return succeeded;
+}
+
 void mediaDatabase::initiateSchema()
 {
     bool ok = _db.open();
@@ -130,4 +164,13 @@ bool mediaDatabase::checkIfValueExists(const QString & tableName, const QString 
     }
 
     return exists;
+}
+
+const QString mediaDatabase::insertFormattingCharacters(const QString &str) const
+{
+    QString newStr = str;
+    newStr.replace("'","\\'");
+    newStr.replace("\"","\\\"");
+
+    return newStr;
 }

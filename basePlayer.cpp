@@ -159,8 +159,7 @@ void basePlayer::metaDataAvailablityHasChanged(bool isMetaDataAvailable)
         _currentlyPlayingTitle = "";
     }
 
-    qDebug() << albumTitle;
-    if(_db != NULL) _db->addAlbum(_currentlyPlayingArtist, albumTitle);
+    if(_db != NULL) _db->addSong(_currentlyPlayingTitle, albumTitle, _currentlyPlayingArtist);
 
     emit metaDataChanged(_currentlyPlayingArtist, _currentlyPlayingTitle);
 }
