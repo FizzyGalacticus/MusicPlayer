@@ -50,23 +50,22 @@ bool mediaDatabase::addArtist(const QString & newArtist)
     return succeeded;
 }
 
-bool mediaDatabase::addAlbum(const QString &artist, const QString &album, const QByteArray *albumCover)
+bool mediaDatabase::addAlbum(const QString &artist, const QString &album)
 {
     bool ok = _db.open(), succeeded = false;
 
     if(ok)
     {
-        if(!checkIfValueExists("album","Artist_name",artist) && !checkIfValueExists("album","Title",album))
-        {
-            QString qry = "INSERT INTO `Media_Player`.`album` "
-                    "(Title, AlbumCover, Artist_name) VALUES ('";
-            qry += album + "', :albumCover, '" + artist + "');";
-            _query->prepare(qry);
-            _query->bindValue(":albumCover", *albumCover);
-            if(!_query->exec())
-                qDebug() << "Could not add album!" << _query->lastError().text();
-            else qDebug() << "Added album!";
-        }
+         QString qry = "INSERT INTO `Media_Player`.`album` "
+                "(Title, Artist_name) VALUES (':album', ':artist');";
+        qry.replace(":album", album);
+        qry.replace(":artist", artist);
+
+        qDebug() << "Inserting into album:" << qry;
+
+        if(!_query->exec(qry))
+            qDebug() << "Could not add album!" << _query->lastError().text();
+        else qDebug() << "Added album!";
 
         _db.close();
     }
@@ -83,6 +82,9 @@ bool mediaDatabase::addSong(const QString &songTitle, const QString &albumTitle,
     QString song = insertFormattingCharacters(songTitle), album = insertFormattingCharacters(albumTitle),
             artist = insertFormattingCharacters(artistName);
 
+    if(artist == "" || album == "" || song == "")
+        return false;
+
     addArtist(artist);
     addAlbum(artist,album);
 
@@ -96,10 +98,12 @@ bool mediaDatabase::addSong(const QString &songTitle, const QString &albumTitle,
         qry.replace(":song", song);
         qry.replace(":album", album);
         qry.replace(":artist", artist);
+
+        qDebug() << "Inserting into song:" << qry;
+
         if(!_query->exec(qry))
         {
-            qDebug() << qry;
-            qDebug() << "Could not insert song into database!" << _query->lastError().text();
+            qDebug() << "Could not add song!" << _query->lastError().text() << "";
         }
         else succeeded = true;
     }
