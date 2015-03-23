@@ -124,7 +124,7 @@ bool mediaDatabase::incrementSongCounter(const QString &songTitle, const QString
 
     if(ok)
     {
-        QString qry = "UPDATE `Song` "
+        QString qry = "UPDATE `Media_Player`.`Song` "
                 "SET `numberOfListens` = `numberOfListens` + 1 "
                 "WHERE `Album_Artist_name` = ':artist' "
                 "AND `Album_Title` = ':album' "

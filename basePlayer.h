@@ -47,6 +47,7 @@ private slots:
     void mediaDurationChanged(qint64);
     void mediaPositionChanged(qint64);
     void videoAvailableChanged(bool videoAvailable);
+    void mediaStateChanged(QMediaPlayer::State state);
 
 protected:
     bool event(QEvent *);
@@ -58,6 +59,7 @@ private:
     mediaDatabase * _db;
 
     QString _currentlyPlayingArtist;
+    QString _currentlyPlayingAlbum;
     QString _currentlyPlayingTitle;
 
     void removeFeaturingArtistFromTitle();

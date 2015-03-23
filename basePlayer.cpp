@@ -17,6 +17,7 @@ basePlayer::basePlayer(QWidget *parent) :
     _player(new QMediaPlayer),
     _db(NULL),
     _currentlyPlayingArtist(""),
+    _currentlyPlayingAlbum(""),
     _currentlyPlayingTitle("")
 {
     grabGesture(Qt::TapAndHoldGesture);
@@ -41,6 +42,7 @@ basePlayer::basePlayer(QWidget *parent) :
     connect(_player, SIGNAL(durationChanged(qint64)), this, SLOT(mediaDurationChanged(qint64)));
     connect(_player, SIGNAL(positionChanged(qint64)), this, SLOT(mediaPositionChanged(qint64)));
     connect(_player, SIGNAL(videoAvailableChanged(bool)), this, SLOT(videoAvailableChanged(bool)));
+    connect(_player, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(mediaStateChanged(QMediaPlayer::State)));
 }
 
 bool basePlayer::clear()
@@ -99,15 +101,9 @@ void basePlayer::setMediaPosition(qint64 position)
 void basePlayer::togglePlayPause()
 {
     if(_player->state() == QMediaPlayer::PausedState || _player->state() == QMediaPlayer::StoppedState)
-    {
         _player->play();
-        emit stateChanged(_player->state());
-    }
     else if(_player->state() == QMediaPlayer::PlayingState)
-    {
         _player->pause();
-        emit stateChanged(_player->state());
-    }
 }
 
 void basePlayer::next()
@@ -137,15 +133,14 @@ void basePlayer::currentIndexHasChanged(int index)
 
 void basePlayer::metaDataAvailablityHasChanged(bool isMetaDataAvailable)
 {
-    QString albumTitle;
     if(isMetaDataAvailable)
     {
         if(_player->availableMetaData().contains("AlbumArtist"))
             _currentlyPlayingArtist = _player->metaData("AlbumArtist").toString();
         else _currentlyPlayingArtist = "Unknown Artist";
         if(_player->availableMetaData().contains("AlbumTitle"))
-            albumTitle = _player->metaData("AlbumTitle").toString();
-        else albumTitle = "Unknown Album";
+            _currentlyPlayingAlbum = _player->metaData("AlbumTitle").toString();
+        else _currentlyPlayingAlbum = "Unknown Album";
         if(_player->availableMetaData().contains("Title"))
         {
             _currentlyPlayingTitle = _player->metaData("Title").toString();
@@ -156,11 +151,11 @@ void basePlayer::metaDataAvailablityHasChanged(bool isMetaDataAvailable)
     else
     {
         _currentlyPlayingArtist = "";
-        albumTitle = "";
+        _currentlyPlayingAlbum = "";
         _currentlyPlayingTitle = "";
     }
 
-    if(_db != NULL) _db->addSong(_currentlyPlayingTitle, albumTitle, _currentlyPlayingArtist);
+    if(_db != NULL) _db->addSong(_currentlyPlayingTitle, _currentlyPlayingAlbum, _currentlyPlayingArtist);
 
     emit metaDataChanged(_currentlyPlayingArtist, _currentlyPlayingTitle);
 }
@@ -253,6 +248,15 @@ void basePlayer::mediaPositionChanged(qint64 position)
 void basePlayer::videoAvailableChanged(bool videoAvailable)
 {
     emit videoAvailabilityChanged(videoAvailable);
+}
+
+void basePlayer::mediaStateChanged(QMediaPlayer::State state)
+{
+    if(state == QMediaPlayer::StoppedState)
+        if(_db != NULL)
+            _db->incrementSongCounter(_currentlyPlayingTitle, _currentlyPlayingAlbum, _currentlyPlayingArtist);
+
+    emit stateChanged(state);
 }
 
 bool basePlayer::event(QEvent * event)
