@@ -93,13 +93,12 @@ bool mediaDatabase::addSong(const QString &songTitle, const QString &albumTitle,
         QString qry = "INSERT INTO `Media_Player`.`song` "
                       "(Title, Album_Title, Album_Artist_name) "
                       "VALUES (':song', ':album', ':artist');";
-        _query->prepare(qry);
-        _query->bindValue(":song", song);
-        _query->bindValue(":album", album);
-        _query->bindValue(":artist", artist);
-        if(!_query->exec())
+        qry.replace(":song", song);
+        qry.replace(":album", album);
+        qry.replace(":artist", artist);
+        if(!_query->exec(qry))
         {
-            qDebug() << _query->lastQuery();
+            qDebug() << qry;
             qDebug() << "Could not insert song into database!" << _query->lastError().text();
         }
         else succeeded = true;
