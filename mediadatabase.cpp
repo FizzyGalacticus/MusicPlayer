@@ -115,6 +115,39 @@ bool mediaDatabase::addSong(const QString &songTitle, const QString &albumTitle,
     return succeeded;
 }
 
+bool mediaDatabase::incrementSongCounter(const QString &songTitle, const QString &albumTitle, const QString &artistName)
+{
+    const QString artist = insertFormattingCharacters(artistName), album = insertFormattingCharacters(albumTitle),
+            song = insertFormattingCharacters(songTitle);
+
+    bool ok = _db.open(), succeeded = false;
+
+    if(ok)
+    {
+        QString qry = "UPDATE `Song` "
+                "SET `numberOfListens` = `numberOfListens` + 1 "
+                "WHERE `Album_Artist_name` = ':artist' "
+                "AND `Album_Title` = ':album' "
+                "AND `Title` = ':title';";
+        qry.replace(":artist", artist);
+        qry.replace(":album", album);
+        qry.replace(":song", song);
+
+        if(!_query->exec(qry))
+            qDebug() << "Could not increment song listens!" << _query->lastError().text();
+        else
+        {
+            qDebug() << "Incremented song listens!";
+            succeeded = true;
+        }
+
+        _db.close();
+    }
+    else qDebug() << "Could not open database to increment song counter!";
+
+    return succeeded;
+}
+
 void mediaDatabase::initiateSchema()
 {
     bool ok = _db.open();

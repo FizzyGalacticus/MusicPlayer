@@ -15,6 +15,7 @@ public:
     bool addArtist(const QString & newArtist);
     bool addAlbum(const QString & artist, const QString & album);
     bool addSong(const QString & songTitle, const QString & albumTitle, const QString & artistName);
+    bool incrementSongCounter(const QString & songTitle, const QString & albumTitle, const QString & artistName);
 
 signals:
 
