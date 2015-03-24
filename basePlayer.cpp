@@ -238,6 +238,9 @@ void basePlayer::initiateOpenMedia()
 void basePlayer::mediaDurationChanged(qint64 duration)
 {
     emit durationChanged(duration);
+
+    if(_db != NULL)
+        _db->incrementSongCounter(_currentlyPlayingTitle, _currentlyPlayingAlbum, _currentlyPlayingArtist);
 }
 
 void basePlayer::mediaPositionChanged(qint64 position)
@@ -252,10 +255,6 @@ void basePlayer::videoAvailableChanged(bool videoAvailable)
 
 void basePlayer::mediaStateChanged(QMediaPlayer::State state)
 {
-    if(state == QMediaPlayer::StoppedState)
-        if(_db != NULL)
-            _db->incrementSongCounter(_currentlyPlayingTitle, _currentlyPlayingAlbum, _currentlyPlayingArtist);
-
     emit stateChanged(state);
 }
 

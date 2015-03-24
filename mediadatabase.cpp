@@ -128,10 +128,12 @@ bool mediaDatabase::incrementSongCounter(const QString &songTitle, const QString
                 "SET `numberOfListens` = `numberOfListens` + 1 "
                 "WHERE `Album_Artist_name` = ':artist' "
                 "AND `Album_Title` = ':album' "
-                "AND `Title` = ':title';";
+                "AND `Title` = ':song';";
         qry.replace(":artist", artist);
         qry.replace(":album", album);
         qry.replace(":song", song);
+
+        qDebug() << qry;
 
         if(!_query->exec(qry))
             qDebug() << "Could not increment song listens!" << _query->lastError().text();
