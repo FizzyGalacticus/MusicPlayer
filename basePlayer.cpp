@@ -209,6 +209,21 @@ QStringList * basePlayer::openFileDialog()
     return files;
 }
 
+const QString & basePlayer::artist() const
+{
+    return _currentlyPlayingArtist;
+}
+
+const QString & basePlayer::album() const
+{
+    return _currentlyPlayingAlbum;
+}
+
+const QString & basePlayer::title() const
+{
+    return _currentlyPlayingTitle;
+}
+
 const QString * basePlayer::getAudioFileTypes()
 {
     return new QString("Audio (*.mp3 *.mp4 *.wav *.flac *.ogg *.aiff *.wma *.mid *.ra *.ram "

@@ -24,6 +24,9 @@ public:
     void setMediaDatabase(mediaDatabase * db);
     bool clear();
     QStringList * openFileDialog();
+    const QString & artist() const;
+    const QString & album() const;
+    const QString & title() const;
 
 signals:
     void stateChanged(QMediaPlayer::State state);
