@@ -14,7 +14,7 @@ public:
     void setFont(const QFont &);
 
 signals:
-    void lyricsChanged(const QString & lyrics);
+    void lyricsChanged(const QString & artist, const QString & title, const QString & newLyrics);
 
 public slots:
     void retrieveLyrics(QString, QString);

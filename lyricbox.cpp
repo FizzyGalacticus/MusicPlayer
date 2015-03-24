@@ -102,14 +102,15 @@ void lyricBox::lyricsRetrieved(QNetworkReply * response)
 
     if(lyrics == "")
     {
-        lyrics = "No lyrics available.";
+        _lyricsTextBox->setText("No Lyrics Available.");
         _retrievedFromSiteLabel->setText("");
     }
-    else _retrievedFromSiteLabel->setText("Lyrics retrieved from: Metrolyrics");
-
-    _lyricsTextBox->setText(lyrics);
-
-    emit lyricsChanged(_lyricsTextBox->toPlainText());
+    else
+    {
+        _lyricsTextBox->setText(lyrics);
+        _retrievedFromSiteLabel->setText("Lyrics retrieved from: Metrolyrics");
+        emit lyricsChanged(_artist, _title, _lyricsTextBox->toPlainText());
+    }
 }
 
 void lyricBox::copyLyricsToClipboard()

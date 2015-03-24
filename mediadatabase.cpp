@@ -115,6 +115,40 @@ bool mediaDatabase::addSong(const QString &songTitle, const QString &albumTitle,
     return succeeded;
 }
 
+bool mediaDatabase::addLyrics(const QString &artistName, const QString &songTitle, const QString & newLyrics)
+{
+    bool ok = _db.open(), succeeded = false;
+
+    if(ok)
+    {
+        QString lyrics = insertFormattingCharacters(newLyrics),
+                artist = insertFormattingCharacters(artistName),
+                title = insertFormattingCharacters(songTitle),
+                qry = "UPDATE `Media_Player`.`Song` "
+                "SET Lyrics=':lyrics' "
+                "WHERE Album_Artist_name=':artist' AND "
+                "Title=':song';";
+        qry.replace(":artist",artist).replace(":song",title).replace(":lyrics", lyrics);
+
+        if(!_query->exec(qry))
+        {
+            qDebug() << "Couldn't add lyrics!" << _query->lastError().text();
+
+            qDebug() << "\n\n" << qry << "\n\n";
+        }
+        else
+        {
+            qDebug() << "Lyrics added!";
+            succeeded = true;
+        }
+
+        _db.close();
+    }
+    else qDebug() << "Could not open database to add lyrics!";
+
+    return succeeded;
+}
+
 bool mediaDatabase::incrementSongCounter(const QString &songTitle, const QString &albumTitle, const QString &artistName)
 {
     const QString artist = insertFormattingCharacters(artistName), album = insertFormattingCharacters(albumTitle),
@@ -209,6 +243,7 @@ const QString mediaDatabase::insertFormattingCharacters(const QString &str) cons
     QString newStr = str;
     newStr.replace("'","\\'");
     newStr.replace("\"","\\\"");
+    newStr.replace("\n", "\\n");
 
     return newStr;
 }

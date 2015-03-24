@@ -75,7 +75,7 @@ void mediaPlayerTabWidget::setControlPanel(controlPanel * panel)
 void mediaPlayerTabWidget::setLyricBox(lyricBox * lyricsBox)
 {
     _lyricsBox = lyricsBox;
-    connect(_lyricsBox, SIGNAL(lyricsChanged(QString)), this, SLOT(lyricsHaveChanged(QString)));
+    connect(_lyricsBox, SIGNAL(lyricsChanged(QString,QString,QString)), this, SLOT(lyricsHaveChanged(QString,QString,QString)));
 }
 
 void mediaPlayerTabWidget::setProgressBar(progressBar * progressbar)
@@ -181,7 +181,10 @@ void mediaPlayerTabWidget::videoAvailableChanged(bool videoAvailable)
     }
 }
 
-void mediaPlayerTabWidget::lyricsHaveChanged(const QString &newLyrics)
+void mediaPlayerTabWidget::lyricsHaveChanged(const QString & artist, const QString & title, const QString & newLyrics)
 {
-    //write lyrics to database
+    if(_db != NULL)
+    {
+        _db->addLyrics(artist, title, newLyrics);
+    }
 }

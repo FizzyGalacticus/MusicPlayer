@@ -45,7 +45,7 @@ private slots:
     void durationChanged(qint64);
     void positionChanged(qint64);
     void videoAvailableChanged(bool videoAvailable);
-    void lyricsHaveChanged(const QString & newLyrics);
+    void lyricsHaveChanged(const QString & artist, const QString & title, const QString & newLyrics);
 
 private:
     QTabWidget *_tabs;
