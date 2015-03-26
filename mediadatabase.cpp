@@ -50,26 +50,29 @@ bool mediaDatabase::addArtist(const QString & newArtist)
     return succeeded;
 }
 
-bool mediaDatabase::addAlbum(const QString &artist, const QString &album)
+bool mediaDatabase::addAlbum(const QString &albumArtist, const QString &newAlbum)
 {
     bool ok = _db.open(), succeeded = false;
 
     if(ok)
     {
-         QString qry = "INSERT INTO `Media_Player`.`Album` "
+        QString artist = insertFormattingCharacters(albumArtist),
+                album = insertFormattingCharacters(newAlbum);
+
+        QString qry = "INSERT INTO `Media_Player`.`Album` "
                 "(Title, Artist_name) VALUES (':album', ':artist');";
         qry.replace(":album", album);
         qry.replace(":artist", artist);
 
         if(!_query->exec(qry))
-            qDebug() << "Could not add album:" << album;
-        else qDebug() << "Added album:" << album;
+            qDebug() << "Could not add album:" << newAlbum;
+        else qDebug() << "Added album:" << newAlbum;
 
         _db.close();
     }
     else
     {
-        qDebug() << "Could not open datase to add album:" << album;
+        qDebug() << "Could not open datase to add album:" << newAlbum;
     }
 
     return succeeded;
