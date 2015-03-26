@@ -100,7 +100,7 @@ void lyricBox::lyricsRetrieved(QNetworkReply * response)
 
     QString lyrics = page.midRef(beginOfLyrics,endOfLyrics-beginOfLyrics).toString();
 
-    if(lyrics == "")
+    if(page.indexOf(beginTag) == -1)
     {
         _lyricsTextBox->setText("No Lyrics Available.");
         _retrievedFromSiteLabel->setText("");
