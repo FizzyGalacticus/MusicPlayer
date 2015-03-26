@@ -44,6 +44,7 @@ public slots:
 
 private slots:
     void currentIndexHasChanged(int index);
+    void metaDataChanged();
     void metaDataAvailablityHasChanged(bool isMetaDataAvailable);
     void initiateAddMedia();
     void initiateOpenMedia();

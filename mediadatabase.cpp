@@ -61,17 +61,15 @@ bool mediaDatabase::addAlbum(const QString &artist, const QString &album)
         qry.replace(":album", album);
         qry.replace(":artist", artist);
 
-        qDebug() << "Inserting into album:" << qry;
-
         if(!_query->exec(qry))
-            qDebug() << "Could not add album!" << _query->lastError().text();
-        else qDebug() << "Added album!";
+            qDebug() << "Could not add album:" << album;
+        else qDebug() << "Added album:" << album;
 
         _db.close();
     }
     else
     {
-        qDebug() << "Could not open datase to add album.";
+        qDebug() << "Could not open datase to add album:" << album;
     }
 
     return succeeded;
@@ -99,17 +97,13 @@ bool mediaDatabase::addSong(const QString &songTitle, const QString &albumTitle,
         qry.replace(":album", album);
         qry.replace(":artist", artist);
 
-        qDebug() << "Inserting into song:" << qry;
-
         if(!_query->exec(qry))
-        {
-            qDebug() << "Could not add song!" << _query->lastError().text() << "";
-        }
+            qDebug() << "Could not add song:" << song;
         else succeeded = true;
     }
     else
     {
-        qDebug() << "Could not open database to insert new song!";
+        qDebug() << "Could not open database to insert new song:" << song;
     }
 
     return succeeded;
@@ -131,20 +125,16 @@ bool mediaDatabase::addLyrics(const QString &artistName, const QString &songTitl
         qry.replace(":artist",artist).replace(":song",title).replace(":lyrics", lyrics);
 
         if(!_query->exec(qry))
-        {
-            qDebug() << "Couldn't add lyrics!" << _query->lastError().text();
-
-            qDebug() << "\n\n" << qry << "\n\n";
-        }
+            qDebug() << "Couldn't add lyrics for song:" << songTitle;
         else
         {
-            qDebug() << "Lyrics added!";
+            qDebug() << "Lyrics added for song:" << songTitle;
             succeeded = true;
         }
 
         _db.close();
     }
-    else qDebug() << "Could not open database to add lyrics!";
+    else qDebug() << "Could not open database to add lyrics for song:" << songTitle;
 
     return succeeded;
 }
@@ -167,19 +157,17 @@ bool mediaDatabase::incrementSongCounter(const QString &songTitle, const QString
         qry.replace(":album", album);
         qry.replace(":song", song);
 
-        qDebug() << qry;
-
         if(!_query->exec(qry))
-            qDebug() << "Could not increment song listens!" << _query->lastError().text();
+            qDebug() << "Could not increment listens for song:" << song;
         else
         {
-            qDebug() << "Incremented song listens!";
+            qDebug() << "Incremented listens for song:" << song;
             succeeded = true;
         }
 
         _db.close();
     }
-    else qDebug() << "Could not open database to increment song counter!";
+    else qDebug() << "Could not open database to increment listens for song:" << song;
 
     return succeeded;
 }
@@ -205,7 +193,7 @@ void mediaDatabase::initiateSchema()
                 QFile::copy(":/resources/schema.sql","schema.sql");
                 QFile * schemaFile = new QFile("schema.sql");
                 schemaFile->open(QFile::ReadOnly);
-                if(!_query->exec(schemaFile->readAll().toStdString().c_str()))
+                if(!_query->exec(QString(schemaFile->readAll())))
                     qDebug() << "Could not initiate schema!";
                 else qDebug() << "Created schema.";
                 schemaFile->close();

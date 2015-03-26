@@ -38,6 +38,7 @@ basePlayer::basePlayer(QWidget *parent) :
     _player->setPlaylist(new QMediaPlaylist);
     _player->setVolume(50);
     connect(_player->playlist(), SIGNAL(currentIndexChanged(int)), this, SLOT(currentIndexHasChanged(int)));
+    connect(_player, SIGNAL(metaDataChanged()), this, SLOT(metaDataChanged()));
     connect(_player, SIGNAL(metaDataAvailableChanged(bool)), this, SLOT(metaDataAvailablityHasChanged(bool)));
     connect(_player, SIGNAL(durationChanged(qint64)), this, SLOT(mediaDurationChanged(qint64)));
     connect(_player, SIGNAL(positionChanged(qint64)), this, SLOT(mediaPositionChanged(qint64)));
@@ -129,6 +130,11 @@ void basePlayer::currentIndexHasChanged(int index)
         _basePlayerView->item(i)->setTextColor("black");
     if(index > -1) _basePlayerView->item(index)->setTextColor("red");
     else if(_basePlayerView->count())_basePlayerView->item(0)->setTextColor("red");
+}
+
+void basePlayer::metaDataChanged()
+{
+    emit metaDataAvailablityHasChanged(_player->isMetaDataAvailable());
 }
 
 void basePlayer::metaDataAvailablityHasChanged(bool isMetaDataAvailable)
