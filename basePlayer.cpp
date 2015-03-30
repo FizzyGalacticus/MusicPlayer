@@ -70,6 +70,19 @@ bool basePlayer::openMedia(const QList<QMediaContent> &items)
     return addMedia(items);
 }
 
+void basePlayer::updateView()
+{
+    _basePlayerView->clear();
+
+    for(int i = 0; i < _player->playlist()->mediaCount(); i++)
+    {
+        _basePlayerView->addItem(_player->playlist()->media(i).canonicalUrl().fileName());
+        _basePlayerView->item(i)->setTextColor("black");
+    }
+
+    _basePlayerView->item(_player->playlist()->currentIndex())->setTextColor("red");
+}
+
 bool basePlayer::addMedia(const QList<QMediaContent> &items)
 {
     bool ok = _player->playlist()->addMedia(items);
@@ -80,7 +93,7 @@ bool basePlayer::addMedia(const QList<QMediaContent> &items)
     if(items.size() && items.size() == _player->playlist()->mediaCount())
     {
         _player->playlist()->setCurrentIndex(0);
-        _basePlayerView->item(0)->setTextColor("red");
+        updateView();
     }
 
     return ok;

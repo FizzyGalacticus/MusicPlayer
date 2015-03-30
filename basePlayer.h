@@ -68,6 +68,7 @@ private:
 
     void removeFeaturingArtistFromTitle();
     const QString * getAudioFileTypes();
+    void updateView();
 };
 
 #endif // PLAYLIST_H
