@@ -72,7 +72,7 @@ bool basePlayer::openMedia(const QList<QMediaContent> &items)
 
 bool basePlayer::addMedia(const QList<QMediaContent> &items)
 {
-    _player->playlist()->addMedia(items);
+    bool ok = _player->playlist()->addMedia(items);
 
     for(QList<QMediaContent>::const_iterator i = items.begin(); i < items.end(); i++)
         _basePlayerView->addItem(i->canonicalUrl().fileName());
@@ -81,9 +81,9 @@ bool basePlayer::addMedia(const QList<QMediaContent> &items)
     {
         _player->playlist()->setCurrentIndex(0);
         _basePlayerView->item(0)->setTextColor("red");
-        return true;
     }
-    else return false;
+
+    return ok;
 }
 
 bool basePlayer::addMedia(const QMediaContent &content)
