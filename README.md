@@ -13,17 +13,20 @@ My group and I originally wanted to use the Unity engine, but it does not seem t
 ###Ideal Features To Implement:
 *	Favorites
 	-	For as long as I can remember, I have listened to a handful of favorite songs immediately before listening to other stuff. I would really like to implement a feature where favorites can be selected in a playlist and then they would be played before all other songs in that playlist. Of course this would need to be data saved with the playlists as well.
-*	Statistics
-	-	A database system that keeps track of the number of times a user has listened to a particular song.
+*	~~Statistics~~
+	-	~~A database system that keeps track of the number of times a user has listened to a particular song.~~
 *	~~Video Playback~~
 	-	~~Because why not? This honestly shouldn't take that much effort, as the player currently can play audio for video files. It just needs the video portion added.~~
 *	Compatibility
 	-	Capability to automatically install GStreamer (*nix) or DirectShow (Windoze) codecs, or to bundle codecs with application.
+*	Album Art
+	-	Ability to locate and pull album art for a playing track.
 
 ###Compiling MySQL drivers
-This has proved to be quite a challenge for both Linux & Windows systems, so I though I would document my process.
+My main system is Ubuntu 12.04, and there are no available packages for Qt5 MySQL drivers. There are drivers available for Qt 3 & 4. I have seen packages installable on Ubuntu 14.04. This lead me to decide to compile my own drivers.
+Compiling the Qt5 MySQL drivers proved to be quite a challenge for both Linux & Windows systems, so I thought I would document my process.
 
-First, it is necessary to build the qsqlmysql driver. From *some* posts I've read, QT5 supposedly comes with them pre-build, but I have not found sufficient evidence to support this. Make sure that you have qmake **from the Qt version of the driver that you wish to build** in your PATH. Also, you **need to have the same architecture of MySQL server installed as the version of Qt that you're building for.** A 32-bit Qt application *can* talk to a 64-bit server, but you must have the 32-bit **libmysql** library for the Qt application to talk to. 
+From *some* posts I've read, QT5 supposedly comes with them pre-build, but I have not found sufficient evidence to support this. Make sure that you have qmake **from the Qt version of the driver that you wish to build** in your PATH. Also, you **need to have the same architecture of MySQL server installed as the version of Qt that you're building for.** A 32-bit Qt application *can* talk to a 64-bit server, but you must have the 32-bit **libmysql** library for the Qt application to talk to. 
 
 To build, navigate to your Qt\VERSION\Src\qtbase\src\plugins\sqldrivers\mysql folder in the terminal. Then type the following command on Linux:
 ```Bash
