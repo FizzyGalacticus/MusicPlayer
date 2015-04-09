@@ -1,6 +1,6 @@
 Final Project for UAF 372 class
 ===============================
-![MainIcon](https://raw.githubusercontent.com/FizzyGalacticus/MusicPlayer/master/icons/mainWindowIcon.png)
+![MainIcon](https://raw.githubusercontent.com/FizzyGalacticus/MusicPlayer/master/resources/icons/mainWindowIcon.png)
 
 ##Purpose
 This media player began as a group project for my CS372 (Software Construction) class. The original purpose was to have us create an application using a GUI framework, since most of us had not played around with GUI programming before. We decided to create a media player that could have a layout and features that we have wanted in existing players. 
