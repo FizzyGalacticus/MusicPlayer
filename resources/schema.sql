@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `Media_Player`.`Song` (
   `lyrics` LONGTEXT NULL,
   `Album_Title` VARCHAR(45) NOT NULL,
   `Album_Artist_name` VARCHAR(45) NOT NULL,
-  `id` INT(11) NOT NULL DEFAULT 1,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `filePath` TEXT NULL,
   PRIMARY KEY (`id`, `Album_Title`, `Album_Artist_name`),
   INDEX `fk_Song_Album1_idx` (`Album_Title` ASC, `Album_Artist_name` ASC),
@@ -80,10 +80,8 @@ DROP TABLE IF EXISTS `Media_Player`.`Playlist_has_Song` ;
 CREATE TABLE IF NOT EXISTS `Media_Player`.`Playlist_has_Song` (
   `Playlist_Name` VARCHAR(45) NOT NULL,
   `Song_id` INT(11) NOT NULL,
-  `Song_Album_Title` VARCHAR(45) NOT NULL,
-  `Song_Album_Artist_name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`Playlist_Name`, `Song_id`, `Song_Album_Title`, `Song_Album_Artist_name`),
-  INDEX `fk_Playlist_has_Song_Song1_idx` (`Song_id` ASC, `Song_Album_Title` ASC, `Song_Album_Artist_name` ASC),
+  PRIMARY KEY (`Playlist_Name`, `Song_id`),
+  INDEX `fk_Playlist_has_Song_Song1_idx` (`Song_id` ASC),
   INDEX `fk_Playlist_has_Song_Playlist1_idx` (`Playlist_Name` ASC),
   CONSTRAINT `fk_Playlist_has_Song_Playlist1`
     FOREIGN KEY (`Playlist_Name`)
@@ -91,10 +89,23 @@ CREATE TABLE IF NOT EXISTS `Media_Player`.`Playlist_has_Song` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Playlist_has_Song_Song1`
-    FOREIGN KEY (`Song_id` , `Song_Album_Title` , `Song_Album_Artist_name`)
-    REFERENCES `Media_Player`.`Song` (`id` , `Album_Title` , `Album_Artist_name`)
+    FOREIGN KEY (`Song_id`)
+    REFERENCES `Media_Player`.`Song` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Media_Player`.`User`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Media_Player`.`User` ;
+
+CREATE TABLE IF NOT EXISTS `Media_Player`.`User` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC))
 ENGINE = InnoDB;
 
 USE `Media_Player` ;
@@ -155,3 +166,24 @@ LIMIT 1;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+USE `Media_Player`;
+
+DELIMITER $$
+
+USE `Media_Player`$$
+DROP TRIGGER IF EXISTS `Media_Player`.`Song_BINS` $$
+USE `Media_Player`$$
+CREATE TRIGGER `Song_BINS` BEFORE INSERT ON `Song` FOR EACH ROW
+BEGIN IF (
+	SELECT COUNT(*) FROM `Media_Player`.`Song`
+	WHERE Title=NEW.Title AND 
+	Album_Artist_name=NEW.Album_Artist_name
+	) > 0
+THEN SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'Cannot add duplicate song.';
+END IF;
+END;
+$$
+
+
+DELIMITER ;
