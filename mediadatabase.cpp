@@ -28,7 +28,7 @@ bool mediaDatabase::addArtist(const QString & newArtist)
     if(ok)
     {
         if(!_query->exec("USE Media_Player;"))
-            qDebug() << "Could not open media_player database!";
+            qDebug() << "Could not open `Media_Player` schema.";
         if(!checkIfValueExists("Artist","name",newArtist))
         {
             if(!_query->exec("INSERT INTO `Media_Player`.`Artist` VALUES ('" + newArtist + "');"))
@@ -118,7 +118,7 @@ bool mediaDatabase::addLyrics(const QString &artistName, const QString &songTitl
                 artist = insertFormattingCharacters(artistName),
                 title = insertFormattingCharacters(songTitle),
                 qry = "UPDATE `Media_Player`.`Song` "
-                "SET Lyrics=':lyrics' "
+                "SET lyrics=':lyrics' "
                 "WHERE Album_Artist_name=':artist' AND "
                 "Title=':song';";
         qry.replace(":artist",artist).replace(":song",title).replace(":lyrics", lyrics);
