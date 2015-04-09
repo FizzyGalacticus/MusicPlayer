@@ -48,9 +48,9 @@ CREATE TABLE IF NOT EXISTS `Media_Player`.`Song` (
   `lyrics` LONGTEXT NULL,
   `Album_Title` VARCHAR(45) NOT NULL,
   `Album_Artist_name` VARCHAR(45) NOT NULL,
-  `id` VARCHAR(45) NOT NULL,
+  `id` INT(11) NOT NULL DEFAULT 1,
   `filePath` TEXT NULL,
-  PRIMARY KEY (`Album_Title`, `Album_Artist_name`, `id`),
+  PRIMARY KEY (`id`, `Album_Title`, `Album_Artist_name`),
   INDEX `fk_Song_Album1_idx` (`Album_Title` ASC, `Album_Artist_name` ASC),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   CONSTRAINT `fk_Song_Album1`
@@ -79,11 +79,11 @@ DROP TABLE IF EXISTS `Media_Player`.`Playlist_has_Song` ;
 
 CREATE TABLE IF NOT EXISTS `Media_Player`.`Playlist_has_Song` (
   `Playlist_Name` VARCHAR(45) NOT NULL,
+  `Song_id` INT(11) NOT NULL,
   `Song_Album_Title` VARCHAR(45) NOT NULL,
   `Song_Album_Artist_name` VARCHAR(45) NOT NULL,
-  `Song_id` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`Playlist_Name`, `Song_Album_Title`, `Song_Album_Artist_name`, `Song_id`),
-  INDEX `fk_Playlist_has_Song_Song1_idx` (`Song_Album_Title` ASC, `Song_Album_Artist_name` ASC, `Song_id` ASC),
+  PRIMARY KEY (`Playlist_Name`, `Song_id`, `Song_Album_Title`, `Song_Album_Artist_name`),
+  INDEX `fk_Playlist_has_Song_Song1_idx` (`Song_id` ASC, `Song_Album_Title` ASC, `Song_Album_Artist_name` ASC),
   INDEX `fk_Playlist_has_Song_Playlist1_idx` (`Playlist_Name` ASC),
   CONSTRAINT `fk_Playlist_has_Song_Playlist1`
     FOREIGN KEY (`Playlist_Name`)
@@ -91,8 +91,8 @@ CREATE TABLE IF NOT EXISTS `Media_Player`.`Playlist_has_Song` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Playlist_has_Song_Song1`
-    FOREIGN KEY (`Song_Album_Title` , `Song_Album_Artist_name` , `Song_id`)
-    REFERENCES `Media_Player`.`Song` (`Album_Title` , `Album_Artist_name` , `id`)
+    FOREIGN KEY (`Song_id` , `Song_Album_Title` , `Song_Album_Artist_name`)
+    REFERENCES `Media_Player`.`Song` (`id` , `Album_Title` , `Album_Artist_name`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
