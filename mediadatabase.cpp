@@ -200,6 +200,8 @@ void mediaDatabase::initiateSchema()
                     qDebug() << "Could not initiate schema!";
                 else qDebug() << "Created schema.";
                 schemaFile->close();
+
+                schemaFile->remove();
             }
             else qDebug() << "Schema exists!";
         }
