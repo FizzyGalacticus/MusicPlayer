@@ -1,6 +1,6 @@
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
 DROP SCHEMA IF EXISTS `Media_Player` ;
 CREATE SCHEMA IF NOT EXISTS `Media_Player` ;
@@ -11,10 +11,11 @@ USE `Media_Player` ;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `Media_Player`.`Artist` ;
 
-CREATE TABLE IF NOT EXISTS `Media_Player`.`Artist` (
-  `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`name`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
+CREATE  TABLE IF NOT EXISTS `Media_Player`.`Artist` (
+  `name` VARCHAR(45) NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
 
 
@@ -23,17 +24,18 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `Media_Player`.`Album` ;
 
-CREATE TABLE IF NOT EXISTS `Media_Player`.`Album` (
-  `Title` VARCHAR(45) NOT NULL,
-  `AlbumCover` LONGBLOB NULL,
-  `Artist_name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`Title`, `Artist_name`),
-  INDEX `fk_Album_Artist_idx` (`Artist_name` ASC),
-  CONSTRAINT `fk_Album_Artist`
-    FOREIGN KEY (`Artist_name`)
-    REFERENCES `Media_Player`.`Artist` (`name`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+CREATE  TABLE IF NOT EXISTS `Media_Player`.`Album` (
+  `Title` VARCHAR(45) NOT NULL ,
+  `AlbumCover` LONGBLOB NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `Artist_id` INT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_Album_Artist1` (`Artist_id` ASC) ,
+  CONSTRAINT `fk_Album_Artist1`
+    FOREIGN KEY (`Artist_id` )
+    REFERENCES `Media_Player`.`Artist` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -42,22 +44,20 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `Media_Player`.`Song` ;
 
-CREATE TABLE IF NOT EXISTS `Media_Player`.`Song` (
-  `Title` VARCHAR(100) NOT NULL,
-  `numberOfListens` INT NOT NULL DEFAULT 0,
-  `lyrics` LONGTEXT NULL,
-  `Album_Title` VARCHAR(45) NOT NULL,
-  `Album_Artist_name` VARCHAR(45) NOT NULL,
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `filePath` TEXT NULL,
-  PRIMARY KEY (`id`, `Album_Title`, `Album_Artist_name`),
-  INDEX `fk_Song_Album1_idx` (`Album_Title` ASC, `Album_Artist_name` ASC),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+CREATE  TABLE IF NOT EXISTS `Media_Player`.`Song` (
+  `Title` VARCHAR(100) NOT NULL ,
+  `numberOfListens` INT NOT NULL DEFAULT 0 ,
+  `lyrics` LONGTEXT NULL ,
+  `id` INT NOT NULL ,
+  `filePath` TEXT NULL ,
+  `Album_id` INT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_Song_Album1` (`Album_id` ASC) ,
   CONSTRAINT `fk_Song_Album1`
-    FOREIGN KEY (`Album_Title` , `Album_Artist_name`)
-    REFERENCES `Media_Player`.`Album` (`Title` , `Artist_name`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    FOREIGN KEY (`Album_id` )
+    REFERENCES `Media_Player`.`Album` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -66,49 +66,36 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `Media_Player`.`Playlist` ;
 
-CREATE TABLE IF NOT EXISTS `Media_Player`.`Playlist` (
-  `Name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`Name`))
+CREATE  TABLE IF NOT EXISTS `Media_Player`.`Playlist` (
+  `Name` VARCHAR(45) NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Media_Player`.`Playlist_has_Song`
+-- Table `Media_Player`.`Song_has_Playlist`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Media_Player`.`Playlist_has_Song` ;
+DROP TABLE IF EXISTS `Media_Player`.`Song_has_Playlist` ;
 
-CREATE TABLE IF NOT EXISTS `Media_Player`.`Playlist_has_Song` (
-  `Playlist_Name` VARCHAR(45) NOT NULL,
-  `Song_id` INT(11) NOT NULL,
-  PRIMARY KEY (`Playlist_Name`, `Song_id`),
-  INDEX `fk_Playlist_has_Song_Song1_idx` (`Song_id` ASC),
-  INDEX `fk_Playlist_has_Song_Playlist1_idx` (`Playlist_Name` ASC),
-  CONSTRAINT `fk_Playlist_has_Song_Playlist1`
-    FOREIGN KEY (`Playlist_Name`)
-    REFERENCES `Media_Player`.`Playlist` (`Name`)
+CREATE  TABLE IF NOT EXISTS `Media_Player`.`Song_has_Playlist` (
+  `Song_id` INT(11) NOT NULL ,
+  `Playlist_id` INT NOT NULL ,
+  PRIMARY KEY (`Song_id`, `Playlist_id`) ,
+  INDEX `fk_Song_has_Playlist_Playlist1` (`Playlist_id` ASC) ,
+  INDEX `fk_Song_has_Playlist_Song1` (`Song_id` ASC) ,
+  CONSTRAINT `fk_Song_has_Playlist_Song1`
+    FOREIGN KEY (`Song_id` )
+    REFERENCES `Media_Player`.`Song` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Playlist_has_Song_Song1`
-    FOREIGN KEY (`Song_id`)
-    REFERENCES `Media_Player`.`Song` (`id`)
+  CONSTRAINT `fk_Song_has_Playlist_Playlist1`
+    FOREIGN KEY ()
+    REFERENCES `Media_Player`.`Playlist` ()
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `Media_Player`.`User`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `Media_Player`.`User` ;
-
-CREATE TABLE IF NOT EXISTS `Media_Player`.`User` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `username_UNIQUE` (`username` ASC))
-ENGINE = InnoDB;
-
-USE `Media_Player` ;
 
 -- -----------------------------------------------------
 -- Placeholder table for view `Media_Player`.`Favorite_Album`
@@ -123,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `Media_Player`.`Favorite_Artist` (`Artist` INT, `Tota
 -- -----------------------------------------------------
 -- Placeholder table for view `Media_Player`.`Favorite_Song`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Media_Player`.`Favorite_Song` (`Title` INT, `Total Plays` INT);
+CREATE TABLE IF NOT EXISTS `Media_Player`.`Favorite_Song` (`Artist` INT, `Album` INT, `Title` INT, `Total Plays` INT);
 
 -- -----------------------------------------------------
 -- View `Media_Player`.`Favorite_Album`
@@ -132,8 +119,9 @@ DROP VIEW IF EXISTS `Media_Player`.`Favorite_Album` ;
 DROP TABLE IF EXISTS `Media_Player`.`Favorite_Album`;
 USE `Media_Player`;
 CREATE  OR REPLACE VIEW `Media_Player`.`Favorite_Album` AS
-select Album_Title AS `Album`, Album_Artist_name AS `Artist`, SUM(numberOfListens) AS `Total Plays`
-FROM Song 
+select `Al`.`Title` AS `Album`, `Ar`.`name` AS `Artist`, SUM(`S`.`numberOfListens`) AS `Total Plays`
+FROM `Artist` Ar, `Album` Al, `Song` S
+WHERE `S`.`Album_id`=`Al`.`id` AND `Al`.`Artist_id`=`Ar`.`id`
 GROUP BY `Album`
 ORDER BY `Total Plays` DESC
 LIMIT 1;
@@ -145,9 +133,13 @@ DROP VIEW IF EXISTS `Media_Player`.`Favorite_Artist` ;
 DROP TABLE IF EXISTS `Media_Player`.`Favorite_Artist`;
 USE `Media_Player`;
 CREATE  OR REPLACE VIEW `Media_Player`.`Favorite_Artist` AS
-SELECT Album_Artist_name AS `Artist`, SUM(numberOfListens) AS `Total Plays`
-FROM Song
-GROUP BY Artist
+SELECT `Ar`.`name` AS `Artist`, SUM(`S`.`numberOfListens`) AS `Total Plays`
+FROM `Song` S
+JOIN `Album` Al
+ON `S`.Album_id=`Al`.`id`
+JOIN `Artist` Ar
+ON `Al`.`Artist_id`=`Ar`.`id`
+GROUP BY `Artist`
 ORDER BY `Total Plays` DESC
 LIMIT 1;
 
@@ -158,32 +150,17 @@ DROP VIEW IF EXISTS `Media_Player`.`Favorite_Song` ;
 DROP TABLE IF EXISTS `Media_Player`.`Favorite_Song`;
 USE `Media_Player`;
 CREATE  OR REPLACE VIEW `Media_Player`.`Favorite_Song` AS
-SELECT Title, numberOfListens AS `Total Plays`
-FROM Song
+SELECT `Ar`.`name` AS `Artist`, `Al`.`Title` AS `Album`, 
+        `S`.`Title`, `S`.`numberOfListens` AS `Total Plays`
+FROM `Song` S
+JOIN `Album` Al
+ON `S`.`Album_id`=`Al`.`id`
+JOIN `Artist` Ar
+ON `Al`.`Artist_id`=`Ar`.`id`
 ORDER BY `Total Plays` DESC
 LIMIT 1;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-USE `Media_Player`;
-
-DELIMITER $$
-
-USE `Media_Player`$$
-DROP TRIGGER IF EXISTS `Media_Player`.`Song_BINS` $$
-USE `Media_Player`$$
-CREATE TRIGGER `Song_BINS` BEFORE INSERT ON `Song` FOR EACH ROW
-BEGIN IF (
-	SELECT COUNT(*) FROM `Media_Player`.`Song`
-	WHERE Title=NEW.Title AND 
-	Album_Artist_name=NEW.Album_Artist_name
-	) > 0
-THEN SIGNAL SQLSTATE '45000'
-SET MESSAGE_TEXT = 'Cannot add duplicate song.';
-END IF;
-END;
-$$
-
-
-DELIMITER ;
