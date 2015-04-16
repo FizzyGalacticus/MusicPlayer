@@ -90,8 +90,8 @@ CREATE  TABLE IF NOT EXISTS `Media_Player`.`Song_has_Playlist` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Song_has_Playlist_Playlist1`
-    FOREIGN KEY ()
-    REFERENCES `Media_Player`.`Playlist` ()
+    FOREIGN KEY (`Playlist_id`)
+    REFERENCES `Media_Player`.`Playlist` (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
