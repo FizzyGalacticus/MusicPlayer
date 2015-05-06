@@ -27,9 +27,11 @@ private:
     void initiateSchema();
     bool checkIfValueExists(const QString & tableName, const QString & columnName, const QString & value);
     const QString insertFormattingCharacters(const QString & str) const;
-    int getId(const QString & tableName, const QString & columnValue);
+    int getArtistId(const QString & artistName);
+    int getAlbumId(const QString & artistName, const QString & albumTitle);
+    int getSongId(const QString & artistName, const QString & albumTitle, const QString & songTitle);
     bool addArtist(const QString & newArtist);
-    bool addAlbum(const QString & artist, const QString & album);
+    bool addAlbum(const int & artistId, const QString & album);
 };
 
 #endif // MEDIADATABASE_H
