@@ -31,7 +31,7 @@ bool mediaDatabase::addArtist(const QString & newArtist)
             qDebug() << "Could not open `Media_Player` schema.";
         if(!checkIfValueExists("Artist","name",newArtist))
         {
-            if(!_query->exec("INSERT INTO `Media_Player`.`Artist` VALUES ('" + newArtist + "');"))
+            if(!_query->exec("INSERT INTO `Media_Player`.`Artist` (name) VALUES ('" + newArtist + "');"))
                 qDebug() << _query->lastError().text();
             else succeeded = true;
         }
@@ -226,4 +226,38 @@ const QString mediaDatabase::insertFormattingCharacters(const QString &str) cons
     newStr.replace("\n", "\\n");
 
     return newStr;
+}
+
+int mediaDatabase::getId(const QString &tableName, const QString &columnValue)
+{
+    bool ok = _db.open();
+    int id = -1;
+
+    if(ok)
+    {
+        QString columnTitle = "";
+
+        if(tableName == "Song" || tableName == "Album")
+            columnTitle = "Title";
+        else if(tableName == "Artist")
+            columnTitle = "name";
+
+        if(!_query->exec("SELECT `id` FROM `Media_Player`.`" + tableName + "` WHERE `" + columnTitle + "`='" + columnValue + "';"))
+        {
+            qDebug() << "Could not execute:" << _query->lastQuery();
+        }
+        else
+        {
+            _query->next();
+            id = _query->value(0).toInt();
+        }
+
+        _db.close();
+    }
+    else
+    {
+        qDebug() << "Could not open database to get id for table" << tableName;
+    }
+
+    return id;
 }

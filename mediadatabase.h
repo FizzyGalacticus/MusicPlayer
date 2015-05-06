@@ -27,6 +27,7 @@ private:
     void initiateSchema();
     bool checkIfValueExists(const QString & tableName, const QString & columnName, const QString & value);
     const QString insertFormattingCharacters(const QString & str) const;
+    int getId(const QString & tableName, const QString & columnValue);
     bool addArtist(const QString & newArtist);
     bool addAlbum(const QString & artist, const QString & album);
 };
