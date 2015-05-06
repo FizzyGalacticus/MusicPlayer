@@ -29,13 +29,13 @@ CREATE  TABLE IF NOT EXISTS `Media_Player`.`Album` (
   `AlbumCover` LONGBLOB NULL ,
   `id` INT NOT NULL AUTO_INCREMENT ,
   `Artist_id` INT NOT NULL ,
-  PRIMARY KEY (`id`) ,
+  PRIMARY KEY (`id`, `Artist_id`) ,
   INDEX `fk_Album_Artist1` (`Artist_id` ASC) ,
   CONSTRAINT `fk_Album_Artist1`
     FOREIGN KEY (`Artist_id` )
     REFERENCES `Media_Player`.`Artist` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -91,7 +91,7 @@ CREATE  TABLE IF NOT EXISTS `Media_Player`.`Song_has_Playlist` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Song_has_Playlist_Playlist1`
     FOREIGN KEY (`Playlist_id`)
-    REFERENCES `Media_Player`.`Playlist` (id)
+    REFERENCES `Media_Player`.`Playlist` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
