@@ -2,7 +2,7 @@
 #include <QCryptographicHash>
 #include <QDebug>
 
-user::user(QObject *parent) : QObject(parent),
+User::User(QObject *parent) : QObject(parent),
   _username("Guest"),
   _pass(QCryptographicHash::hash("guest", QCryptographicHash::Sha3_512)),
   _joinDateTime(QDateTime::currentDateTime())
@@ -10,22 +10,22 @@ user::user(QObject *parent) : QObject(parent),
 
 }
 
-user::~user()
+User::~User()
 {
 
 }
 
-const QString & user::getUsername()
+const QString & User::getUsername()
 {
     return _username;
 }
 
-const QString user::getJoinDateTime()
+const QString User::getJoinDateTime()
 {
     return _joinDateTime.toString("yyyy-MM-dd hh:mm:ss");
 }
 
-void user::setMediaDatabase(mediaDatabase *database)
+void User::setMediaDatabase(mediaDatabase *database)
 {
     _db = database;
 }

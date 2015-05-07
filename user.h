@@ -6,12 +6,12 @@
 #include <QDateTime>
 #include "mediadatabase.h"
 
-class user : public QObject
+class User : public QObject
 {
     Q_OBJECT
 public:
-    explicit user(QObject *parent = 0);
-    ~user();
+    explicit User(QObject *parent = 0);
+    ~User();
 
     const QString & getUsername();
     const QString getJoinDateTime();
