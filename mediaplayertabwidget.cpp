@@ -94,6 +94,13 @@ void mediaPlayerTabWidget::setMediaDatabase(mediaDatabase *db)
         _players->at(i)->setMediaDatabase(_db);
 }
 
+void mediaPlayerTabWidget::setUser(User *user)
+{
+    _user = user;
+    for(int i = 0; i < _players->size(); i++)
+        _players->at(i)->setUser(_user);
+}
+
 void mediaPlayerTabWidget::newMetaDataReceived(const QString &artist, const QString &title)
 {
     if(QObject::sender() == _currentlyPlayingPlayer)

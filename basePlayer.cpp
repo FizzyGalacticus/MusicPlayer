@@ -16,6 +16,7 @@ basePlayer::basePlayer(QWidget *parent) :
     _basePlayerView(new QListWidget),
     _player(new QMediaPlayer),
     _db(NULL),
+    _user(NULL),
     _currentlyPlayingArtist(""),
     _currentlyPlayingAlbum(""),
     _currentlyPlayingTitle("")
@@ -259,6 +260,11 @@ void basePlayer::setMediaDatabase(mediaDatabase *db)
     _db = db;
 }
 
+void basePlayer::setUser(User *user)
+{
+    _user = user;
+}
+
 void basePlayer::initiateAddMedia()
 {
     addMedia(*getMediaContentFromFilePaths(openFileDialog()));
@@ -273,8 +279,8 @@ void basePlayer::mediaDurationChanged(qint64 duration)
 {
     emit durationChanged(duration);
 
-    if(_db != NULL)
-        _db->incrementSongCounter(_currentlyPlayingTitle, _currentlyPlayingAlbum, _currentlyPlayingArtist);
+    if(_db != NULL && _user != NULL)
+        _db->incrementSongCounter(_currentlyPlayingTitle, _currentlyPlayingArtist, _user->getUsername());
 }
 
 void basePlayer::mediaPositionChanged(qint64 position)

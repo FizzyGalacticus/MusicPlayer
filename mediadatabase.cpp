@@ -465,16 +465,18 @@ int mediaDatabase::getUserId(const QString &username)
 
     if(ok)
     {
-        QString qry = "SELECT `id` FROM User "
+        QString qry = "SELECT `id` FROM `Media_Player`.`User` "
                       "WHERE `username`='" +
                       insertFormattingCharacters(username) + "';";
 
+        qDebug() << qry;
+
         if(!_query->exec(qry))
-            qDebug() << "Couldn't retrieve User ID.";
+            qDebug() << _query->lastError().text();
         else
         {
-            while(_query->next())
-                id = _query->value(0).toInt();
+            _query->next();
+            id = _query->value(0).toInt();
         }
 
         _db.close();

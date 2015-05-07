@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mediaDatabase * db = new mediaDatabase;
     _player->setMediaDatabase(db);
-
+    _player->setUser(_user);
     _user->setMediaDatabase(db);
 }
 

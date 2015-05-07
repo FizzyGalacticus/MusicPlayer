@@ -26,6 +26,7 @@ public:
     void setLyricBox(lyricBox *);
     void setProgressBar(progressBar *);
     void setMediaDatabase(mediaDatabase * db);
+    void setUser(User * user);
 
 signals:
     void currentPlayerDurationChanged(qint64);

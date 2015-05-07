@@ -8,6 +8,7 @@
 #include <QString>
 #include "videowidget.h"
 #include "mediadatabase.h"
+#include "user.h"
 
 class basePlayer : public QWidget
 {
@@ -22,6 +23,7 @@ public:
     static const QList<QMediaContent> * getMediaContentFromFilePaths(const QStringList *);
     void setVideoWidget(videoWidget *);
     void setMediaDatabase(mediaDatabase * db);
+    void setUser(User * user);
     bool clear();
     QStringList * openFileDialog();
     const QString & artist() const;
@@ -61,6 +63,7 @@ private:
     QMediaPlayer * _player;
     QMediaPlaylist * _mediaPlaylist;
     mediaDatabase * _db;
+    User * _user;
 
     QString _currentlyPlayingArtist;
     QString _currentlyPlayingAlbum;
