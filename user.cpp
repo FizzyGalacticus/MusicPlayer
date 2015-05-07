@@ -397,14 +397,38 @@ QVBoxLayout * UserInformation::prepareFavoriteArtistLayout()
 
 QVBoxLayout * UserInformation::prepareFavoriteAlbumLayout()
 {
+    const QVector<QString> * info = _db->getFavoriteAlbum(_username);
     QVBoxLayout * favoriteAlbumLayout = new QVBoxLayout;
+
+    QLabel * titleLabel = new QLabel("Favorite Album");
+    QLabel * artistLabel = new QLabel("Artist: " + info->at(0));
+    QLabel * albumLabel = new QLabel("Album: " + info->at(1));
+    QLabel * playsLabel = new QLabel("Total Plays: " + info->at(2));
+
+    favoriteAlbumLayout->addWidget(titleLabel);
+    favoriteAlbumLayout->addWidget(artistLabel);
+    favoriteAlbumLayout->addWidget(albumLabel);
+    favoriteAlbumLayout->addWidget(playsLabel);
 
     return favoriteAlbumLayout;
 }
 
 QVBoxLayout * UserInformation::prepareFavoriteSongLayout()
 {
+    const QVector<QString> * info = _db->getFavoriteSong(_username);
     QVBoxLayout * favoriteSongLayout = new QVBoxLayout;
+
+    QLabel * titleLabel = new QLabel("Favorite Album");
+    QLabel * artistLabel = new QLabel("Artist: " + info->at(0));
+    QLabel * albumLabel = new QLabel("Album: " + info->at(1));
+    QLabel * songLabel = new QLabel("Song: " + info->at(2));
+    QLabel * playsLabel = new QLabel("Total Plays: " + info->at(3));
+
+    favoriteSongLayout->addWidget(titleLabel);
+    favoriteSongLayout->addWidget(artistLabel);
+    favoriteSongLayout->addWidget(albumLabel);
+    favoriteSongLayout->addWidget(songLabel);
+    favoriteSongLayout->addWidget(playsLabel);
 
     return favoriteSongLayout;
 }
