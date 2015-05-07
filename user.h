@@ -37,7 +37,7 @@ class UserLoginDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit UserLoginDialog(QWidget *parent = 0);
+    explicit UserLoginDialog(mediaDatabase * database, QWidget *parent = 0);
     ~UserLoginDialog();
 
 signals:
@@ -49,6 +49,7 @@ private slots:
 
 private:
     QString _user, _pass, _fname, _lname, _email;
+    mediaDatabase * _db;
 
     void prepareLoginLayout();
 };

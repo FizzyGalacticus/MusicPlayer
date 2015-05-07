@@ -12,7 +12,8 @@
 User::User(QObject *parent) : QObject(parent),
   _username("Guest"),
   _pass(QCryptographicHash::hash("guest", QCryptographicHash::Sha3_512)),
-  _joinDateTime(QDateTime::currentDateTime())
+  _joinDateTime(QDateTime::currentDateTime()),
+  _db(NULL)
 {
 
 }
@@ -44,17 +45,21 @@ void User::setMediaDatabase(mediaDatabase *database)
 
 void User::presentLoginWindow()
 {
-    UserLoginDialog login;
-    connect(&login,SIGNAL(login(QString,QString)), this, SLOT(login(QString,QString)));
-    login.exec();
+    if(_db != NULL)
+    {
+        UserLoginDialog login(_db);
+        connect(&login,SIGNAL(login(QString,QString)), this, SLOT(login(QString,QString)));
+        login.exec();
+    }
 }
 
-UserLoginDialog::UserLoginDialog(QWidget *parent) : QDialog(parent),
+UserLoginDialog::UserLoginDialog(mediaDatabase *database, QWidget *parent) : QDialog(parent),
     _user("Username"),
     _pass("password"),
     _fname("First Name"),
     _lname("Last Name"),
-    _email("youremail@example.com")
+    _email("youremail@example.com"),
+    _db(database)
 {
     prepareLoginLayout();
 }
