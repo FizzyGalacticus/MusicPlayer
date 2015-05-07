@@ -8,7 +8,6 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
-#include <QChar>
 
 User::User(QObject *parent) : QObject(parent),
   _username("Guest"),
