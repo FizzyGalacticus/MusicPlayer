@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _lyricsBox(new lyricBox),
     _progressBar(new progressBar),
     _menu(new QMenuBar),
+    _user(new User),
     _mainWindowIcon(":/resources/icons/mainWindowIcon.png"),
     _previousButtonIcon(":/resources/icons/Button-Prev-icon.png"),
     _nextButtonIcon(":/resources/icons/Button-Next-icon.png"),
@@ -41,8 +42,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mediaDatabase * db = new mediaDatabase;
     _player->setMediaDatabase(db);
-
-    User myUser;
 }
 
 MainWindow::~MainWindow()

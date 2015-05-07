@@ -48,6 +48,9 @@ public slots:
 private slots:
 
 private:
+    QString _user, _pass, _fname, _lname, _email;
+
+    void prepareLoginLayout();
 };
 
 #endif // USER_H

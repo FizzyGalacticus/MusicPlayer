@@ -2,6 +2,12 @@
 #include <QCryptographicHash>
 #include <QDebug>
 #include <QDialog>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QSpacerItem>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
 
 User::User(QObject *parent) : QObject(parent),
   _username("Guest"),
@@ -50,10 +56,49 @@ UserLoginDialog::UserLoginDialog(QWidget *parent) : QDialog(parent),
     _lname("Last Name"),
     _email("youremail@example.com")
 {
-
+    prepareLoginLayout();
 }
 
 UserLoginDialog::~UserLoginDialog()
 {
 
+}
+
+void UserLoginDialog::prepareLoginLayout()
+{
+    //Initialize Layouts
+    QHBoxLayout * usernameLayout = new QHBoxLayout;
+    QHBoxLayout * passwordLayout = new QHBoxLayout;
+    QHBoxLayout * loginButtonLayout = new QHBoxLayout;
+
+    QVBoxLayout * mainLayout = new QVBoxLayout;
+
+    //Initialize objects needed
+    QLabel * usernameLabel = new QLabel("Username:");
+    QLabel * passwordLabel = new QLabel("Password:");
+
+    QLineEdit * usernameLine = new QLineEdit;
+    QLineEdit * passwordLine = new QLineEdit;
+
+    QPushButton * loginButton = new QPushButton("Login");
+
+    //Set password field to password mode
+    passwordLine->setEchoMode(QLineEdit::Password);
+
+    //Set loginButton default width
+    loginButton->setMaximumWidth(40);
+
+    //Put stuff in layouts
+    usernameLayout->addWidget(usernameLabel);
+    usernameLayout->addWidget(usernameLine);
+    passwordLayout->addWidget(passwordLabel);
+    passwordLayout->addWidget(passwordLine);
+    loginButtonLayout->addSpacerItem(new QSpacerItem(20,20));
+    loginButtonLayout->addWidget(loginButton);
+
+    mainLayout->addLayout(usernameLayout);
+    mainLayout->addLayout(passwordLayout);
+    mainLayout->addLayout(loginButtonLayout);
+
+    this->setLayout(mainLayout);
 }

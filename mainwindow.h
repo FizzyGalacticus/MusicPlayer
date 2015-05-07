@@ -9,6 +9,7 @@
 #include <QIcon>
 #include "videowidget.h"
 #include <QMenuBar>
+#include "user.h"
 
 namespace Ui {
 class MainWindow;
@@ -30,6 +31,7 @@ private:
     lyricBox * _lyricsBox;
     progressBar * _progressBar;
     QMenuBar * _menu;
+    User * _user;
 
     //Icons
     QIcon _mainWindowIcon, _previousButtonIcon, _nextButtonIcon, _playButtonIcon,
