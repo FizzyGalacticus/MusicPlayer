@@ -234,6 +234,37 @@ bool mediaDatabase::userExists(const QString &username)
     return exists;
 }
 
+bool mediaDatabase::createUser(const QString &username, const QString &password, const QString &fname, const QString &lname, const QString &email)
+{
+    bool ok = _db.open(), succeeded = false;
+
+    if(ok)
+    {
+        QString qry = "INSERT INTO `Media_Player`.`User` "
+                      "(username, password, Fname, Lname, email) "
+                      "VALUES ('" + insertFormattingCharacters(username) + "','" +
+                      insertFormattingCharacters(password) + "','" + insertFormattingCharacters(fname) +
+                      "','" + insertFormattingCharacters(lname) + "','" + insertFormattingCharacters(email) + "');";
+
+        if(!_query->exec(qry))
+        {
+            qDebug() << _query->lastError().text();
+        }
+        else
+        {
+            succeeded = true;
+        }
+
+        _db.close();
+    }
+    else
+    {
+        qDebug() << "Could not open database to create user.";
+    }
+
+    return succeeded;
+}
+
 void mediaDatabase::initiateSchema()
 {
     bool ok = _db.open();
