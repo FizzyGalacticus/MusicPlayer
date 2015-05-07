@@ -79,6 +79,8 @@ private:
     QLabel * _usernameAvailableLabel;
 
     void prepareCreationLayout();
+    bool passwordsAreEqual();
+    bool usernameNotEmpty();
 };
 
 #endif // USER_H

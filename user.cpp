@@ -154,10 +154,7 @@ CreateUserDialog::~CreateUserDialog()
 
 void CreateUserDialog::checkUsernameButtonHasBeenClicked()
 {
-    QChar * checkMark = new QChar(0x14, 0x27);
-    QChar * xMark = new QChar(0x4C, 0x27);
-
-    if(_db->userExists(_usernameLine->text()))
+    if(_db->userExists(_usernameLine->text()) || _usernameLine->text() == "")
     {
         _usernameAvailableLabel->setText(QString("<html>&#x2716;</html>"));
         _usernameAvailableLabel->setStyleSheet("QLabel {color: red;}");
@@ -171,7 +168,20 @@ void CreateUserDialog::checkUsernameButtonHasBeenClicked()
 
 void CreateUserDialog::createUserButtonHasBeenClicked()
 {
+    if(passwordsAreEqual() && usernameNotEmpty())
+    {
+        _db->createUser(_usernameLine->text(),
+                        QCryptographicHash::hash(_passwordLine->text().toStdString().c_str(), QCryptographicHash::Sha3_512),
+                        _firstNameLine->text(),
+                        _lastNameLine->text(),
+                        _emailLine->text());
 
+        this->close();
+    }
+    else
+    {
+
+    }
 }
 
 void CreateUserDialog::prepareCreationLayout()
@@ -236,4 +246,14 @@ void CreateUserDialog::prepareCreationLayout()
     mainLayout->addLayout(createUserButtonLayout);
 
     this->setLayout(mainLayout);
+}
+
+bool CreateUserDialog::passwordsAreEqual()
+{
+    return (_passwordLine->text() == _repeatPasswordLine->text());
+}
+
+bool CreateUserDialog::usernameNotEmpty()
+{
+    return _usernameLine->text().size();
 }
