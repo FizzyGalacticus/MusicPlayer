@@ -293,6 +293,11 @@ UserInformation::~UserInformation()
 
 }
 
+void UserInformation::okButtonHasBeenPressed()
+{
+    this->close();
+}
+
 void UserInformation::prepareUserInfoLayout()
 {
     //Initialize Layouts
@@ -311,6 +316,7 @@ void UserInformation::prepareUserInfoLayout()
     QLabel * membersinceLabel = new QLabel("Member Since: " + _membersince);
 
     QPushButton * okButton = new QPushButton("Ok");
+    connect(okButton, SIGNAL(clicked()), this, SLOT(okButtonHasBeenPressed()));
 
     //Put stuff in layouts
     usernameLayout->addWidget(usernameLabel);

@@ -96,6 +96,7 @@ signals:
 public slots:
 
 private slots:
+    void okButtonHasBeenPressed();
 
 private:
     const QString _username, _name, _email, _membersince;
