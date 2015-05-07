@@ -3,6 +3,7 @@
 #include <QSqlError>
 #include <QSqlResult>
 #include <QFile>
+#include <QVector>
 
 mediaDatabase::mediaDatabase(QObject *parent) :
     QObject(parent),
@@ -167,6 +168,38 @@ bool mediaDatabase::incrementSongCounter(const QString &songTitle, const QString
     else qDebug() << "Could not open database to increment listens for song:" << song;
 
     return succeeded;
+}
+
+const QVector<QString> * mediaDatabase::login(const QString &username, const QString &password)
+{
+    bool ok = _db.open();
+    QVector<QString> * results = new QVector<QString>;
+
+    if(ok)
+    {
+        QString qry = "SELECT `fname`, `lname`, `email` "
+                      "FROM `Media_Player`.`User` "
+                      "WHERE `username`='" + username + "'"
+                      "AND `password`='" + password + "';";
+
+        if(!_query->exec(qry))
+        {
+            qDebug() << "Couldn't query for user:" << _query->lastError().text();
+        }
+        else
+        {
+            while(_query->next())
+                results->push_back(_query->value(0).toString());
+        }
+
+        _db.close();
+    }
+    else
+    {
+        qDebug() << "Could not open database to authenticate user.";
+    }
+
+    return results;
 }
 
 void mediaDatabase::initiateSchema()

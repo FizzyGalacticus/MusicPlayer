@@ -6,6 +6,7 @@
 #include <QString>
 #include <QDateTime>
 #include "mediadatabase.h"
+#include <QLineEdit>
 
 class User : public QObject
 {
@@ -27,7 +28,7 @@ private slots:
     bool login(const QString username, const QString password);
 
 private:
-    QString _username, _pass;
+    QString _username;
     QDateTime _joinDateTime;
 
     mediaDatabase * _db;
@@ -46,9 +47,10 @@ signals:
 public slots:
 
 private slots:
+    void loginButtonHasBeenClicked();
 
 private:
-    QString _user, _pass, _fname, _lname, _email;
+    QLineEdit * _usernameLine, * _passwordLine, _repeatPasswordLine, _firstNameLine, _lastNameLine, _emailLine;
     mediaDatabase * _db;
 
     void prepareLoginLayout();

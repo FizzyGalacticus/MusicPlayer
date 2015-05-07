@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QVector>
 
 class mediaDatabase : public QObject
 {
@@ -15,6 +16,7 @@ public:
     bool addSong(const QString & songTitle, const QString & albumTitle, const QString & artistName);
     bool addLyrics(const QString & artistName, const QString & songTitle, const QString & lyrics);
     bool incrementSongCounter(const QString & songTitle, const QString & albumTitle, const QString & artistName);
+    const QVector<QString> * login(const QString & username, const QString & password);
 
 signals:
 

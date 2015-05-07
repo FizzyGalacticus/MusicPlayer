@@ -11,7 +11,6 @@
 
 User::User(QObject *parent) : QObject(parent),
   _username("Guest"),
-  _pass(QCryptographicHash::hash("guest", QCryptographicHash::Sha3_512)),
   _joinDateTime(QDateTime::currentDateTime()),
   _db(NULL)
 {
@@ -54,11 +53,12 @@ void User::presentLoginWindow()
 }
 
 UserLoginDialog::UserLoginDialog(mediaDatabase *database, QWidget *parent) : QDialog(parent),
-    _user("Username"),
-    _pass("password"),
-    _fname("First Name"),
-    _lname("Last Name"),
-    _email("youremail@example.com"),
+    _usernameLine(new QLineEdit("Username")),
+    _passwordLine(new QLineEdit("Password")),
+    _repeatPasswordLine(new QLineEdit("Repeat Password")),
+    _firstNameLine(new QLineEdit("First Name")),
+    _lastNameLine(new QLineEdit("Last Name")),
+    _emailLine(new QLineEdit("youremail@example.com")),
     _db(database)
 {
     prepareLoginLayout();
@@ -67,6 +67,19 @@ UserLoginDialog::UserLoginDialog(mediaDatabase *database, QWidget *parent) : QDi
 UserLoginDialog::~UserLoginDialog()
 {
 
+}
+
+void UserLoginDialog::loginButtonHasBeenClicked()
+{
+    const QVector<QString> * results = _db->login(_usernameLine->text(),QCryptographicHash::hash(_passwordLine->text().toStdString().c_str(), QCryptographicHash::Sha3_512));
+    if(results->size())
+    {
+        qDebug() << "Logged in!";
+    }
+    else
+    {
+        qDebug() << "Could not log in.";
+    }
 }
 
 void UserLoginDialog::prepareLoginLayout()
@@ -82,22 +95,17 @@ void UserLoginDialog::prepareLoginLayout()
     QLabel * usernameLabel = new QLabel("Username:");
     QLabel * passwordLabel = new QLabel("Password:");
 
-    QLineEdit * usernameLine = new QLineEdit;
-    QLineEdit * passwordLine = new QLineEdit;
-
     QPushButton * loginButton = new QPushButton("Login");
-
-    //Set password field to password mode
-    passwordLine->setEchoMode(QLineEdit::Password);
+    connect(loginButton, SIGNAL(clicked()), this, SLOT(loginButtonHasBeenClicked()));
 
     //Set loginButton default width
     loginButton->setMaximumWidth(40);
 
     //Put stuff in layouts
     usernameLayout->addWidget(usernameLabel);
-    usernameLayout->addWidget(usernameLine);
+    usernameLayout->addWidget(_usernameLine);
     passwordLayout->addWidget(passwordLabel);
-    passwordLayout->addWidget(passwordLine);
+    passwordLayout->addWidget(_passwordLine);
     loginButtonLayout->addSpacerItem(new QSpacerItem(20,20));
     loginButtonLayout->addWidget(loginButton);
 

@@ -146,9 +146,10 @@ DROP TABLE IF EXISTS `Media_Player`.`User` ;
 CREATE  TABLE IF NOT EXISTS `Media_Player`.`User` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `username` VARCHAR(45) NOT NULL ,
-  `password` VARCHAR(128) NULL ,
+  `password` VARCHAR(64) NOT NULL ,
   `Fname` VARCHAR(20) NULL ,
   `Lname` VARCHAR(20) NULL ,
+  `email` VARCHAR(100) NULL ,
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
