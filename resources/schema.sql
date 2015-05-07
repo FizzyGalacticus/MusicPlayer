@@ -146,10 +146,11 @@ DROP TABLE IF EXISTS `Media_Player`.`User` ;
 CREATE  TABLE IF NOT EXISTS `Media_Player`.`User` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `username` VARCHAR(45) NOT NULL ,
-  `password` VARCHAR(64) NOT NULL ,
+  `password` BLOB NOT NULL ,
   `Fname` VARCHAR(20) NULL ,
   `Lname` VARCHAR(20) NULL ,
   `email` VARCHAR(100) NULL ,
+  `joinDateTime` DATETIME NOT NULL ,
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
@@ -179,69 +180,6 @@ CREATE  TABLE IF NOT EXISTS `Media_Player`.`User_has_Song` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Placeholder table for view `Media_Player`.`Favorite_Album`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Media_Player`.`Favorite_Album` (`Album` INT, `Artist` INT, `Total Plays` INT);
-
--- -----------------------------------------------------
--- Placeholder table for view `Media_Player`.`Favorite_Artist`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Media_Player`.`Favorite_Artist` (`Artist` INT, `Total Plays` INT);
-
--- -----------------------------------------------------
--- Placeholder table for view `Media_Player`.`Favorite_Song`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Media_Player`.`Favorite_Song` (`Artist` INT, `Album` INT, `Title` INT, `Total Plays` INT);
-
--- -----------------------------------------------------
--- View `Media_Player`.`Favorite_Album`
--- -----------------------------------------------------
-DROP VIEW IF EXISTS `Media_Player`.`Favorite_Album` ;
-DROP TABLE IF EXISTS `Media_Player`.`Favorite_Album`;
-USE `Media_Player`;
-CREATE  OR REPLACE VIEW `Media_Player`.`Favorite_Album` AS
-select `Al`.`Title` AS `Album`, `Ar`.`name` AS `Artist`, SUM(`S`.`numberOfListens`) AS `Total Plays`
-FROM `Artist` Ar, `Album` Al, `Song` S
-WHERE `S`.`Album_id`=`Al`.`id` AND `Al`.`Artist_id`=`Ar`.`id`
-GROUP BY `Album`
-ORDER BY `Total Plays` DESC
-LIMIT 1;
-
--- -----------------------------------------------------
--- View `Media_Player`.`Favorite_Artist`
--- -----------------------------------------------------
-DROP VIEW IF EXISTS `Media_Player`.`Favorite_Artist` ;
-DROP TABLE IF EXISTS `Media_Player`.`Favorite_Artist`;
-USE `Media_Player`;
-CREATE  OR REPLACE VIEW `Media_Player`.`Favorite_Artist` AS
-SELECT `Ar`.`name` AS `Artist`, SUM(`S`.`numberOfListens`) AS `Total Plays`
-FROM `Song` S
-JOIN `Album` Al
-ON `S`.Album_id=`Al`.`id`
-JOIN `Artist` Ar
-ON `Al`.`Artist_id`=`Ar`.`id`
-GROUP BY `Artist`
-ORDER BY `Total Plays` DESC
-LIMIT 1;
-
--- -----------------------------------------------------
--- View `Media_Player`.`Favorite_Song`
--- -----------------------------------------------------
-DROP VIEW IF EXISTS `Media_Player`.`Favorite_Song` ;
-DROP TABLE IF EXISTS `Media_Player`.`Favorite_Song`;
-USE `Media_Player`;
-CREATE  OR REPLACE VIEW `Media_Player`.`Favorite_Song` AS
-SELECT `Ar`.`name` AS `Artist`, `Al`.`Title` AS `Album`, 
-        `S`.`Title`, `S`.`numberOfListens` AS `Total Plays`
-FROM `Song` S
-JOIN `Album` Al
-ON `S`.`Album_id`=`Al`.`id`
-JOIN `Artist` Ar
-ON `Al`.`Artist_id`=`Ar`.`id`
-ORDER BY `Total Plays` DESC
-LIMIT 1;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
