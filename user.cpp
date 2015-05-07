@@ -46,8 +46,8 @@ void User::presentLoginWindow()
     if(_db != NULL)
     {
         UserLoginDialog login(_db);
-        connect(&login, SIGNAL(userDataReceived(const QString &, const QString &, const QString &)),
-                               this, SLOT(userDataReceived(QString,QString,QString)));
+        connect(&login, SIGNAL(userDataReceived(const QString, const QString, const QString, const QString)),
+                               this, SLOT(userDataReceived(const QString, const QString, const QString, const QString)));
         login.exec();
     }
 }
@@ -61,8 +61,9 @@ void User::presentCreateUserWindow()
     }
 }
 
-void User::userDataReceived(const QString &firstName, const QString &lastName, const QString &email)
+void User::userDataReceived(const QString & username, const QString &firstName, const QString &lastName, const QString &email)
 {
+    _username = username;
     _firstName = firstName;
     _lastName = lastName;
     _email = email;
@@ -98,7 +99,7 @@ void UserLoginDialog::loginButtonHasBeenClicked()
     {
         QString fname = results->at(0), lname = results->at(1), email = results->at(2);
 
-        emit userDataReceived(fname, lname, email);
+        emit userDataReceived(_usernameLine->text(), fname, lname, email);
         this->close();
     }
     else
