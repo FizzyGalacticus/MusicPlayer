@@ -418,7 +418,7 @@ QVBoxLayout * UserInformation::prepareFavoriteSongLayout()
     const QVector<QString> * info = _db->getFavoriteSong(_username);
     QVBoxLayout * favoriteSongLayout = new QVBoxLayout;
 
-    QLabel * titleLabel = new QLabel("Favorite Album");
+    QLabel * titleLabel = new QLabel("Favorite Song");
     QLabel * artistLabel = new QLabel("Artist: " + info->at(0));
     QLabel * albumLabel = new QLabel("Album: " + info->at(1));
     QLabel * songLabel = new QLabel("Song: " + info->at(2));
