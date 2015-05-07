@@ -55,7 +55,8 @@ void User::presentCreateUserWindow()
 {
     if(_db != NULL)
     {
-        //Create user dialog
+        CreateUserDialog create(_db);
+        create.exec();
     }
 }
 
@@ -72,6 +73,7 @@ UserLoginDialog::UserLoginDialog(mediaDatabase *database, QWidget *parent) : QDi
     _db(database)
 {
     prepareLoginLayout();
+    this->setWindowTitle("Login");
 }
 
 UserLoginDialog::~UserLoginDialog()
@@ -140,6 +142,7 @@ CreateUserDialog::CreateUserDialog(mediaDatabase *database, QWidget *parent) : Q
     _db(database)
 {
     prepareCreationLayout();
+    this->setWindowTitle("Create User");
 }
 
 CreateUserDialog::~CreateUserDialog()
@@ -185,7 +188,7 @@ void CreateUserDialog::prepareCreationLayout()
 
     //Set widths for buttons
     checkUsernameButton->setMaximumWidth(60);
-    createUserButton->setMaximumWidth(40);
+    createUserButton->setMaximumWidth(50);
 
     //Put stuff in layouts
     usernameLayout->addWidget(usernameLabel);
