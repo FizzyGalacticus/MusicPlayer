@@ -7,15 +7,15 @@
 #include <QDateTime>
 
 const QString mediaDatabase::universalQuery = "SELECT u.username AS `User`, `User ID`, `Artist`, `Artist ID`, `Album Title`, "
-                             "`Album ID`, `Song Title`, `Song ID`, `Plays` FROM User u JOIN "
+                             "`Album ID`, `Song Title`, `Song ID`, `Plays` FROM `Media_Player`.`User` u JOIN "
                              "(SELECT uhs.User_id AS `User ID`, `Artist`, `Artist ID`, `Album Title`, `Album ID`, "
-                             "`Song Title`, `Song ID`, uhs.numberOfListens AS `Plays` FROM User_has_Song uhs "
+                             "`Song Title`, `Song ID`, uhs.numberOfListens AS `Plays` FROM `Media_Player`.`User_has_Song` uhs "
                              "JOIN (SELECT ar.name AS `Artist`, `Artist ID`, `Album Title`, `Album ID`, `Song Title`, "
                              "`Song ID` FROM (SELECT s.Artist_id AS `Artist ID`, `Album Title`, `Album ID`, s.Title AS "
                              "`Song Title`, `Song ID` FROM (SELECT al.Title AS `Album Title`, al.id AS `Album ID`, "
-                             "ahs.Song_id AS `Song ID` FROM Album al JOIN Album_has_Song ahs ON al.id=ahs.Album_id) AS f "
-                             "JOIN Song s ON s.id=f.`Song ID`) AS g JOIN Artist ar ON ar.id=`Artist ID`) AS h ON "
-                             "uhs.Song_id=`Song ID`) AS i ON u.id=`User ID`;";
+                             "ahs.Song_id AS `Song ID` FROM `Media_Player`.`Album` al JOIN `Media_Player`.`Album_has_Song` ahs ON al.id=ahs.Album_id) AS f "
+                             "JOIN Song s ON s.id=f.`Song ID`) AS g JOIN `Media_Player`.`Artist` ar ON ar.id=`Artist ID`) AS h ON "
+                             "uhs.Song_id=`Song ID`) AS i ON u.id=`User ID`";
 const int mediaDatabase::universalSize = 9;
 
 mediaDatabase::mediaDatabase(QObject *parent) :
@@ -229,6 +229,8 @@ const QVector<QString> * mediaDatabase::login(const QString &username, const QSt
                     results->push_back(_query->value(i).toString());
 
                 results->push_back(_query->value(3).toDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+
+                getFavoriteSong(username);
             }
         }
 
@@ -303,6 +305,38 @@ bool mediaDatabase::createUser(const QString &username, const QString &password,
     }
 
     return succeeded;
+}
+
+const QVector<QString> * mediaDatabase::getFavoriteSong(const QString &username)
+{
+    QVector<QString> * favoriteSongData = new QVector<QString>;
+    bool ok = _db.open();
+
+    if(ok)
+    {
+        QString qry = "SELECT `Artist`, `Album Title`, `Song Title`, `Plays` "
+                      "FROM (" + universalQuery + ") as v WHERE `User`='" + username + "' "
+                      "ORDER BY `Plays` DESC LIMIT 1;";
+
+        _query->exec("USE `Media_Player`;");
+        if(!_query->exec(qry))
+            qDebug() << _query->lastError().text();
+        else
+        {
+            _query->next();
+            for(auto i = 0; i < 4; i++)
+                favoriteSongData->push_back(_query->value(i).toString());
+
+            for(auto i = 0; i < favoriteSongData->size(); i++)
+                qDebug() << favoriteSongData->at(i);
+        }
+    }
+    else
+    {
+        qDebug() << "Could not open database to get favorite song.";
+    }
+
+    return favoriteSongData;
 }
 
 void mediaDatabase::initiateSchema()

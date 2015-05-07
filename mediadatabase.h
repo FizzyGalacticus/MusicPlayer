@@ -19,6 +19,7 @@ public:
     const QVector<QString> * login(const QString & username, const QString & password);
     bool userExists(const QString & username);
     bool createUser(const QString & username, const QString & password, const QString & fname, const QString & lname, const QString & email, const QString &joinDateTime);
+    const QVector<QString> * getFavoriteSong(const QString & username);
 
 signals:
 
