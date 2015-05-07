@@ -25,6 +25,7 @@ signals:
 public slots:
     void presentLoginWindow();
     void presentCreateUserWindow();
+    void presentUserInformationWindow();
 
 private slots:
     void userDataReceived(const QString & username, const QString & firstName, const QString & lastName, const QString & email);

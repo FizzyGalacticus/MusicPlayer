@@ -61,6 +61,12 @@ void User::presentCreateUserWindow()
     }
 }
 
+void User::presentUserInformationWindow()
+{
+    UserInformation userInfo(_username, _firstName + " " + _lastName, _email, getJoinDateTime());
+    userInfo.exec();
+}
+
 void User::userDataReceived(const QString & username, const QString &firstName, const QString &lastName, const QString &email)
 {
     _username = username;
