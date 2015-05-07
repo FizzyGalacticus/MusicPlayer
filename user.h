@@ -69,10 +69,14 @@ signals:
 public slots:
 
 private slots:
+    void checkUsernameButtonHasBeenClicked();
+    void createUserButtonHasBeenClicked();
 
 private:
-    QLineEdit * _usernameLine, * _passwordLine, _repeatPasswordLine, _firstNameLine, _lastNameLine, _emailLine;
+    QLineEdit * _usernameLine, * _passwordLine, * _repeatPasswordLine, * _firstNameLine, * _lastNameLine, * _emailLine;
     mediaDatabase * _db;
+
+    void prepareCreationLayout();
 };
 
 #endif // USER_H

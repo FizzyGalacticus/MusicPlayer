@@ -139,10 +139,83 @@ CreateUserDialog::CreateUserDialog(mediaDatabase *database, QWidget *parent) : Q
     _emailLine(new QLineEdit("youremail@example.com")),
     _db(database)
 {
-
+    prepareCreationLayout();
 }
 
 CreateUserDialog::~CreateUserDialog()
 {
 
+}
+
+void CreateUserDialog::checkUsernameButtonHasBeenClicked()
+{
+
+}
+
+void CreateUserDialog::createUserButtonHasBeenClicked()
+{
+
+}
+
+void CreateUserDialog::prepareCreationLayout()
+{
+    //Initialize layouts
+    QHBoxLayout * usernameLayout = new QHBoxLayout;
+    QHBoxLayout * passwordLayout = new QHBoxLayout;
+    QHBoxLayout * repeatPasswordLayout = new QHBoxLayout;
+    QHBoxLayout * fNameLayout = new QHBoxLayout;
+    QHBoxLayout * lNameLayout = new QHBoxLayout;
+    QHBoxLayout * emailLayout = new QHBoxLayout;
+    QHBoxLayout * createUserButtonLayout = new QHBoxLayout;
+
+    QVBoxLayout * mainLayout = new QVBoxLayout;
+
+    //Initialize objects needed
+    QLabel * usernameLabel = new QLabel("Username:");
+    QLabel * passwordLabel = new QLabel("Password:");
+    QLabel * repeatPasswordLabel = new QLabel("Repeat Password:");
+    QLabel * fNameLabel = new QLabel("First Name:");
+    QLabel * lNameLabel = new QLabel("Last Name:");
+    QLabel * emailLabel = new QLabel("Email:");
+
+    QPushButton * checkUsernameButton = new QPushButton("Check It!");
+    connect(checkUsernameButton, SIGNAL(clicked()), this, SLOT(checkUsernameButtonHasBeenClicked()));
+    QPushButton * createUserButton = new QPushButton("Create");
+    connect(createUserButton, SIGNAL(clicked()), this, SLOT(createUserButtonHasBeenClicked()));
+
+    //Set widths for buttons
+    checkUsernameButton->setMaximumWidth(60);
+    createUserButton->setMaximumWidth(40);
+
+    //Put stuff in layouts
+    usernameLayout->addWidget(usernameLabel);
+    usernameLayout->addWidget(_usernameLine);
+    usernameLayout->addWidget(checkUsernameButton);
+
+    passwordLayout->addWidget(passwordLabel);
+    passwordLayout->addWidget(_passwordLine);
+
+    repeatPasswordLayout->addWidget(repeatPasswordLabel);
+    repeatPasswordLayout->addWidget(_repeatPasswordLine);
+
+    fNameLayout->addWidget(fNameLabel);
+    fNameLayout->addWidget(_firstNameLine);
+
+    lNameLayout->addWidget(lNameLabel);
+    lNameLayout->addWidget(_lastNameLine);
+
+    emailLayout->addWidget(emailLabel);
+    emailLayout->addWidget(_emailLine);
+
+    createUserButtonLayout->addWidget(createUserButton);
+
+    mainLayout->addLayout(usernameLayout);
+    mainLayout->addLayout(passwordLayout);
+    mainLayout->addLayout(repeatPasswordLayout);
+    mainLayout->addLayout(fNameLayout);
+    mainLayout->addLayout(lNameLayout);
+    mainLayout->addLayout(emailLayout);
+    mainLayout->addLayout(createUserButtonLayout);
+
+    this->setLayout(mainLayout);
 }
