@@ -88,8 +88,6 @@ bool mediaDatabase::addSong(const QString &songTitle, const QString &albumTitle,
 
     addAlbum(artistId,albumTitle);
 
-    const int albumId = getAlbumId(artistName,albumTitle);
-
     bool ok = _db.open(), succeeded = false;
 
     if(ok)
@@ -105,6 +103,30 @@ bool mediaDatabase::addSong(const QString &songTitle, const QString &albumTitle,
         if(!_query->exec(qry))
             qDebug() << _query->lastError().text();
         else succeeded = true;
+
+        _db.close();
+
+        const int songId = getSongId(artistName,songTitle);
+        const int albumId = getAlbumId(artistName,albumTitle);
+
+        ok = _db.open();
+
+        if(ok)
+        {
+            qry = "INSERT INTO `Media_Player`.`Album_has_Song` (Album_id, Song_id) "
+                  "VALUES (" + QString::number(albumId) + "," + QString::number(songId) + ");";
+
+            qDebug() << qry;
+
+            if(!_query->exec(qry))
+                qDebug() << "Couldn't add song to album!";
+
+            _db.close();
+        }
+        else
+        {
+            qDebug() << "Could not open database to add song to album.";
+        }
     }
     else
     {
@@ -365,15 +387,22 @@ int mediaDatabase::getArtistId(const QString & artistName)
 
 int mediaDatabase::getAlbumId(const QString &artistName, const QString &albumTitle)
 {
-    bool ok = _db.open();
+    const int artistId = getArtistId(artistName);
     int id = -1;
+
+    bool ok = _db.open();
 
     if(ok)
     {\
         const QString album = insertFormattingCharacters(albumTitle);
-        const int artistId = getArtistId(artistName);
 
-        if(!_query->exec("SELECT id FROM `Media_Player`.`Album` WHERE Title='" + album + "' AND Artist_id=" + artistId + ");"))
+        QString qry = "SELECT `id` FROM `Media_Player`.`Album` "
+                      "WHERE `Title`='" + album + "' "
+                      "AND Artist_id=" + QString::number(artistId) + ";";
+
+        qDebug() << qry;
+
+        if(!_query->exec(qry))
         {
            qDebug() << _query->lastError().text();
         }
