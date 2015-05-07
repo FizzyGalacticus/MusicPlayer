@@ -26,9 +26,10 @@ public slots:
 
 private slots:
     bool login(const QString username, const QString password);
+    void userDataReceived(const QString & firstName, const QString & lastName, const QString & email);
 
 private:
-    QString _username;
+    QString _username, _firstName, _lastName, _email;
     QDateTime _joinDateTime;
 
     mediaDatabase * _db;
@@ -43,6 +44,7 @@ public:
 
 signals:
     bool login(const QString username, const QString password);
+    void userDataReceived(const QString & firstName, const QString & lastName, const QString & email);
 
 public slots:
 

@@ -11,6 +11,9 @@
 
 User::User(QObject *parent) : QObject(parent),
   _username("Guest"),
+  _firstName(""),
+  _lastName(""),
+  _email(""),
   _joinDateTime(QDateTime::currentDateTime()),
   _db(NULL)
 {
@@ -48,8 +51,17 @@ void User::presentLoginWindow()
     {
         UserLoginDialog login(_db);
         connect(&login,SIGNAL(login(QString,QString)), this, SLOT(login(QString,QString)));
+        connect(&login, SIGNAL(userDataReceived(const QString &, const QString &, const QString &)),
+                               this, SLOT(userDataReceived(QString,QString,QString)));
         login.exec();
     }
+}
+
+void User::userDataReceived(const QString &firstName, const QString &lastName, const QString &email)
+{
+    _firstName = firstName;
+    _lastName = lastName;
+    _email = email;
 }
 
 UserLoginDialog::UserLoginDialog(mediaDatabase *database, QWidget *parent) : QDialog(parent),
@@ -71,10 +83,14 @@ UserLoginDialog::~UserLoginDialog()
 
 void UserLoginDialog::loginButtonHasBeenClicked()
 {
-    const QVector<QString> * results = _db->login(_usernameLine->text(),QCryptographicHash::hash(_passwordLine->text().toStdString().c_str(), QCryptographicHash::Sha3_512));
+    const QVector<QString> * results = _db->login(_usernameLine->text(),_passwordLine->text());
+
     if(results->size())
     {
-        qDebug() << "Logged in!";
+        QString fname = results->at(0), lname = results->at(1), email = results->at(2);
+
+        emit userDataReceived(fname, lname, email);
+        this->close();
     }
     else
     {

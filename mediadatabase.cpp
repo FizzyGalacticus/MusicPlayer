@@ -189,7 +189,10 @@ const QVector<QString> * mediaDatabase::login(const QString &username, const QSt
         else
         {
             while(_query->next())
-                results->push_back(_query->value(0).toString());
+            {
+                for(auto i = 0; i < 3; i++)
+                    results->push_back(_query->value(i).toString());
+            }
         }
 
         _db.close();
