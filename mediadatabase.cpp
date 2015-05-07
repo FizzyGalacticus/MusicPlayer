@@ -6,6 +6,18 @@
 #include <QVector>
 #include <QDateTime>
 
+const QString mediaDatabase::universalQuery = "SELECT u.username AS `User`, `User ID`, `Artist`, `Artist ID`, `Album Title`, "
+                             "`Album ID`, `Song Title`, `Song ID`, `Plays` FROM User u JOIN "
+                             "(SELECT uhs.User_id AS `User ID`, `Artist`, `Artist ID`, `Album Title`, `Album ID`, "
+                             "`Song Title`, `Song ID`, uhs.numberOfListens AS `Plays` FROM User_has_Song uhs "
+                             "JOIN (SELECT ar.name AS `Artist`, `Artist ID`, `Album Title`, `Album ID`, `Song Title`, "
+                             "`Song ID` FROM (SELECT s.Artist_id AS `Artist ID`, `Album Title`, `Album ID`, s.Title AS "
+                             "`Song Title`, `Song ID` FROM (SELECT al.Title AS `Album Title`, al.id AS `Album ID`, "
+                             "ahs.Song_id AS `Song ID` FROM Album al JOIN Album_has_Song ahs ON al.id=ahs.Album_id) AS f "
+                             "JOIN Song s ON s.id=f.`Song ID`) AS g JOIN Artist ar ON ar.id=`Artist ID`) AS h ON "
+                             "uhs.Song_id=`Song ID`) AS i ON u.id=`User ID`;";
+const int mediaDatabase::universalSize = 9;
+
 mediaDatabase::mediaDatabase(QObject *parent) :
     QObject(parent),
     _db(QSqlDatabase::addDatabase("QMYSQL","Media-Player")),

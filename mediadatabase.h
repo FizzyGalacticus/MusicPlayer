@@ -28,6 +28,9 @@ private:
     QSqlDatabase _db;
     QSqlQuery * _query;
 
+    static const QString universalQuery;
+    static const int universalSize;
+
     void initiateSchema();
     bool checkIfValueExists(const QString & tableName, const QString & columnName, const QString & value);
     const QString insertFormattingCharacters(const QString & str) const;
