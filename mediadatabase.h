@@ -20,6 +20,8 @@ public:
     bool userExists(const QString & username);
     bool createUser(const QString & username, const QString & password, const QString & fname, const QString & lname, const QString & email, const QString &joinDateTime);
     const QVector<QString> * getFavoriteSong(const QString & username);
+    const QVector<QString> * getFavoriteAlbum(const QString & username);
+    const QVector<QString> * getFavoriteArtist(const QString & username);
 
 signals:
 

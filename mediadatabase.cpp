@@ -229,8 +229,6 @@ const QVector<QString> * mediaDatabase::login(const QString &username, const QSt
                     results->push_back(_query->value(i).toString());
 
                 results->push_back(_query->value(3).toDateTime().toString("yyyy-MM-dd hh:mm:ss"));
-
-                getFavoriteSong(username);
             }
         }
 
@@ -326,9 +324,6 @@ const QVector<QString> * mediaDatabase::getFavoriteSong(const QString &username)
             _query->next();
             for(auto i = 0; i < 4; i++)
                 favoriteSongData->push_back(_query->value(i).toString());
-
-            for(auto i = 0; i < favoriteSongData->size(); i++)
-                qDebug() << favoriteSongData->at(i);
         }
     }
     else
@@ -337,6 +332,78 @@ const QVector<QString> * mediaDatabase::getFavoriteSong(const QString &username)
     }
 
     return favoriteSongData;
+}
+
+const QVector<QString> * mediaDatabase::getFavoriteAlbum(const QString &username)
+{
+    QVector<QString> * favoriteAlbumData = new QVector<QString>;
+    bool ok = _db.open();
+
+    if(ok)
+    {
+        QString qry = "SELECT `Artist`, `Album Title`, SUM(`Plays`) AS `Total Plays` "
+                      "FROM (" + universalQuery + ") AS v "
+                      "WHERE `User`='" + username + "' "
+                      "GROUP BY `Album Title` "
+                      "ORDER BY `Total Plays` DESC LIMIT 1;";
+
+        _query->exec("USE `Media_Player`;");
+        if(!_query->exec(qry))
+            qDebug() << _query->lastQuery();
+        else
+        {
+            _query->next();
+            for(auto i = 0; i < 3; i++)
+                favoriteAlbumData->push_back(_query->value(i).toString());
+
+            for(auto i = 0; i < favoriteAlbumData->size(); i++)
+                qDebug() << favoriteAlbumData->at(i);
+        }
+
+        _db.close();
+    }
+    else
+    {
+        qDebug() << "Could not open database to get favorite album.";
+    }
+
+    return favoriteAlbumData;
+}
+
+const QVector<QString> * mediaDatabase::getFavoriteArtist(const QString &username)
+{
+    QVector<QString> * favoriteArtistData = new QVector<QString>;
+    bool ok = _db.open();
+
+    if(ok)
+    {
+        QString qry = "SELECT `Artist`, SUM(`Plays`) AS `Total Plays` "
+                      "FROM (" + universalQuery + ") AS v "
+                      "WHERE `User`='" + username + "' "
+                      "GROUP BY `Artist` "
+                      "ORDER BY `Total Plays` DESC LIMIT 1;";
+
+        _query->exec("USE `Media_Player`;");
+        if(!_query->exec(qry))
+            qDebug() << _query->lastQuery();
+        else
+        {
+            _query->next();
+            for(auto i = 0; i < 2; i++)
+                favoriteArtistData->push_back(_query->value(i).toString());
+
+            for(auto i = 0; i < favoriteArtistData->size(); i++)
+                qDebug() << favoriteArtistData->at(i);
+        }
+
+        _db.close();
+    }
+    else
+    {
+        qDebug() << "Couldn't open database to get favorite artist.";
+    }
+
+    return favoriteArtistData;
 }
 
 void mediaDatabase::initiateSchema()
