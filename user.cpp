@@ -277,7 +277,13 @@ bool CreateUserDialog::usernameNotEmpty()
     return _usernameLine->text().size();
 }
 
-UserInformation::UserInformation(QWidget *parent) : QDialog(parent)
+UserInformation::UserInformation(const QString username, const QString name,
+                                 const QString email, const QString membersince, QWidget *parent) :
+    QDialog(parent),
+    _username(username),
+    _name(name),
+    _email(email),
+    _membersince(membersince)
 {
 
 }
@@ -289,5 +295,35 @@ UserInformation::~UserInformation()
 
 void UserInformation::prepareUserInfoLayout()
 {
+    //Initialize Layouts
+    QHBoxLayout * usernameLayout = new QHBoxLayout;
+    QHBoxLayout * nameLayout = new QHBoxLayout;
+    QHBoxLayout * emailLayout = new QHBoxLayout;
+    QHBoxLayout * membersinceLayout = new QHBoxLayout;
+    QHBoxLayout * okButtonLayout = new QHBoxLayout;
 
+    QVBoxLayout * mainLayout = new QVBoxLayout;
+
+    //Initialize Objects Needed
+    QLabel * usernameLabel = new QLabel("Username: " + _username);
+    QLabel * nameLabel = new QLabel("Name: " + _name);
+    QLabel * emailLabel = new QLabel("Email: " + _email);
+    QLabel * membersinceLabel = new QLabel("Member Since: " + _membersince);
+
+    QPushButton * okButton = new QPushButton("Ok");
+
+    //Put stuff in layouts
+    usernameLayout->addWidget(usernameLabel);
+    nameLayout->addWidget(nameLabel);
+    emailLayout->addWidget(emailLabel);
+    membersinceLayout->addWidget(membersinceLabel);
+    okButtonLayout->addWidget(okButton);
+
+    mainLayout->addLayout(usernameLayout);
+    mainLayout->addLayout(nameLayout);
+    mainLayout->addLayout(emailLayout);
+    mainLayout->addLayout(membersinceLayout);
+    mainLayout->addLayout(okButtonLayout);
+
+    this->setLayout(mainLayout);
 }

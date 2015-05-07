@@ -87,7 +87,8 @@ class UserInformation : public QDialog
 {
     Q_OBJECT
 public:
-    explicit UserInformation(QWidget *parent = 0);
+    explicit UserInformation(const QString username, const QString name,
+                             const QString email, const QString membersince, QWidget *parent = 0);
     ~UserInformation();
 
 signals:
@@ -97,6 +98,8 @@ public slots:
 private slots:
 
 private:
+    const QString _username, _name, _email, _membersince;
+
     void prepareUserInfoLayout();
 };
 
