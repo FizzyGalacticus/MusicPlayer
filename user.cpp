@@ -69,12 +69,17 @@ void User::userDataReceived(const QString &firstName, const QString &lastName, c
 }
 
 UserLoginDialog::UserLoginDialog(mediaDatabase *database, QWidget *parent) : QDialog(parent),
-    _usernameLine(new QLineEdit("Username")),
-    _passwordLine(new QLineEdit("Password")),
+    _usernameLine(new QLineEdit("")),
+    _passwordLine(new QLineEdit("")),
     _db(database)
 {
     prepareLoginLayout();
     this->setWindowTitle("Login");
+
+    _usernameLine->setPlaceholderText("Username");
+    _passwordLine->setPlaceholderText("Password");
+
+    _passwordLine->setEchoMode(QLineEdit::Password);
 }
 
 UserLoginDialog::~UserLoginDialog()
@@ -84,7 +89,10 @@ UserLoginDialog::~UserLoginDialog()
 
 void UserLoginDialog::loginButtonHasBeenClicked()
 {
-    const QVector<QString> * results = _db->login(_usernameLine->text(),_passwordLine->text());
+    const QVector<QString> * results = _db->login(_usernameLine->text(),
+                                                  QCryptographicHash::hash(_passwordLine->text().toStdString().c_str(),
+                                                                           QCryptographicHash::Sha3_512)
+                                                  );
 
     if(results->size())
     {
@@ -134,17 +142,27 @@ void UserLoginDialog::prepareLoginLayout()
 }
 
 CreateUserDialog::CreateUserDialog(mediaDatabase *database, QWidget *parent) : QDialog(parent),
-    _usernameLine(new QLineEdit("Username")),
-    _passwordLine(new QLineEdit("Password")),
-    _repeatPasswordLine(new QLineEdit("Repeat Password")),
-    _firstNameLine(new QLineEdit("First Name")),
-    _lastNameLine(new QLineEdit("Last Name")),
-    _emailLine(new QLineEdit("youremail@example.com")),
+    _usernameLine(new QLineEdit("")),
+    _passwordLine(new QLineEdit("")),
+    _repeatPasswordLine(new QLineEdit("")),
+    _firstNameLine(new QLineEdit("")),
+    _lastNameLine(new QLineEdit("")),
+    _emailLine(new QLineEdit("")),
     _db(database),
     _usernameAvailableLabel(new QLabel)
 {
     prepareCreationLayout();
     this->setWindowTitle("Create User");
+
+    _usernameLine->setPlaceholderText("Username");
+    _passwordLine->setPlaceholderText("Password");
+    _repeatPasswordLine->setPlaceholderText("Repeat password");
+    _firstNameLine->setPlaceholderText("First Name");
+    _lastNameLine->setPlaceholderText("Last Name");
+    _emailLine->setPlaceholderText("youremail@example.ninja");
+
+    _passwordLine->setEchoMode(QLineEdit::Password);
+    _repeatPasswordLine->setEchoMode(QLineEdit::Password);
 }
 
 CreateUserDialog::~CreateUserDialog()
