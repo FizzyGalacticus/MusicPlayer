@@ -276,3 +276,18 @@ bool CreateUserDialog::usernameNotEmpty()
 {
     return _usernameLine->text().size();
 }
+
+UserInformation::UserInformation(QWidget *parent) : QDialog(parent)
+{
+
+}
+
+UserInformation::~UserInformation()
+{
+
+}
+
+void UserInformation::prepareUserInfoLayout()
+{
+
+}

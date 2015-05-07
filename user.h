@@ -83,4 +83,21 @@ private:
     bool usernameNotEmpty();
 };
 
+class UserInformation : public QDialog
+{
+    Q_OBJECT
+public:
+    explicit UserInformation(QWidget *parent = 0);
+    ~UserInformation();
+
+signals:
+
+public slots:
+
+private slots:
+
+private:
+    void prepareUserInfoLayout();
+};
+
 #endif // USER_H
