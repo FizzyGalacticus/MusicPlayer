@@ -2,6 +2,8 @@
 #define USER_H
 
 #include <QObject>
+#include <QString>
+#include <QDateTime>
 
 class user : public QObject
 {
@@ -13,6 +15,10 @@ public:
 signals:
 
 public slots:
+
+private:
+    QString _username, _pass;
+    QDateTime _joinDateTime;
 };
 
 #endif // USER_H

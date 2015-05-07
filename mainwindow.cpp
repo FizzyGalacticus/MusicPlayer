@@ -9,6 +9,7 @@
 #include <QList>
 #include <QMenu>
 #include "mediadatabase.h"
+#include "user.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -40,6 +41,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mediaDatabase * db = new mediaDatabase;
     _player->setMediaDatabase(db);
+
+    user myUser;
 }
 
 MainWindow::~MainWindow()
