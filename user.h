@@ -8,6 +8,8 @@
 #include "mediadatabase.h"
 #include <QLineEdit>
 #include <QLabel>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 
 class User : public QObject
 {
@@ -110,6 +112,10 @@ private:
     const QString _username, _name, _email, _membersince;
 
     void prepareUserInfoLayout();
+    QHBoxLayout * prepareFavoritesLayout();
+    QVBoxLayout * prepareFavoriteArtistLayout();
+    QVBoxLayout * prepareFavoriteAlbumLayout();
+    QVBoxLayout * prepareFavoriteSongLayout();
 };
 
 #endif // USER_H

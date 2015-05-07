@@ -332,7 +332,10 @@ void UserInformation::prepareUserInfoLayout()
     QHBoxLayout * membersinceLayout = new QHBoxLayout;
     QHBoxLayout * okButtonLayout = new QHBoxLayout;
 
-    QVBoxLayout * mainLayout = new QVBoxLayout;
+    QVBoxLayout * leftLayout = new QVBoxLayout;
+    QVBoxLayout * rightLayout = new QVBoxLayout;
+
+    QHBoxLayout * mainLayout = new QHBoxLayout;
 
     //Initialize Objects Needed
     QLabel * usernameLabel = new QLabel("Username: " + _username);
@@ -350,11 +353,46 @@ void UserInformation::prepareUserInfoLayout()
     membersinceLayout->addWidget(membersinceLabel);
     okButtonLayout->addWidget(okButton);
 
-    mainLayout->addLayout(usernameLayout);
-    mainLayout->addLayout(nameLayout);
-    mainLayout->addLayout(emailLayout);
-    mainLayout->addLayout(membersinceLayout);
-    mainLayout->addLayout(okButtonLayout);
+    leftLayout->addLayout(usernameLayout);
+    leftLayout->addLayout(nameLayout);
+    leftLayout->addLayout(emailLayout);
+    leftLayout->addLayout(membersinceLayout);
+    leftLayout->addLayout(okButtonLayout);
+
+    mainLayout->addLayout(leftLayout);
+    mainLayout->addLayout(rightLayout);
 
     this->setLayout(mainLayout);
+}
+
+QHBoxLayout * UserInformation::prepareFavoritesLayout()
+{
+    QHBoxLayout * favoritesLayout = new QHBoxLayout;
+
+    favoritesLayout->addLayout(prepareFavoriteArtistLayout());
+    favoritesLayout->addLayout(prepareFavoriteAlbumLayout());
+    favoritesLayout->addLayout(prepareFavoriteSongLayout());
+
+    return favoritesLayout;
+}
+
+QVBoxLayout * UserInformation::prepareFavoriteArtistLayout()
+{
+    QVBoxLayout * favoriteArtistLayout = new QVBoxLayout;
+
+    return favoriteArtistLayout;
+}
+
+QVBoxLayout * UserInformation::prepareFavoriteAlbumLayout()
+{
+    QVBoxLayout * favoriteAlbumLayout = new QVBoxLayout;
+
+    return favoriteAlbumLayout;
+}
+
+QVBoxLayout * UserInformation::prepareFavoriteSongLayout()
+{
+    QVBoxLayout * favoriteSongLayout = new QVBoxLayout;
+
+    return favoriteSongLayout;
 }
