@@ -97,10 +97,10 @@ bool mediaDatabase::addSong(const QString &songTitle, const QString &albumTitle,
         QString song = insertFormattingCharacters(songTitle);
 
         QString qry = "INSERT INTO `Media_Player`.`Song` "
-                      "(Title, Album_id) "
-                      "VALUES (':song', ':album');";
+                      "(Title, Artist_id) "
+                      "VALUES (':song', ':artist');";
         qry.replace(":song", song);
-        qry.replace(":album", QString::number(albumId));
+        qry.replace(":artist", QString::number(artistId));
 
         if(!_query->exec(qry))
             qDebug() << _query->lastError().text();
