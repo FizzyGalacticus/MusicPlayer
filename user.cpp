@@ -198,7 +198,8 @@ void CreateUserDialog::createUserButtonHasBeenClicked()
                         QCryptographicHash::hash(_passwordLine->text().toStdString().c_str(), QCryptographicHash::Sha3_512),
                         _firstNameLine->text(),
                         _lastNameLine->text(),
-                        _emailLine->text());
+                        _emailLine->text(),
+                        QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
 
         this->close();
     }

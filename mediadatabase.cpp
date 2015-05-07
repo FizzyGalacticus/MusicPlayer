@@ -234,17 +234,20 @@ bool mediaDatabase::userExists(const QString &username)
     return exists;
 }
 
-bool mediaDatabase::createUser(const QString &username, const QString &password, const QString &fname, const QString &lname, const QString &email)
+bool mediaDatabase::createUser(const QString &username, const QString &password,
+                               const QString &fname, const QString &lname,
+                               const QString &email, const QString &joinDateTime)
 {
     bool ok = _db.open(), succeeded = false;
 
     if(ok)
     {
         QString qry = "INSERT INTO `Media_Player`.`User` "
-                      "(username, password, Fname, Lname, email) "
+                      "(username, password, Fname, Lname, email, joinDateTime) "
                       "VALUES ('" + insertFormattingCharacters(username) + "','" +
                       insertFormattingCharacters(password) + "','" + insertFormattingCharacters(fname) +
-                      "','" + insertFormattingCharacters(lname) + "','" + insertFormattingCharacters(email) + "');";
+                      "','" + insertFormattingCharacters(lname) + "','" + insertFormattingCharacters(email) + "','" +
+                      joinDateTime + "');";
 
         if(!_query->exec(qry))
         {
