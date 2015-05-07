@@ -116,8 +116,6 @@ bool mediaDatabase::addSong(const QString &songTitle, const QString &albumTitle,
             qry = "INSERT INTO `Media_Player`.`Album_has_Song` (Album_id, Song_id) "
                   "VALUES (" + QString::number(albumId) + "," + QString::number(songId) + ");";
 
-            qDebug() << qry;
-
             if(!_query->exec(qry))
                 qDebug() << "Couldn't add song to album!";
 
@@ -399,8 +397,6 @@ int mediaDatabase::getAlbumId(const QString &artistName, const QString &albumTit
         QString qry = "SELECT `id` FROM `Media_Player`.`Album` "
                       "WHERE `Title`='" + album + "' "
                       "AND Artist_id=" + QString::number(artistId) + ";";
-
-        qDebug() << qry;
 
         if(!_query->exec(qry))
         {
