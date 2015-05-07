@@ -33,7 +33,7 @@ private:
     const QString insertFormattingCharacters(const QString & str) const;
     int getArtistId(const QString & artistName);
     int getAlbumId(const QString & artistName, const QString & albumTitle);
-    int getSongId(const QString & artistName, const QString & albumTitle, const QString & songTitle);
+    int getSongId(const QString & artistName, const QString & songTitle);
     bool addArtist(const QString & newArtist);
     bool addAlbum(const int & artistId, const QString & album);
 };

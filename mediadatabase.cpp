@@ -116,23 +116,21 @@ bool mediaDatabase::addSong(const QString &songTitle, const QString &albumTitle,
 
 bool mediaDatabase::addLyrics(const QString & artistName, const QString & songTitle, const QString & newLyrics)
 {
-    QString lyrics = insertFormattingCharacters(newLyrics),
-            title = insertFormattingCharacters(songTitle);
+    QString lyrics = insertFormattingCharacters(newLyrics);
 
-    const int albumId = 3;//getAlbumId(artistName,albumTitle);
+    const int songId = getSongId(artistName,songTitle);
 
     bool ok = _db.open(), succeeded = false;
 
     if(ok)
     {
         QString qry = "UPDATE `Media_Player`.`Song` "
-                "SET lyrics=':lyrics' "
-                "WHERE Album_id=':album' AND "
-                "Title=':song';";
-        qry.replace(":album",QString::number(albumId)).replace(":song",title).replace(":lyrics", lyrics);
+                "SET `lyrics`=':lyrics' "
+                "WHERE `id`=':song';";
+        qry.replace(":lyrics", lyrics).replace(":song", QString::number(songId));
 
         if(!_query->exec(qry))
-            qDebug() << _query->lastError().text();
+            qDebug() << "\n\nLAST ERROR: " << _query->lastQuery() << "\n\n";
         else succeeded = true;
 
         _db.close();
@@ -395,17 +393,23 @@ int mediaDatabase::getAlbumId(const QString &artistName, const QString &albumTit
     return id;
 }
 
-int mediaDatabase::getSongId(const QString &artistName, const QString &albumTitle, const QString &songTitle)
+int mediaDatabase::getSongId(const QString &artistName, const QString &songTitle)
 {
-    bool ok = _db.open();
+    const int artistId = getArtistId(artistName);
+
     int id = -1;
+
+    bool ok = _db.open();
 
     if(ok)
     {\
         const QString song = insertFormattingCharacters(songTitle);
-        const int albumId = getAlbumId(artistName,albumTitle);
 
-        if(!_query->exec("SELECT id FROM `Media_Player`.`Song` WHERE Title='" + song + "' AND Album_id=" + albumId + ");"))
+        QString qry = "SELECT `id` FROM `Media_Player`.`Song` "
+                      "WHERE `Title`='" + song + "'" +
+                      "AND `Artist_id`=" + QString::number(artistId) + ";";
+
+        if(!_query->exec(qry))
         {
             qDebug() << _query->lastError().text();
         }
