@@ -28,7 +28,9 @@ public slots:
     void presentUserInformationWindow();
 
 private slots:
-    void userDataReceived(const QString & username, const QString & firstName, const QString & lastName, const QString & email);
+    void userDataReceived(const QString & username, const QString & firstName,
+                          const QString & lastName, const QString & email,
+                          const QString & joinDateTime);
 
 private:
     QString _username, _firstName, _lastName, _email;
@@ -45,7 +47,9 @@ public:
     ~UserLoginDialog();
 
 signals:
-    void userDataReceived(const QString & username, const QString & firstName, const QString & lastName, const QString & email);
+    void userDataReceived(const QString & username, const QString & firstName,
+                          const QString & lastName, const QString & email,
+                          const QString & joinDateTime);
 
 public slots:
 
@@ -67,6 +71,9 @@ public:
     ~CreateUserDialog();
 
 signals:
+    void userDataReceived(const QString & username, const QString & firstName,
+                              const QString & lastName, const QString & email,
+                              const QString & joinDateTime);
 
 public slots:
 

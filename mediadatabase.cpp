@@ -4,6 +4,7 @@
 #include <QSqlResult>
 #include <QFile>
 #include <QVector>
+#include <QDateTime>
 
 mediaDatabase::mediaDatabase(QObject *parent) :
     QObject(parent),
@@ -177,7 +178,7 @@ const QVector<QString> * mediaDatabase::login(const QString &username, const QSt
 
     if(ok)
     {
-        QString qry = "SELECT `fname`, `lname`, `email` "
+        QString qry = "SELECT `fname`, `lname`, `email`, `joinDateTime` "
                       "FROM `Media_Player`.`User` "
                       "WHERE `username`='" + username + "'"
                       "AND `password`='" + password + "';";
@@ -192,6 +193,8 @@ const QVector<QString> * mediaDatabase::login(const QString &username, const QSt
             {
                 for(auto i = 0; i < 3; i++)
                     results->push_back(_query->value(i).toString());
+
+                results->push_back(_query->value(3).toDateTime().toString("yyyy-MM-dd hh:mm:ss"));
             }
         }
 

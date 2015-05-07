@@ -45,8 +45,12 @@ void User::presentLoginWindow()
     if(_db != NULL)
     {
         UserLoginDialog login(_db);
-        connect(&login, SIGNAL(userDataReceived(const QString, const QString, const QString, const QString)),
-                               this, SLOT(userDataReceived(const QString, const QString, const QString, const QString)));
+        connect(&login, SIGNAL(userDataReceived(const QString &, const QString &,
+                                                const QString &, const QString &,
+                                                const QString &)),
+                               this, SLOT(userDataReceived(const QString & , const QString & ,
+                                                           const QString & , const QString & ,
+                                                           const QString & )));
         login.exec();
     }
 }
@@ -56,22 +60,28 @@ void User::presentCreateUserWindow()
     if(_db != NULL)
     {
         CreateUserDialog create(_db);
+        connect(&create, SIGNAL(userDataReceived(const QString, const QString, const QString, const QString)),
+                this, SLOT(userDataReceived(const QString, const QString, const QString, const QString)));
         create.exec();
     }
 }
 
 void User::presentUserInformationWindow()
 {
-    UserInformation userInfo(_username, _firstName + " " + _lastName, _email, getJoinDateTime());
+    const QString joinDateTime = _joinDateTime.toString("dddd, MMMM dd, yyyy");
+    UserInformation userInfo(_username, _firstName + " " + _lastName, _email, joinDateTime);
     userInfo.exec();
 }
 
-void User::userDataReceived(const QString & username, const QString &firstName, const QString &lastName, const QString &email)
+void User::userDataReceived(const QString & username, const QString &firstName, const QString &lastName, const QString &email, const QString & joinDateTime)
 {
     _username = username;
     _firstName = firstName;
     _lastName = lastName;
     _email = email;
+    _joinDateTime = QDateTime::fromString(joinDateTime, "yyyy-MM-dd hh:mm:ss");
+
+    qDebug() << joinDateTime << _joinDateTime.toString();
 }
 
 UserLoginDialog::UserLoginDialog(mediaDatabase *database, QWidget *parent) : QDialog(parent),
@@ -102,9 +112,9 @@ void UserLoginDialog::loginButtonHasBeenClicked()
 
     if(results->size())
     {
-        QString fname = results->at(0), lname = results->at(1), email = results->at(2);
+        QString fname = results->at(0), lname = results->at(1), email = results->at(2), joinDateTime = results->at(3);
 
-        emit userDataReceived(_usernameLine->text(), fname, lname, email);
+        emit userDataReceived(_usernameLine->text(), fname, lname, email, joinDateTime);
         this->close();
     }
     else
@@ -194,12 +204,16 @@ void CreateUserDialog::createUserButtonHasBeenClicked()
 {
     if(passwordsAreEqual() && usernameNotEmpty())
     {
-        _db->createUser(_usernameLine->text(),
+        const QString joinDateTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+        if(_db->createUser(_usernameLine->text(),
                         QCryptographicHash::hash(_passwordLine->text().toStdString().c_str(), QCryptographicHash::Sha3_512),
                         _firstNameLine->text(),
                         _lastNameLine->text(),
                         _emailLine->text(),
-                        QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+                        joinDateTime))
+        {
+            emit userDataReceived(_usernameLine->text(), _firstNameLine->text(), _lastNameLine->text(), _emailLine->text(), joinDateTime);
+        }
 
         this->close();
     }
