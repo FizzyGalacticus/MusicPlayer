@@ -120,10 +120,13 @@ void MainWindow::setupMenuBar()
     QList<QAction *> userMenuActions;
 
     QAction * login = new QAction(tr("Login"), this);
+    QAction * create = new QAction(tr("Create User"), this);
     login->setShortcut(QKeySequence("CTRL+L"));
     connect(login, SIGNAL(triggered()), _user, SLOT(presentLoginWindow()));
+    connect(create, SIGNAL(triggered()), _user, SLOT(presentCreateUserWindow()));
 
     userMenuActions.push_back(login);
+    userMenuActions.push_back(create);
 
     userMenu->addActions(userMenuActions);
 
