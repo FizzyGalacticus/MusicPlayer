@@ -23,9 +23,9 @@ signals:
 
 public slots:
     void presentLoginWindow();
+    void presentCreateUserWindow();
 
 private slots:
-    bool login(const QString username, const QString password);
     void userDataReceived(const QString & firstName, const QString & lastName, const QString & email);
 
 private:
@@ -43,7 +43,6 @@ public:
     ~UserLoginDialog();
 
 signals:
-    bool login(const QString username, const QString password);
     void userDataReceived(const QString & firstName, const QString & lastName, const QString & email);
 
 public slots:
@@ -52,10 +51,28 @@ private slots:
     void loginButtonHasBeenClicked();
 
 private:
-    QLineEdit * _usernameLine, * _passwordLine, _repeatPasswordLine, _firstNameLine, _lastNameLine, _emailLine;
+    QLineEdit * _usernameLine, * _passwordLine;
     mediaDatabase * _db;
 
     void prepareLoginLayout();
+};
+
+class CreateUserDialog : public QDialog
+{
+    Q_OBJECT
+public:
+    explicit CreateUserDialog(mediaDatabase * database, QWidget *parent = 0);
+    ~CreateUserDialog();
+
+signals:
+
+public slots:
+
+private slots:
+
+private:
+    QLineEdit * _usernameLine, * _passwordLine, _repeatPasswordLine, _firstNameLine, _lastNameLine, _emailLine;
+    mediaDatabase * _db;
 };
 
 #endif // USER_H

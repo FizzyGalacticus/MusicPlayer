@@ -25,11 +25,6 @@ User::~User()
 
 }
 
-bool User::login(const QString username, const QString password)
-{
-    return false;
-}
-
 const QString & User::getUsername()
 {
     return _username;
@@ -50,10 +45,17 @@ void User::presentLoginWindow()
     if(_db != NULL)
     {
         UserLoginDialog login(_db);
-        connect(&login,SIGNAL(login(QString,QString)), this, SLOT(login(QString,QString)));
         connect(&login, SIGNAL(userDataReceived(const QString &, const QString &, const QString &)),
                                this, SLOT(userDataReceived(QString,QString,QString)));
         login.exec();
+    }
+}
+
+void User::presentCreateUserWindow()
+{
+    if(_db != NULL)
+    {
+        //Create user dialog
     }
 }
 
@@ -67,10 +69,6 @@ void User::userDataReceived(const QString &firstName, const QString &lastName, c
 UserLoginDialog::UserLoginDialog(mediaDatabase *database, QWidget *parent) : QDialog(parent),
     _usernameLine(new QLineEdit("Username")),
     _passwordLine(new QLineEdit("Password")),
-    _repeatPasswordLine(new QLineEdit("Repeat Password")),
-    _firstNameLine(new QLineEdit("First Name")),
-    _lastNameLine(new QLineEdit("Last Name")),
-    _emailLine(new QLineEdit("youremail@example.com")),
     _db(database)
 {
     prepareLoginLayout();
@@ -130,4 +128,21 @@ void UserLoginDialog::prepareLoginLayout()
     mainLayout->addLayout(loginButtonLayout);
 
     this->setLayout(mainLayout);
+}
+
+CreateUserDialog::CreateUserDialog(mediaDatabase *database, QWidget *parent) : QDialog(parent),
+    _usernameLine(new QLineEdit("Username")),
+    _passwordLine(new QLineEdit("Password")),
+    _repeatPasswordLine(new QLineEdit("Repeat Password")),
+    _firstNameLine(new QLineEdit("First Name")),
+    _lastNameLine(new QLineEdit("Last Name")),
+    _emailLine(new QLineEdit("youremail@example.com")),
+    _db(database)
+{
+
+}
+
+CreateUserDialog::~CreateUserDialog()
+{
+
 }
