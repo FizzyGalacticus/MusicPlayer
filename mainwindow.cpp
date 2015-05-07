@@ -97,6 +97,11 @@ void MainWindow::setWidgetPositions()
 
 void MainWindow::setupMenuBar()
 {
+    //File menu
+    QMenu * fileMenu = new QMenu(tr("File"));
+
+    QList<QAction *> fileMenuActions;
+
     QAction * openMedia = new QAction(tr("Open Media"), this);
     QAction * addMedia = new QAction(tr("Add Media"), this);
     openMedia->setShortcut(QKeySequence("CTRL+O"));
@@ -104,16 +109,27 @@ void MainWindow::setupMenuBar()
     connect (openMedia, SIGNAL(triggered()), _player, SLOT(openMedia()));
     connect (addMedia, SIGNAL(triggered()), _player, SLOT(addMedia()));
 
-    QList<QAction *> actions;
+    fileMenuActions.push_back(addMedia);
+    fileMenuActions.push_back(openMedia);
 
-    actions.push_back(addMedia);
-    actions.push_back(openMedia);
+    fileMenu->addActions(fileMenuActions);
 
-    QMenu * m = new QMenu(tr("File"));
+    //User menu
+    QMenu * userMenu = new QMenu(tr("User"));
 
-    m->addActions(actions);
+    QList<QAction *> userMenuActions;
 
-    _menu->addMenu(m);
+    QAction * login = new QAction(tr("Login"), this);
+    login->setShortcut(QKeySequence("CTRL+L"));
+    connect(login, SIGNAL(triggered()), _user, SLOT(presentLoginWindow()));
+
+    userMenuActions.push_back(login);
+
+    userMenu->addActions(userMenuActions);
+
+    //Add menus
+    _menu->addMenu(fileMenu);
+    _menu->addMenu(userMenu);
 
     this->setMenuBar(_menu);
 }

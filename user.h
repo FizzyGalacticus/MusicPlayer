@@ -17,11 +17,11 @@ public:
     const QString & getUsername();
     const QString getJoinDateTime();
     void setMediaDatabase(mediaDatabase * database);
-    void presentLoginWindow();
 
 signals:
 
 public slots:
+    void presentLoginWindow();
 
 private slots:
     bool login(const QString username, const QString password);
