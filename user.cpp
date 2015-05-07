@@ -291,7 +291,8 @@ UserInformation::UserInformation(const QString username, const QString name,
     _email(email),
     _membersince(membersince)
 {
-
+    prepareUserInfoLayout();
+    this->setWindowTitle("User Info");
 }
 
 UserInformation::~UserInformation()

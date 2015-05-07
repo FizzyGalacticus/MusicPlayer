@@ -121,12 +121,16 @@ void MainWindow::setupMenuBar()
 
     QAction * login = new QAction(tr("Login"), this);
     QAction * create = new QAction(tr("Create User"), this);
+    QAction * info = new QAction(tr("User Information"), this);
     login->setShortcut(QKeySequence("CTRL+L"));
+    info->setShortcut(QKeySequence("CTRL+I"));
     connect(login, SIGNAL(triggered()), _user, SLOT(presentLoginWindow()));
     connect(create, SIGNAL(triggered()), _user, SLOT(presentCreateUserWindow()));
+    connect(info, SIGNAL(triggered()), _user, SLOT(presentUserInformationWindow()));
 
     userMenuActions.push_back(login);
     userMenuActions.push_back(create);
+    userMenuActions.push_back(info);
 
     userMenu->addActions(userMenuActions);
 
