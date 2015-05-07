@@ -98,7 +98,7 @@ class UserInformation : public QDialog
     Q_OBJECT
 public:
     explicit UserInformation(const QString username, const QString name,
-                             const QString email, const QString membersince, QWidget *parent = 0);
+                             const QString email, const QString membersince, mediaDatabase * database, QWidget *parent = 0);
     ~UserInformation();
 
 signals:
@@ -110,6 +110,7 @@ private slots:
 
 private:
     const QString _username, _name, _email, _membersince;
+    mediaDatabase * _db;
 
     void prepareUserInfoLayout();
     QHBoxLayout * prepareFavoritesLayout();

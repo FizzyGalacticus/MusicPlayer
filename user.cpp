@@ -73,7 +73,7 @@ void User::presentCreateUserWindow()
 void User::presentUserInformationWindow()
 {
     const QString joinDateTime = _joinDateTime.toString("dddd, MMMM dd, yyyy");
-    UserInformation userInfo(_username, _firstName + " " + _lastName, _email, joinDateTime);
+    UserInformation userInfo(_username, _firstName + " " + _lastName, _email, joinDateTime, _db);
     userInfo.exec();
 }
 
@@ -302,12 +302,13 @@ bool CreateUserDialog::usernameNotEmpty()
 }
 
 UserInformation::UserInformation(const QString username, const QString name,
-                                 const QString email, const QString membersince, QWidget *parent) :
+                                 const QString email, const QString membersince, mediaDatabase * database, QWidget *parent) :
     QDialog(parent),
     _username(username),
     _name(name),
     _email(email),
-    _membersince(membersince)
+    _membersince(membersince),
+    _db(database)
 {
     prepareUserInfoLayout();
     this->setWindowTitle("User Info");
@@ -333,7 +334,6 @@ void UserInformation::prepareUserInfoLayout()
     QHBoxLayout * okButtonLayout = new QHBoxLayout;
 
     QVBoxLayout * leftLayout = new QVBoxLayout;
-    QVBoxLayout * rightLayout = new QVBoxLayout;
 
     QHBoxLayout * mainLayout = new QHBoxLayout;
 
@@ -360,7 +360,7 @@ void UserInformation::prepareUserInfoLayout()
     leftLayout->addLayout(okButtonLayout);
 
     mainLayout->addLayout(leftLayout);
-    mainLayout->addLayout(rightLayout);
+    mainLayout->addLayout(prepareFavoritesLayout());
 
     this->setLayout(mainLayout);
 }
@@ -369,16 +369,28 @@ QHBoxLayout * UserInformation::prepareFavoritesLayout()
 {
     QHBoxLayout * favoritesLayout = new QHBoxLayout;
 
-    favoritesLayout->addLayout(prepareFavoriteArtistLayout());
-    favoritesLayout->addLayout(prepareFavoriteAlbumLayout());
-    favoritesLayout->addLayout(prepareFavoriteSongLayout());
+    if(_db != NULL)
+    {
+        favoritesLayout->addLayout(prepareFavoriteArtistLayout());
+        favoritesLayout->addLayout(prepareFavoriteAlbumLayout());
+        favoritesLayout->addLayout(prepareFavoriteSongLayout());
+    }
 
     return favoritesLayout;
 }
 
 QVBoxLayout * UserInformation::prepareFavoriteArtistLayout()
 {
+    const QVector<QString> * info = _db->getFavoriteArtist(_username);
     QVBoxLayout * favoriteArtistLayout = new QVBoxLayout;
+
+    QLabel * titleLabel = new QLabel("Favorite Artist");
+    QLabel * artistLabel = new QLabel("Artist: " + info->at(0));
+    QLabel * playsLabel = new QLabel("Total Plays: " + info->at(1));
+
+    favoriteArtistLayout->addWidget(titleLabel);
+    favoriteArtistLayout->addWidget(artistLabel);
+    favoriteArtistLayout->addWidget(playsLabel);
 
     return favoriteArtistLayout;
 }
