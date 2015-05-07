@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QChar>
 
 User::User(QObject *parent) : QObject(parent),
   _username("Guest"),
@@ -139,7 +140,8 @@ CreateUserDialog::CreateUserDialog(mediaDatabase *database, QWidget *parent) : Q
     _firstNameLine(new QLineEdit("First Name")),
     _lastNameLine(new QLineEdit("Last Name")),
     _emailLine(new QLineEdit("youremail@example.com")),
-    _db(database)
+    _db(database),
+    _usernameAvailableLabel(new QLabel)
 {
     prepareCreationLayout();
     this->setWindowTitle("Create User");
@@ -152,7 +154,19 @@ CreateUserDialog::~CreateUserDialog()
 
 void CreateUserDialog::checkUsernameButtonHasBeenClicked()
 {
+    QChar * checkMark = new QChar(0x14, 0x27);
+    QChar * xMark = new QChar(0x4C, 0x27);
 
+    if(_db->userExists(_usernameLine->text()))
+    {
+        _usernameAvailableLabel->setText(QString("<html>&#x2716;</html>"));
+        _usernameAvailableLabel->setStyleSheet("QLabel {color: red;}");
+    }
+    else
+    {
+        _usernameAvailableLabel->setText(QString("<html>&#x2714;</html>"));
+        _usernameAvailableLabel->setStyleSheet("QLabel {color: green;}");
+    }
 }
 
 void CreateUserDialog::createUserButtonHasBeenClicked()
@@ -194,6 +208,7 @@ void CreateUserDialog::prepareCreationLayout()
     usernameLayout->addWidget(usernameLabel);
     usernameLayout->addWidget(_usernameLine);
     usernameLayout->addWidget(checkUsernameButton);
+    usernameLayout->addWidget(_usernameAvailableLabel);
 
     passwordLayout->addWidget(passwordLabel);
     passwordLayout->addWidget(_passwordLine);

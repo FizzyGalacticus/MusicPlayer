@@ -7,6 +7,7 @@
 #include <QDateTime>
 #include "mediadatabase.h"
 #include <QLineEdit>
+#include <QLabel>
 
 class User : public QObject
 {
@@ -75,6 +76,7 @@ private slots:
 private:
     QLineEdit * _usernameLine, * _passwordLine, * _repeatPasswordLine, * _firstNameLine, * _lastNameLine, * _emailLine;
     mediaDatabase * _db;
+    QLabel * _usernameAvailableLabel;
 
     void prepareCreationLayout();
 };
