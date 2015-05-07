@@ -48,9 +48,9 @@ void User::presentLoginWindow()
         connect(&login, SIGNAL(userDataReceived(const QString &, const QString &,
                                                 const QString &, const QString &,
                                                 const QString &)),
-                               this, SLOT(userDataReceived(const QString & , const QString & ,
-                                                           const QString & , const QString & ,
-                                                           const QString & )));
+                               this, SLOT(userDataReceived(const QString &, const QString &,
+                                                           const QString &, const QString &,
+                                                           const QString &)));
         login.exec();
     }
 }
@@ -60,8 +60,12 @@ void User::presentCreateUserWindow()
     if(_db != NULL)
     {
         CreateUserDialog create(_db);
-        connect(&create, SIGNAL(userDataReceived(const QString, const QString, const QString, const QString)),
-                this, SLOT(userDataReceived(const QString, const QString, const QString, const QString)));
+        connect(&create, SIGNAL(userDataReceived(const QString &, const QString &,
+                                                 const QString &, const QString &,
+                                                 const QString &)),
+                this, SLOT(userDataReceived(const QString &, const QString &,
+                                            const QString &, const QString &,
+                                            const QString &)));
         create.exec();
     }
 }

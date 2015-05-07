@@ -160,23 +160,27 @@ bool mediaDatabase::addLyrics(const QString & artistName, const QString & songTi
     return succeeded;
 }
 
-bool mediaDatabase::incrementSongCounter(const QString &songTitle, const QString &albumTitle, const QString &artistName)
+bool mediaDatabase::incrementSongCounter(const QString &songTitle, const QString &artistName, const QString & username)
 {
-    const QString artist = insertFormattingCharacters(artistName), album = insertFormattingCharacters(albumTitle),
-            song = insertFormattingCharacters(songTitle);
-
-    const int & albumId = getAlbumId(artistName,albumTitle);
-
+    const int songId = getSongId(artistName, songTitle), userId = getUserId(username);
     bool ok = _db.open(), succeeded = false;
 
     if(ok)
     {
-        QString qry = "UPDATE `Media_Player`.`Song` "
+        QString qry = "INSERT INTO `Media_Player`.`User_has_Song` "
+                      "(User_id, Song_id) VALUES "
+                      "(" + QString::number(userId) + "," + QString::number(songId) +
+                      ");";
+
+        if(!_query->exec(qry))
+            qDebug() << "Couldn't add entry to User_has_Song";
+
+        qry = "UPDATE `Media_Player`.`User_has_Song` "
                 "SET `numberOfListens` = `numberOfListens` + 1 "
-                "WHERE `Album_id` = ':album' "
-                "AND `Title` = ':song';";
-        qry.replace(":album", QString::number(albumId));
-        qry.replace(":song", song);
+                "WHERE `User_id` = ':user' "
+                "AND `Song_id` = ':song';";
+        qry.replace(":user", QString::number(userId));
+        qry.replace(":song", QString::number(songId));
 
         if(!_query->exec(qry))
             qDebug() << _query->lastError().text();
@@ -184,7 +188,7 @@ bool mediaDatabase::incrementSongCounter(const QString &songTitle, const QString
 
         _db.close();
     }
-    else qDebug() << "Could not open database to increment listens for song:" << song;
+    else qDebug() << "Could not open database to increment listens for song:" << songTitle;
 
     return succeeded;
 }
@@ -449,6 +453,35 @@ int mediaDatabase::getSongId(const QString &artistName, const QString &songTitle
     else
     {
         qDebug() << "Could not open database to get Song ID";
+    }
+
+    return id;
+}
+
+int mediaDatabase::getUserId(const QString &username)
+{
+    int id = -1;
+    bool ok = _db.open();
+
+    if(ok)
+    {
+        QString qry = "SELECT `id` FROM User "
+                      "WHERE `username`='" +
+                      insertFormattingCharacters(username) + "';";
+
+        if(!_query->exec(qry))
+            qDebug() << "Couldn't retrieve User ID.";
+        else
+        {
+            while(_query->next())
+                id = _query->value(0).toInt();
+        }
+
+        _db.close();
+    }
+    else
+    {
+        qDebug() << "Couldn't open database to get User ID.";
     }
 
     return id;

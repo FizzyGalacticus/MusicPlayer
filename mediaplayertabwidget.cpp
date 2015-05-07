@@ -16,7 +16,8 @@ mediaPlayerTabWidget::mediaPlayerTabWidget(QWidget *parent) :
     _controlPanel(NULL),
     _lyricsBox(NULL),
     _progressBar(NULL),
-    _db(NULL)
+    _db(NULL),
+    _user(NULL)
 {
     QVBoxLayout * layout = new QVBoxLayout;
 

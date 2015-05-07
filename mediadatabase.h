@@ -15,7 +15,7 @@ public:
 
     bool addSong(const QString & songTitle, const QString & albumTitle, const QString & artistName);
     bool addLyrics(const QString & artistName, const QString & songTitle, const QString & lyrics);
-    bool incrementSongCounter(const QString & songTitle, const QString & albumTitle, const QString & artistName);
+    bool incrementSongCounter(const QString & songTitle, const QString & artistName, const QString & username);
     const QVector<QString> * login(const QString & username, const QString & password);
     bool userExists(const QString & username);
     bool createUser(const QString & username, const QString & password, const QString & fname, const QString & lname, const QString & email, const QString &joinDateTime);
@@ -34,6 +34,7 @@ private:
     int getArtistId(const QString & artistName);
     int getAlbumId(const QString & artistName, const QString & albumTitle);
     int getSongId(const QString & artistName, const QString & songTitle);
+    int getUserId(const QString & username);
     bool addArtist(const QString & newArtist);
     bool addAlbum(const int & artistId, const QString & album);
 };

@@ -11,6 +11,7 @@
 #include "progressbar.h"
 #include "videowidget.h"
 #include "mediadatabase.h"
+#include "user.h"
 
 class mediaPlayerTabWidget : public QWidget
 {
@@ -58,6 +59,7 @@ private:
     lyricBox * _lyricsBox;
     progressBar * _progressBar;
     mediaDatabase * _db;
+    User * _user;
 };
 
 #endif // MEDIAPLAYERTABWIDGET_H
