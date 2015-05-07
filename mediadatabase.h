@@ -17,6 +17,7 @@ public:
     bool addLyrics(const QString & artistName, const QString & songTitle, const QString & lyrics);
     bool incrementSongCounter(const QString & songTitle, const QString & albumTitle, const QString & artistName);
     const QVector<QString> * login(const QString & username, const QString & password);
+    bool userExists(const QString & username);
 
 signals:
 

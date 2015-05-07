@@ -205,6 +205,35 @@ const QVector<QString> * mediaDatabase::login(const QString &username, const QSt
     return results;
 }
 
+bool mediaDatabase::userExists(const QString &username)
+{
+    bool ok = _db.open(), exists = false;
+
+    if(ok)
+    {
+        QString qry = "SELECT COUNT(*) FROM `Media_Player`.`User` "
+                      "WHERE `username`='" + insertFormattingCharacters(username) + "';";
+
+        if(!_query->exec(qry))
+        {
+            qDebug() << _query->lastError().text();
+        }
+        else
+        {
+            while(_query->next())
+                exists = _query->value(0).toBool();
+        }
+
+        _db.close();
+    }
+    else
+    {
+        qDebug() << "Could not open database to check if user exists.";
+    }
+
+    return exists;
+}
+
 void mediaDatabase::initiateSchema()
 {
     bool ok = _db.open();
