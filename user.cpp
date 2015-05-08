@@ -382,7 +382,7 @@ QVBoxLayout * UserInformation::prepareFavoriteArtistLayout()
     const QVector<QString> * info = _db->getFavoriteArtist(_username);
     QVBoxLayout * favoriteArtistLayout = new QVBoxLayout;
 
-    QLabel * titleLabel = new QLabel("<b>Favorite Artist</b>");
+    QLabel * titleLabel = new QLabel("<b><u>Favorite Artist:</u></b>");
     QLabel * artistLabel = new QLabel("Artist: " + info->at(0));
     QLabel * playsLabel = new QLabel("Total Plays: " + info->at(1));
 
@@ -398,7 +398,7 @@ QVBoxLayout * UserInformation::prepareFavoriteAlbumLayout()
     const QVector<QString> * info = _db->getFavoriteAlbum(_username);
     QVBoxLayout * favoriteAlbumLayout = new QVBoxLayout;
 
-    QLabel * titleLabel = new QLabel("<b>Favorite Album</b>");
+    QLabel * titleLabel = new QLabel("<b><u>Favorite Album:</u></b>");
     QLabel * artistLabel = new QLabel("Artist: " + info->at(0));
     QLabel * albumLabel = new QLabel("Album: " + info->at(1));
     QLabel * playsLabel = new QLabel("Total Plays: " + info->at(2));
@@ -416,7 +416,7 @@ QVBoxLayout * UserInformation::prepareFavoriteSongLayout()
     const QVector<QString> * info = _db->getFavoriteSong(_username);
     QVBoxLayout * favoriteSongLayout = new QVBoxLayout;
 
-    QLabel * titleLabel = new QLabel("<b>Favorite Song</b>");
+    QLabel * titleLabel = new QLabel("<b><u>Favorite Song:</u></b>");
     QLabel * artistLabel = new QLabel("Artist: " + info->at(0));
     QLabel * albumLabel = new QLabel("Album: " + info->at(1));
     QLabel * songLabel = new QLabel("Song: " + info->at(2));
