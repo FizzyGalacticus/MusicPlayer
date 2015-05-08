@@ -325,6 +325,8 @@ const QVector<QString> * mediaDatabase::getFavoriteSong(const QString &username)
             for(auto i = 0; i < 4; i++)
                 favoriteSongData->push_back(_query->value(i).toString());
         }
+        
+        _db.close();
     }
     else
     {
@@ -540,7 +542,7 @@ int mediaDatabase::getSongId(const QString &artistName, const QString &songTitle
     bool ok = _db.open();
 
     if(ok)
-    {\
+    {
         const QString song = insertFormattingCharacters(songTitle);
 
         QString qry = "SELECT `id` FROM `Media_Player`.`Song` "
