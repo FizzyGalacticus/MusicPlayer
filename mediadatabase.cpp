@@ -162,7 +162,7 @@ bool mediaDatabase::addLyrics(const QString & artistName, const QString & songTi
         qry.replace(":lyrics", lyrics).replace(":song", QString::number(songId));
 
         if(!_query->exec(qry))
-            qDebug() << "\n\nLAST ERROR: " << _query->lastQuery() << "\n\n";
+            qDebug() << _query->lastError().text();
         else succeeded = true;
 
         _db.close();
@@ -355,9 +355,6 @@ const QVector<QString> * mediaDatabase::getFavoriteAlbum(const QString &username
             _query->next();
             for(auto i = 0; i < 3; i++)
                 favoriteAlbumData->push_back(_query->value(i).toString());
-
-            for(auto i = 0; i < favoriteAlbumData->size(); i++)
-                qDebug() << favoriteAlbumData->at(i);
         }
 
         _db.close();
@@ -442,7 +439,6 @@ void mediaDatabase::initiateSchema()
     else
     {
         qDebug() << "Could not open database!";
-        qDebug() << "Error:" << _db.lastError().text();
     }
 }
 
@@ -581,8 +577,6 @@ int mediaDatabase::getUserId(const QString &username)
         QString qry = "SELECT `id` FROM `Media_Player`.`User` "
                       "WHERE `username`='" +
                       insertFormattingCharacters(username) + "';";
-
-        qDebug() << qry;
 
         if(!_query->exec(qry))
             qDebug() << _query->lastError().text();
