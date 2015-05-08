@@ -325,7 +325,7 @@ const QVector<QString> * mediaDatabase::getFavoriteSong(const QString &username)
             for(auto i = 0; i < 4; i++)
                 favoriteSongData->push_back(_query->value(i).toString());
         }
-        
+
         _db.close();
     }
     else
@@ -390,9 +390,6 @@ const QVector<QString> * mediaDatabase::getFavoriteArtist(const QString &usernam
             _query->next();
             for(auto i = 0; i < 2; i++)
                 favoriteArtistData->push_back(_query->value(i).toString());
-
-            for(auto i = 0; i < favoriteArtistData->size(); i++)
-                qDebug() << favoriteArtistData->at(i);
         }
 
         _db.close();
