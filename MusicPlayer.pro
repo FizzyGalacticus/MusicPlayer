@@ -8,6 +8,8 @@ QT       += core gui multimedia multimediawidgets sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+RC_ICONS = resources/icons/mainWindowIcon.ico
+
 TARGET = MusicPlayer
 TEMPLATE = app
 
